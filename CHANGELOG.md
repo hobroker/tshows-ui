@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/hobroker/tshows-ui/compare/v1.1.0...v1.2.0) (2022-03-23)
+
+
+### Features
+
+* use Material UI ([#7](https://github.com/hobroker/tshows-ui/issues/7)) ([cb92446](https://github.com/hobroker/tshows-ui/commit/cb924469a2d2e754b79341446befe1370f9bfbe5))
+
 # [1.1.0](https://github.com/hobroker/tshows-ui/compare/v1.0.0...v1.1.0) (2022-03-22)
 
 
