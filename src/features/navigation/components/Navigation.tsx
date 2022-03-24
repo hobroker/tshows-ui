@@ -5,6 +5,7 @@ import ElevationScroll from './ElevationScroll';
 import Search from './Search';
 import NotificationsBadge from './NotificationsBadge';
 import NavigationProvider from '../contexts/NavigationContext';
+import Logo from '../../logo/components/Logo';
 
 const LoginButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1, 1, 1, 2),
@@ -17,11 +18,13 @@ const Navigation = () => (
       <AppBar>
         <Toolbar>
           <Box>
-            <Button color="inherit">Trackshows</Button>
+            <Button href="/" sx={{ padding: 0 }}>
+              <Logo />
+            </Button>
           </Box>
           <Search />
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { md: 'flex' } }}>
+          <Box sx={{ display: 'flex' }}>
             <NotificationsBadge />
             <LoginButton href="/login" color="secondary" variant="contained">
               Login
