@@ -3,13 +3,17 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { ReactComponent as LogoSvg } from '../assets/logo.svg';
 
-const StyledLogoSvg = styled(LogoSvg)(({ theme }) => ({
+const StyledLogo = styled(LogoSvg)(({ theme }) => ({
   fill: theme.palette.secondary.main,
 }));
 
-const Logo = () => (
-  <Box sx={{ width: 150 }}>
-    <StyledLogoSvg />
+interface Props {
+  width?: number;
+}
+
+const Logo = ({ width = 150 }: Props) => (
+  <Box sx={{ width }}>
+    <StyledLogo />
   </Box>
 );
 
