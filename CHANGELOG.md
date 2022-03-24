@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/hobroker/tshows-ui/compare/v1.2.0...v1.3.0) (2022-03-24)
+
+
+### Features
+
+* add logo ([#8](https://github.com/hobroker/tshows-ui/issues/8)) ([3e804df](https://github.com/hobroker/tshows-ui/commit/3e804df55d4c885dee3906a8c11766693e5ea7be))
+
 # [1.2.0](https://github.com/hobroker/tshows-ui/compare/v1.1.0...v1.2.0) (2022-03-23)
 
 
