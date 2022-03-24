@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from '../../home/components/Home';
 import Onboarding from '../../onboarding/components/Onboarding';
-import Login from '../../login/components/Login';
+import LoginPage from '../../join/components/LoginPage';
 
 const Router = () => (
   <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/login" element={<Login />} />
+    <Route path="/login" element={<LoginPage />} />
     <Route path="/onboarding" element={<Onboarding />} />
   </Routes>
 );
