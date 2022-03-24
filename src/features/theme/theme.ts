@@ -24,6 +24,9 @@ const theme = createTheme({
       },
     },
   },
+  typography: {
+    fontFamily: '"Open Sans", Helvetica, Arial, sans-serif',
+  },
 });
 
 export default theme;
