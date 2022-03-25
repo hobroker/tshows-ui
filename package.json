@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.10",
-    "@graphql-codegen/schema-ast": "^2.4.1",
     "@mui/icons-material": "^5.5.1",
     "@mui/material": "^5.5.2",
     "@testing-library/jest-dom": "^5.16.2",
@@ -54,7 +53,7 @@
   "devDependencies": {
     "@eclass/semantic-release-docker": "^3.0.0",
     "@graphql-codegen/cli": "2.6.2",
-    "@graphql-codegen/introspection": "2.1.1",
+    "@graphql-codegen/schema-ast": "^2.4.1",
     "@graphql-codegen/typescript": "2.4.8",
     "@graphql-codegen/typescript-operations": "2.3.5",
     "@graphql-codegen/typescript-react-apollo": "3.2.11",
