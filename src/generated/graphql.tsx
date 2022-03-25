@@ -2,9 +2,15 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -46,7 +52,6 @@ export type Mutation = {
   __typename?: 'Mutation';
   join: User;
 };
-
 
 export type MutationJoinArgs = {
   data: UserCreateInput;
@@ -139,19 +144,21 @@ export type UserCreateInput = {
   username: Scalars['String'];
 };
 
-export type ListGendresQueryVariables = Exact<{ [key: string]: never; }>;
+export type ListGendresQueryVariables = Exact<{ [key: string]: never }>;
 
-
-export type ListGendresQuery = { __typename?: 'Query', genders?: Array<{ __typename?: 'Gender', id: number }> | null };
-
+export type ListGendresQuery = {
+  __typename?: 'Query';
+  genders?: Array<{ __typename?: 'Gender'; id: number; name: string }> | null;
+};
 
 export const ListGendresDocument = gql`
-    query ListGendres {
-  genders {
-    id
+  query ListGendres {
+    genders {
+      id
+      name
+    }
   }
-}
-    `;
+`;
 
 /**
  * __useListGendresQuery__
@@ -168,14 +175,37 @@ export const ListGendresDocument = gql`
  *   },
  * });
  */
-export function useListGendresQuery(baseOptions?: Apollo.QueryHookOptions<ListGendresQuery, ListGendresQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ListGendresQuery, ListGendresQueryVariables>(ListGendresDocument, options);
-      }
-export function useListGendresLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListGendresQuery, ListGendresQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ListGendresQuery, ListGendresQueryVariables>(ListGendresDocument, options);
-        }
+export function useListGendresQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListGendresQuery,
+    ListGendresQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<ListGendresQuery, ListGendresQueryVariables>(
+    ListGendresDocument,
+    options,
+  );
+}
+export function useListGendresLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListGendresQuery,
+    ListGendresQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<ListGendresQuery, ListGendresQueryVariables>(
+    ListGendresDocument,
+    options,
+  );
+}
 export type ListGendresQueryHookResult = ReturnType<typeof useListGendresQuery>;
-export type ListGendresLazyQueryHookResult = ReturnType<typeof useListGendresLazyQuery>;
-export type ListGendresQueryResult = Apollo.QueryResult<ListGendresQuery, ListGendresQueryVariables>;
+export type ListGendresLazyQueryHookResult = ReturnType<
+  typeof useListGendresLazyQuery
+>;
+export type ListGendresQueryResult = Apollo.QueryResult<
+  ListGendresQuery,
+  ListGendresQueryVariables
+>;

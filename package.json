@@ -2,6 +2,14 @@
   "name": "tshows-ui",
   "version": "1.4.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings 0 --fix",
+    "codegen": "graphql-codegen --config codegen.yml"
+  },
   "dependencies": {
     "@apollo/client": "^3.5.10",
     "@mui/icons-material": "^5.5.1",
@@ -24,13 +32,21 @@
     "typescript": "^4.6.2",
     "yup": "^0.32.11"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings 0 --fix",
-    "codegen": "graphql-codegen --config codegen.yml"
+  "devDependencies": {
+    "@eclass/semantic-release-docker": "^3.0.0",
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/schema-ast": "^2.4.1",
+    "@graphql-codegen/typescript": "2.4.8",
+    "@graphql-codegen/typescript-operations": "2.3.5",
+    "@graphql-codegen/typescript-react-apollo": "3.2.11",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "conventional-changelog-conventionalcommits": "^4.6.3",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.0",
+    "semantic-release": "^19.0.2"
   },
   "eslintConfig": {
     "extends": [
@@ -49,21 +65,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@eclass/semantic-release-docker": "^3.0.0",
-    "@graphql-codegen/cli": "2.6.2",
-    "@graphql-codegen/schema-ast": "^2.4.1",
-    "@graphql-codegen/typescript": "2.4.8",
-    "@graphql-codegen/typescript-operations": "2.3.5",
-    "@graphql-codegen/typescript-react-apollo": "3.2.11",
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/exec": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "conventional-changelog-conventionalcommits": "^4.6.3",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.6.0",
-    "semantic-release": "^19.0.2"
   }
 }
