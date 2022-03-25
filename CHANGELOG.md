@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/hobroker/tshows-ui/compare/v1.3.0...v1.4.0) (2022-03-24)
+
+
+### Features
+
+* add login and register pages ([#10](https://github.com/hobroker/tshows-ui/issues/10)) ([d43e6aa](https://github.com/hobroker/tshows-ui/commit/d43e6aa708569125b96b7b05495ab7601465acd7))
+
 # [1.3.0](https://github.com/hobroker/tshows-ui/compare/v1.2.0...v1.3.0) (2022-03-24)
 
 

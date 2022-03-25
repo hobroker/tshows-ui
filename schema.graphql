@@ -1,0 +1,110 @@
+type Gender {
+  createdAt: Timestamp!
+  id: Int!
+  name: String!
+  updatedAt: Timestamp!
+}
+
+type Genre {
+  createdAt: Timestamp!
+  id: Int!
+  name: String!
+  shows: [Show!]
+  updatedAt: Timestamp!
+}
+
+type Keyword {
+  createdAt: Timestamp!
+  id: Int!
+  name: String!
+  updatedAt: Timestamp!
+}
+
+type Mutation {
+  join(data: UserCreateInput!): User!
+}
+
+type Person {
+  birthday: Timestamp
+  createdAt: Timestamp!
+  deathday: Timestamp
+  description: String!
+  gender: Gender!
+  id: Int!
+  image: String
+  name: String!
+  updatedAt: Timestamp!
+}
+
+type ProductionCompany {
+  createdAt: Timestamp!
+  id: Int!
+  logo: String!
+  name: String!
+  updatedAt: Timestamp!
+}
+
+type Query {
+  allUsers: [User!]
+  genders: [Gender!]
+  genres: [Genre!]
+  keywords: [Keyword!]!
+  persons: [Person!]
+  trending: [Show!]!
+}
+
+type Season {
+  createdAt: Timestamp!
+  description: String!
+  id: Int!
+  name: String!
+  number: Int!
+  show: Show!
+  tallImage: String!
+  updatedAt: Timestamp!
+}
+
+type Show {
+  createdAt: Timestamp!
+  description: String!
+  episodeRuntime: Int!
+  externalId: Int!
+  genres: [Genre!]!
+  isInProduction: Boolean!
+  keywords: [Keyword!]!
+  name: String!
+  productionCompanies: [ProductionCompany!]!
+  seasons: [Season!]!
+  status: Status!
+  tallImage: String!
+  updatedAt: Timestamp!
+  wideImage: String!
+}
+
+type Status {
+  createdAt: Timestamp!
+  id: Int!
+  name: String!
+  updatedAt: Timestamp!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type User {
+  createdAt: Timestamp!
+  currentHashedRefreshToken: String
+  email: String!
+  id: Int!
+  password: String
+  updatedAt: Timestamp!
+  username: String!
+}
+
+input UserCreateInput {
+  email: String!
+  password: String
+  username: String!
+}
