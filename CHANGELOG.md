@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/hobroker/tshows-ui/compare/v1.4.0...v1.5.0) (2022-03-26)
+
+
+### Features
+
+* add graphql ([#12](https://github.com/hobroker/tshows-ui/issues/12)) ([952ec15](https://github.com/hobroker/tshows-ui/commit/952ec151848a84ef8da0d9127fdff046cf7ed2fb))
+
 # [1.4.0](https://github.com/hobroker/tshows-ui/compare/v1.3.0...v1.4.0) (2022-03-24)
 
 
