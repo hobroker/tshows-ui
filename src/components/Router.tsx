@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from '../../home/components/Home';
-import Onboarding from '../../onboarding/components/Onboarding';
-import LoginPage from '../../join/components/LoginPage';
-import RegisterPage from '../../join/components/RegisterPage';
+import Home from '../features/home/components/Home';
+import Onboarding from '../features/onboarding/components/Onboarding';
+import LoginPage from '../features/join/components/LoginPage';
+import RegisterPage from '../features/join/components/RegisterPage';
 
 const Router = () => (
   <Routes>

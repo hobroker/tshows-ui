@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Badge, IconButton } from '@mui/material';
+import { Badge, Box, IconButton } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NavigationContext } from '../contexts/NavigationContext';
 
@@ -8,11 +8,13 @@ const NotificationsBadge = () => {
   const notificationsCount = notifications.length;
 
   return (
-    <IconButton size="large" color="inherit">
-      <Badge badgeContent={notificationsCount} color="secondary">
-        <NotificationsIcon />
-      </Badge>
-    </IconButton>
+    <Box sx={{ marginRight: 1, marginTop: 0.5 }}>
+      <IconButton size="large" color="inherit">
+        <Badge badgeContent={notificationsCount} color="secondary">
+          <NotificationsIcon />
+        </Badge>
+      </IconButton>
+    </Box>
   );
 };
 
