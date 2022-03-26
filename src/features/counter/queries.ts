@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_GENDERS_LIST = gql`
-  query ListGendres {
-    genders {
-      id
+export const QUERY_ME = gql`
+  query Me {
+    me {
       name
+      email
     }
   }
 `;

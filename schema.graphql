@@ -13,6 +13,10 @@ type Genre {
   updatedAt: Timestamp!
 }
 
+input JoinWithGoogleInput {
+  token: String!
+}
+
 type Keyword {
   createdAt: Timestamp!
   id: Int!
@@ -21,7 +25,7 @@ type Keyword {
 }
 
 type Mutation {
-  join(data: UserCreateInput!): User!
+  joinWithGoogle(input: JoinWithGoogleInput!): User!
 }
 
 type Person {
@@ -45,10 +49,11 @@ type ProductionCompany {
 }
 
 type Query {
-  allUsers: [User!]
+  allUsers: User!
   genders: [Gender!]
   genres: [Genre!]
   keywords: [Keyword!]!
+  me: User!
   persons: [Person!]
   trending: [Show!]!
 }
@@ -94,17 +99,12 @@ type Status {
 scalar Timestamp
 
 type User {
+  avatar: String
   createdAt: Timestamp!
   currentHashedRefreshToken: String
   email: String!
   id: Int!
+  name: String!
   password: String
   updatedAt: Timestamp!
-  username: String!
-}
-
-input UserCreateInput {
-  email: String!
-  password: String
-  username: String!
 }

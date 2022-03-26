@@ -8,7 +8,7 @@ import {
 } from 'react-google-login';
 import { ReactComponent as GoogleLogoSvg } from '../assets/google.svg';
 import { GOOGLE_CLIENT_ID } from '../constants';
-import { API_URL } from '../../../../api/constants';
+import { useJoinWithGoogleMutation } from '../../../../../generated/graphql';
 
 const StyledButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.primary,
@@ -19,20 +19,17 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const SignInWithGoogleButton = () => {
+  const [joinWithGoogle, { loading }] = useJoinWithGoogleMutation();
+
   const onSuccess = async (
     response: GoogleLoginResponse | GoogleLoginResponseOffline,
   ) => {
-    console.log('response', response);
     if ('accessToken' in response) {
-      const accessToken = response.accessToken;
-
-      await fetch(`${API_URL}/google`, {
-        method: 'POST',
-        body: JSON.stringify({
-          token: accessToken,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
+      await joinWithGoogle({
+        variables: {
+          input: {
+            token: response.accessToken,
+          },
         },
       });
     }
@@ -46,7 +43,7 @@ const SignInWithGoogleButton = () => {
     onSuccess,
     onFailure,
   });
-  const disabled = !loaded;
+  const disabled = !loaded || loading;
 
   return (
     <StyledButton

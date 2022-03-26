@@ -3,14 +3,14 @@ import { Button, ButtonGroup } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { dec, inc } from 'rambda';
-import { useListGendresQuery } from '../../../generated/graphql';
+import { useMeQuery } from '../../../generated/graphql';
 
 const Counter = () => {
   const [count, setCount] = useState(0);
   const incrementAction = () => setCount(inc);
   const decrementAction = () => setCount(dec);
 
-  const { data, error, loading } = useListGendresQuery();
+  const { data, error, loading } = useMeQuery();
 
   console.log('data, error, loading', data, error, loading);
 
