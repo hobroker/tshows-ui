@@ -1,4 +1,5 @@
-import React from 'react';
+import { log } from 'util';
+import React, { useContext } from 'react';
 import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
@@ -7,9 +8,17 @@ import {
 import { GOOGLE_CLIENT_ID } from '../constants';
 import { useJoinWithGoogleMutation } from '../../../../../generated/graphql';
 import GoogleButton from './GoogleButton';
+import { UserContext } from '../../../../user/contexts/UserContext';
+import useAlert from '../../../../../hooks/useAlert';
 
-const SignInWithGoogleButton = () => {
+interface Props {
+  toggleBackdrop: () => void;
+}
+
+const SignInWithGoogleButton = ({ toggleBackdrop }: Props) => {
+  const { notifyError } = useAlert();
   const [joinWithGoogle, { loading }] = useJoinWithGoogleMutation();
+  const { refreshUser } = useContext(UserContext);
 
   const onSuccess = async (
     response: GoogleLoginResponse | GoogleLoginResponseOffline,
@@ -22,20 +31,26 @@ const SignInWithGoogleButton = () => {
           },
         },
       });
+
+      toggleBackdrop();
+
+      refreshUser();
     }
   };
 
-  const onFailure = () => {
-    console.log('error');
-  };
+  const onFailure = () => notifyError('Google login failed');
   const { signIn, loaded } = useGoogleLogin({
     clientId: GOOGLE_CLIENT_ID,
     onSuccess,
     onFailure,
   });
+  const onLogin = () => {
+    signIn();
+    toggleBackdrop();
+  };
   const disabled = !loaded || loading;
 
-  return <GoogleButton disabled={disabled} onClick={signIn} />;
+  return <GoogleButton disabled={disabled} onClick={onLogin} />;
 };
 
 export default SignInWithGoogleButton;
