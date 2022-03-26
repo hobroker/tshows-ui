@@ -3,6 +3,7 @@ import { Box, Card, CardContent, Divider, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import LogoIcon from '../../logo/components/LogoIcon';
 import SignInWithGoogleButton from '../features/google/components/SignInWithGoogleButton';
+import Counter from '../../counter/components/Counter';
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -36,6 +37,7 @@ const JoinWrapper = ({ title, children }: Props) => (
         </Row>
         <Row marginBottom={3}>
           <SignInWithGoogleButton />
+          <Counter />
         </Row>
         <Divider>OR</Divider>
         <Row marginBottom={3} />

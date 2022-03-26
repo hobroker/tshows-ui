@@ -26,6 +26,8 @@ type Keyword {
 
 type Mutation {
   joinWithGoogle(input: JoinWithGoogleInput!): User!
+  logout: Void!
+  refresh: User!
 }
 
 type Person {
@@ -101,10 +103,12 @@ scalar Timestamp
 type User {
   avatar: String
   createdAt: Timestamp!
-  currentHashedRefreshToken: String
   email: String!
   id: Int!
   name: String!
-  password: String
   updatedAt: Timestamp!
+}
+
+type Void {
+  _: String
 }

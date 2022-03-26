@@ -1,13 +1,22 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
-import { API_URL } from '../api/constants';
+import {
+  ApolloClient,
+  ApolloLink,
+  createHttpLink,
+  InMemoryCache,
+} from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+import { API_URL } from './constants';
+import errorHandler from './errorHandler';
 
-const link = createHttpLink({
+export const linkError = onError(errorHandler);
+
+const mainLink = createHttpLink({
   uri: `${API_URL}/graphql`,
   credentials: 'include',
 });
 
 const client = new ApolloClient({
-  link,
+  link: ApolloLink.from([linkError, mainLink]),
   cache: new InMemoryCache(),
 });
 

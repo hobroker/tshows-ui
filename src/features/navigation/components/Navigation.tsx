@@ -6,6 +6,8 @@ import Search from './Search';
 import NotificationsBadge from './NotificationsBadge';
 import NavigationProvider from '../contexts/NavigationContext';
 import Logo from '../../logo/components/Logo';
+import LogoutButton from './LogoutButton';
+import RefreshButton from './RefreshButton';
 
 const LoginButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1, 1, 1, 2),
@@ -29,6 +31,8 @@ const Navigation = () => (
             <LoginButton href="/login" color="secondary" variant="contained">
               Login
             </LoginButton>
+            <LogoutButton />
+            <RefreshButton />
           </Box>
         </Toolbar>
       </AppBar>

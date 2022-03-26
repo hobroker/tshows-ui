@@ -1,22 +1,12 @@
 import React from 'react';
-import { Box, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
   useGoogleLogin,
 } from 'react-google-login';
-import { ReactComponent as GoogleLogoSvg } from '../assets/google.svg';
 import { GOOGLE_CLIENT_ID } from '../constants';
 import { useJoinWithGoogleMutation } from '../../../../../generated/graphql';
-
-const StyledButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  borderColor: theme.palette.grey[400],
-  '&:hover': {
-    borderColor: theme.palette.grey[500],
-  },
-}));
+import GoogleButton from './GoogleButton';
 
 const SignInWithGoogleButton = () => {
   const [joinWithGoogle, { loading }] = useJoinWithGoogleMutation();
@@ -35,8 +25,8 @@ const SignInWithGoogleButton = () => {
     }
   };
 
-  const onFailure = (response: any) => {
-    console.log('response', response);
+  const onFailure = () => {
+    console.log('error');
   };
   const { signIn, loaded } = useGoogleLogin({
     clientId: GOOGLE_CLIENT_ID,
@@ -45,19 +35,7 @@ const SignInWithGoogleButton = () => {
   });
   const disabled = !loaded || loading;
 
-  return (
-    <StyledButton
-      variant="outlined"
-      size="large"
-      onClick={signIn}
-      disabled={disabled}
-    >
-      <Box height={20} width={20} marginRight={1}>
-        <GoogleLogoSvg />
-      </Box>
-      Sign in with Google
-    </StyledButton>
-  );
+  return <GoogleButton disabled={disabled} onClick={signIn} />;
 };
 
 export default SignInWithGoogleButton;
