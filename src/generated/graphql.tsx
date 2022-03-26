@@ -13,6 +13,7 @@ export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
 };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
+
 export type Scalars = {
   ID: string;
   String: string;
@@ -172,29 +173,19 @@ export type RefreshTokenMutation = {
   refresh: { __typename?: 'User'; id: number };
 };
 
-export type UserFieldsFragment = {
-  __typename?: 'User';
-  id: number;
-  email: string;
-  name: string;
-  avatar?: string | null;
-};
-
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
   __typename?: 'Query';
-  me: { __typename?: 'User'; name: string; avatar?: string | null };
+  me: {
+    __typename?: 'User';
+    id: number;
+    email: string;
+    name: string;
+    avatar?: string | null;
+  };
 };
 
-export const UserFieldsFragmentDoc = gql`
-  fragment UserFields on User {
-    id
-    email
-    name
-    avatar
-  }
-`;
 export const JoinWithGoogleDocument = gql`
   mutation JoinWithGoogle($input: JoinWithGoogleInput!) {
     joinWithGoogle(input: $input) {
@@ -347,6 +338,8 @@ export type RefreshTokenMutationOptions = Apollo.BaseMutationOptions<
 export const MeDocument = gql`
   query Me {
     me {
+      id
+      email
       name
       avatar
     }

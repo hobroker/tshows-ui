@@ -34,6 +34,7 @@ const UserProvider = ({ children }: Props) => {
     try {
       const { data } = await fetchUser();
       const user = data?.me;
+
       if (!user) {
         throw Error();
       }
