@@ -1,4 +1,3 @@
-import { log } from 'util';
 import React, { useContext } from 'react';
 import {
   GoogleLoginResponse,

@@ -8,9 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Avatar, Divider } from '@mui/material';
-import { UserContext } from '../../user/contexts/UserContext';
-import { useLogoutMutation } from '../../../generated/graphql';
-import { UserState } from '../../user/constants';
+import { UserContext } from '../../../user/contexts/UserContext';
+import { useLogoutMutation } from '../../../../generated/graphql';
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu

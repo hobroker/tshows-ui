@@ -5,7 +5,7 @@ import Search from './Search';
 import NotificationsBadge from './NotificationsBadge';
 import NavigationProvider from '../contexts/NavigationContext';
 import Logo from '../../logo/components/Logo';
-import UserItem from './UserItem';
+import UserItem from './UserItem/UserItem';
 
 const Navigation = () => (
   <NavigationProvider>

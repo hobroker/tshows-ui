@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { UserContext } from '../../user/contexts/UserContext';
-import { UserState } from '../../user/constants';
+import { UserContext } from '../../../user/contexts/UserContext';
+import { UserState } from '../../../user/constants';
 import UserMenuSkeleton from './UserMenuSkeleton';
 import LoginLink from './LoginLink';
 import UserMenu from './UserMenu';
