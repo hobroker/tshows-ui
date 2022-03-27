@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from '../features/home/components/Home';
-import Onboarding from '../features/onboarding/components/Onboarding';
+import OnboardingPage from '../features/onboarding/components/OnboardingPage';
 import LoginPage from '../features/join/components/LoginPage';
 import RegisterPage from '../features/join/components/RegisterPage';
 
@@ -9,7 +9,7 @@ const Router = () => (
     <Route path="/" element={<Home />} />
     <Route path="/login" element={<LoginPage />} />
     <Route path="/join" element={<RegisterPage />} />
-    <Route path="/onboarding" element={<Onboarding />} />
+    <Route path="/onboarding" element={<OnboardingPage />} />
   </Routes>
 );
 

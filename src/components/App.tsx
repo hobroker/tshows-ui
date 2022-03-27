@@ -6,6 +6,7 @@ import Navigation from '../features/navigation/components/Navigation';
 import Theme from '../features/theme/components/Theme';
 import client from '../features/apollo/client';
 import RootContextProvider from '../contexts/RootContextProvider';
+import PageWrapper from './PageWrapper';
 
 const App = () => (
   <ApolloProvider client={client}>

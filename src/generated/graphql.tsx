@@ -34,11 +34,8 @@ export type Gender = {
 
 export type Genre = {
   __typename?: 'Genre';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
+  externalId: Scalars['Int'];
   name: Scalars['String'];
-  shows?: Maybe<Array<Show>>;
-  updatedAt: Scalars['Timestamp'];
 };
 
 export type JoinWithGoogleInput = {
@@ -58,10 +55,15 @@ export type Mutation = {
   joinWithGoogle: User;
   logout: Void;
   refresh: User;
+  savePreferences: Preference;
 };
 
 export type MutationJoinWithGoogleArgs = {
   input: JoinWithGoogleInput;
+};
+
+export type MutationSavePreferencesArgs = {
+  input: UpsertPreferenceInput;
 };
 
 export type Person = {
@@ -77,6 +79,16 @@ export type Person = {
   updatedAt: Scalars['Timestamp'];
 };
 
+export type Preference = {
+  __typename?: 'Preference';
+  createdAt: Scalars['Timestamp'];
+  genreIds: Array<Scalars['String']>;
+  id: Scalars['Int'];
+  showIds: Array<Scalars['String']>;
+  updatedAt: Scalars['Timestamp'];
+  user: User;
+};
+
 export type ProductionCompany = {
   __typename?: 'ProductionCompany';
   createdAt: Scalars['Timestamp'];
@@ -90,8 +102,9 @@ export type Query = {
   __typename?: 'Query';
   allUsers: User;
   genders?: Maybe<Array<Gender>>;
-  genres?: Maybe<Array<Genre>>;
+  getPreferences?: Maybe<Preference>;
   keywords: Array<Keyword>;
+  listGenres: Array<Genre>;
   me: User;
   persons?: Maybe<Array<Person>>;
   trending: Array<Show>;
@@ -135,6 +148,10 @@ export type Status = {
   updatedAt: Scalars['Timestamp'];
 };
 
+export type UpsertPreferenceInput = {
+  genreIds: Array<Scalars['Int']>;
+};
+
 export type User = {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']>;
@@ -157,6 +174,32 @@ export type JoinWithGoogleMutationVariables = Exact<{
 export type JoinWithGoogleMutation = {
   __typename?: 'Mutation';
   joinWithGoogle: { __typename?: 'User'; name: string; email: string };
+};
+
+export type ListGenresQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListGenresQuery = {
+  __typename?: 'Query';
+  listGenres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
+};
+
+export type SavePreferencesMutationVariables = Exact<{
+  genreIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+export type SavePreferencesMutation = {
+  __typename?: 'Mutation';
+  savePreferences: { __typename: 'Preference' };
+};
+
+export type GetPreferencesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPreferencesQuery = {
+  __typename?: 'Query';
+  getPreferences?: {
+    __typename?: 'Preference';
+    genreIds: Array<string>;
+  } | null;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -237,6 +280,174 @@ export type JoinWithGoogleMutationResult =
 export type JoinWithGoogleMutationOptions = Apollo.BaseMutationOptions<
   JoinWithGoogleMutation,
   JoinWithGoogleMutationVariables
+>;
+export const ListGenresDocument = gql`
+  query ListGenres {
+    listGenres {
+      externalId
+      name
+    }
+  }
+`;
+
+/**
+ * __useListGenresQuery__
+ *
+ * To run a query within a React component, call `useListGenresQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListGenresQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListGenresQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListGenresQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListGenresQuery,
+    ListGenresQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<ListGenresQuery, ListGenresQueryVariables>(
+    ListGenresDocument,
+    options,
+  );
+}
+export function useListGenresLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListGenresQuery,
+    ListGenresQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<ListGenresQuery, ListGenresQueryVariables>(
+    ListGenresDocument,
+    options,
+  );
+}
+export type ListGenresQueryHookResult = ReturnType<typeof useListGenresQuery>;
+export type ListGenresLazyQueryHookResult = ReturnType<
+  typeof useListGenresLazyQuery
+>;
+export type ListGenresQueryResult = Apollo.QueryResult<
+  ListGenresQuery,
+  ListGenresQueryVariables
+>;
+export const SavePreferencesDocument = gql`
+  mutation SavePreferences($genreIds: [Int!]!) {
+    savePreferences(input: { genreIds: $genreIds }) {
+      __typename
+    }
+  }
+`;
+export type SavePreferencesMutationFn = Apollo.MutationFunction<
+  SavePreferencesMutation,
+  SavePreferencesMutationVariables
+>;
+
+/**
+ * __useSavePreferencesMutation__
+ *
+ * To run a mutation, you first call `useSavePreferencesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSavePreferencesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [savePreferencesMutation, { data, loading, error }] = useSavePreferencesMutation({
+ *   variables: {
+ *      genreIds: // value for 'genreIds'
+ *   },
+ * });
+ */
+export function useSavePreferencesMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SavePreferencesMutation,
+    SavePreferencesMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    SavePreferencesMutation,
+    SavePreferencesMutationVariables
+  >(SavePreferencesDocument, options);
+}
+export type SavePreferencesMutationHookResult = ReturnType<
+  typeof useSavePreferencesMutation
+>;
+export type SavePreferencesMutationResult =
+  Apollo.MutationResult<SavePreferencesMutation>;
+export type SavePreferencesMutationOptions = Apollo.BaseMutationOptions<
+  SavePreferencesMutation,
+  SavePreferencesMutationVariables
+>;
+export const GetPreferencesDocument = gql`
+  query GetPreferences {
+    getPreferences {
+      genreIds
+    }
+  }
+`;
+
+/**
+ * __useGetPreferencesQuery__
+ *
+ * To run a query within a React component, call `useGetPreferencesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPreferencesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPreferencesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPreferencesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetPreferencesQuery,
+    GetPreferencesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetPreferencesQuery, GetPreferencesQueryVariables>(
+    GetPreferencesDocument,
+    options,
+  );
+}
+export function useGetPreferencesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPreferencesQuery,
+    GetPreferencesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<GetPreferencesQuery, GetPreferencesQueryVariables>(
+    GetPreferencesDocument,
+    options,
+  );
+}
+export type GetPreferencesQueryHookResult = ReturnType<
+  typeof useGetPreferencesQuery
+>;
+export type GetPreferencesLazyQueryHookResult = ReturnType<
+  typeof useGetPreferencesLazyQuery
+>;
+export type GetPreferencesQueryResult = Apollo.QueryResult<
+  GetPreferencesQuery,
+  GetPreferencesQueryVariables
 >;
 export const MeDocument = gql`
   query Me {

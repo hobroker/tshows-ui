@@ -6,11 +6,8 @@ type Gender {
 }
 
 type Genre {
-  createdAt: Timestamp!
-  id: Int!
+  externalId: Int!
   name: String!
-  shows: [Show!]
-  updatedAt: Timestamp!
 }
 
 input JoinWithGoogleInput {
@@ -28,6 +25,7 @@ type Mutation {
   joinWithGoogle(input: JoinWithGoogleInput!): User!
   logout: Void!
   refresh: User!
+  savePreferences(input: UpsertPreferenceInput!): Preference!
 }
 
 type Person {
@@ -42,6 +40,15 @@ type Person {
   updatedAt: Timestamp!
 }
 
+type Preference {
+  createdAt: Timestamp!
+  genreIds: [String!]!
+  id: Int!
+  showIds: [String!]!
+  updatedAt: Timestamp!
+  user: User!
+}
+
 type ProductionCompany {
   createdAt: Timestamp!
   id: Int!
@@ -53,8 +60,9 @@ type ProductionCompany {
 type Query {
   allUsers: User!
   genders: [Gender!]
-  genres: [Genre!]
+  getPreferences: Preference
   keywords: [Keyword!]!
+  listGenres: [Genre!]!
   me: User!
   persons: [Person!]
   trending: [Show!]!
@@ -99,6 +107,10 @@ type Status {
 `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
 """
 scalar Timestamp
+
+input UpsertPreferenceInput {
+  genreIds: [Int!]!
+}
 
 type User {
   avatar: String

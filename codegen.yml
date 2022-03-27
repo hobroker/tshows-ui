@@ -5,6 +5,7 @@ generates:
   ./src/generated/graphql.tsx:
     hooks:
       afterOneFileWrite:
+        - prettier --write
         - eslint --fix
     plugins:
       - 'typescript'

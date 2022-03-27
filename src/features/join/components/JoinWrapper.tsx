@@ -18,7 +18,6 @@ const Wrapper = styled(Box)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 `;
 
 const Row = styled(Box)`

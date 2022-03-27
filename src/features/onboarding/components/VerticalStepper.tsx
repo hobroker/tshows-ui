@@ -1,0 +1,134 @@
+import React, {
+  ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  Box,
+  Button,
+  Paper,
+  Step,
+  StepContent,
+  StepLabel,
+  Stepper,
+  Typography,
+} from '@mui/material';
+import { dec, inc } from 'rambda';
+import PrimaryLogo from '../../logo/components/PrimaryLogo';
+import WelcomeStep from './Steps/WelcomeStep';
+import ProfileStep from './Steps/ProfileStep';
+import GenresStep from './Steps/GenresStep';
+import { OnboardingContext } from '../contexts/OnboardingContext';
+
+interface StepType {
+  label: string;
+  title: ReactNode;
+  content: ReactNode;
+  onContinue?: () => void;
+}
+
+const VerticalStepper = () => {
+  const { savePreferences } = useContext(OnboardingContext);
+  const [activeStep, setActiveStep] = useState(2);
+  const [loading, setLoading] = useState(false);
+  const handleNext = () => setActiveStep(inc);
+  const handleBack = () => setActiveStep(dec);
+  const handleReset = () => setActiveStep(0);
+
+  const saveGenrePrefences = useCallback(async () => {
+    setLoading(true);
+    await savePreferences();
+    setLoading(false);
+
+    // handleNext();
+  }, [savePreferences]);
+
+  const steps = useMemo<StepType[]>(
+    () => [
+      {
+        label: 'Welcome',
+        title: (
+          <Box sx={{ display: 'flex' }}>
+            Welcome to
+            <Box py={1} ml={0.5}>
+              <PrimaryLogo sx={{ height: 16 }} />
+            </Box>
+          </Box>
+        ),
+        content: <WelcomeStep />,
+      },
+      {
+        label: 'Profile',
+        title: "Let's personalize your profile",
+        content: <ProfileStep />,
+      },
+      {
+        label: 'Genres',
+        title: 'Select your favorite genres',
+        content: <GenresStep />,
+        onContinue: saveGenrePrefences,
+      },
+      {
+        label: 'Finish',
+        title: 'Finish',
+        content: (
+          <Box>
+            <Typography variant="body1">This is the finish section.</Typography>
+          </Box>
+        ),
+      },
+    ],
+    [saveGenrePrefences],
+  );
+
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Stepper activeStep={activeStep} orientation="vertical">
+        {steps.map(({ onContinue, label, title, content }, index) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+            <StepContent>
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="h6" sx={{ marginBottom: 1 }}>
+                  {title}
+                </Typography>
+                {content}
+              </Box>
+              <Box sx={{ mb: 2 }}>
+                <div>
+                  <Button
+                    variant="contained"
+                    onClick={onContinue || handleNext}
+                    sx={{ mt: 1, mr: 1 }}
+                    disabled={loading}
+                  >
+                    {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                  </Button>
+                  <Button
+                    disabled={index === 0}
+                    onClick={handleBack}
+                    sx={{ mt: 1, mr: 1 }}
+                  >
+                    Back
+                  </Button>
+                </div>
+              </Box>
+            </StepContent>
+          </Step>
+        ))}
+      </Stepper>
+      {activeStep === steps.length && (
+        <Paper square elevation={0} sx={{ p: 3 }}>
+          <Typography>All steps completed - you&apos;re finished</Typography>
+          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+            Reset
+          </Button>
+        </Paper>
+      )}
+    </Box>
+  );
+};
+
+export default VerticalStepper;
