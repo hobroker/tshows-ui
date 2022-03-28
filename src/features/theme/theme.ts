@@ -23,6 +23,13 @@ const theme = createTheme({
         LinkComponent: LinkBehavior,
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        filled: {
+          border: '1px solid transparent',
+        },
+      },
+    },
   },
   typography: {
     fontFamily: '"Open Sans", Helvetica, Arial, sans-serif',

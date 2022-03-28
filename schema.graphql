@@ -1,3 +1,7 @@
+input DiscoverShowsInput {
+  genreIds: [Int!]!
+}
+
 type Gender {
   createdAt: Timestamp!
   id: Int!
@@ -28,6 +32,15 @@ type Mutation {
   savePreferences(input: UpsertPreferenceInput!): Preference!
 }
 
+type PartialShow {
+  description: String!
+  externalId: Int!
+  genres: [Genre!]!
+  name: String!
+  tallImage: String!
+  wideImage: String!
+}
+
 type Person {
   birthday: Timestamp
   createdAt: Timestamp!
@@ -41,12 +54,9 @@ type Person {
 }
 
 type Preference {
-  createdAt: Timestamp!
-  genreIds: [String!]!
+  genres: [Genre!]!
   id: Int!
-  showIds: [String!]!
-  updatedAt: Timestamp!
-  user: User!
+  shows: [PartialShow!]!
 }
 
 type ProductionCompany {
@@ -59,13 +69,12 @@ type ProductionCompany {
 
 type Query {
   allUsers: User!
+  discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
   genders: [Gender!]
   getPreferences: Preference
-  keywords: [Keyword!]!
   listGenres: [Genre!]!
   me: User!
   persons: [Person!]
-  trending: [Show!]!
 }
 
 type Season {
@@ -80,7 +89,6 @@ type Season {
 }
 
 type Show {
-  createdAt: Timestamp!
   description: String!
   episodeRuntime: Int!
   externalId: Int!
@@ -92,7 +100,6 @@ type Show {
   seasons: [Season!]!
   status: Status!
   tallImage: String!
-  updatedAt: Timestamp!
   wideImage: String!
 }
 
@@ -110,6 +117,7 @@ scalar Timestamp
 
 input UpsertPreferenceInput {
   genreIds: [Int!]!
+  showIds: [Int!]!
 }
 
 type User {

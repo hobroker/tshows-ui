@@ -24,6 +24,10 @@ export type Scalars = {
   Timestamp: any;
 };
 
+export type DiscoverShowsInput = {
+  genreIds: Array<Scalars['Int']>;
+};
+
 export type Gender = {
   __typename?: 'Gender';
   createdAt: Scalars['Timestamp'];
@@ -66,6 +70,16 @@ export type MutationSavePreferencesArgs = {
   input: UpsertPreferenceInput;
 };
 
+export type PartialShow = {
+  __typename?: 'PartialShow';
+  description: Scalars['String'];
+  externalId: Scalars['Int'];
+  genres: Array<Genre>;
+  name: Scalars['String'];
+  tallImage: Scalars['String'];
+  wideImage: Scalars['String'];
+};
+
 export type Person = {
   __typename?: 'Person';
   birthday?: Maybe<Scalars['Timestamp']>;
@@ -81,12 +95,9 @@ export type Person = {
 
 export type Preference = {
   __typename?: 'Preference';
-  createdAt: Scalars['Timestamp'];
-  genreIds: Array<Scalars['String']>;
+  genres: Array<Genre>;
   id: Scalars['Int'];
-  showIds: Array<Scalars['String']>;
-  updatedAt: Scalars['Timestamp'];
-  user: User;
+  shows: Array<PartialShow>;
 };
 
 export type ProductionCompany = {
@@ -101,13 +112,16 @@ export type ProductionCompany = {
 export type Query = {
   __typename?: 'Query';
   allUsers: User;
+  discoverShows: Array<PartialShow>;
   genders?: Maybe<Array<Gender>>;
   getPreferences?: Maybe<Preference>;
-  keywords: Array<Keyword>;
   listGenres: Array<Genre>;
   me: User;
   persons?: Maybe<Array<Person>>;
-  trending: Array<Show>;
+};
+
+export type QueryDiscoverShowsArgs = {
+  input: DiscoverShowsInput;
 };
 
 export type Season = {
@@ -124,7 +138,6 @@ export type Season = {
 
 export type Show = {
   __typename?: 'Show';
-  createdAt: Scalars['Timestamp'];
   description: Scalars['String'];
   episodeRuntime: Scalars['Int'];
   externalId: Scalars['Int'];
@@ -136,7 +149,6 @@ export type Show = {
   seasons: Array<Season>;
   status: Status;
   tallImage: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
   wideImage: Scalars['String'];
 };
 
@@ -150,6 +162,7 @@ export type Status = {
 
 export type UpsertPreferenceInput = {
   genreIds: Array<Scalars['Int']>;
+  showIds: Array<Scalars['Int']>;
 };
 
 export type User = {
@@ -183,8 +196,26 @@ export type ListGenresQuery = {
   listGenres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
 
+export type DiscoverShowsQueryVariables = Exact<{
+  genreIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+export type DiscoverShowsQuery = {
+  __typename?: 'Query';
+  discoverShows: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage: string;
+    tallImage: string;
+    genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
+  }>;
+};
+
 export type SavePreferencesMutationVariables = Exact<{
   genreIds: Array<Scalars['Int']> | Scalars['Int'];
+  showIds: Array<Scalars['Int']> | Scalars['Int'];
 }>;
 
 export type SavePreferencesMutation = {
@@ -198,7 +229,8 @@ export type GetPreferencesQuery = {
   __typename?: 'Query';
   getPreferences?: {
     __typename?: 'Preference';
-    genreIds: Array<string>;
+    genres: Array<{ __typename?: 'Genre'; externalId: number }>;
+    shows: Array<{ __typename?: 'PartialShow'; externalId: number }>;
   } | null;
 };
 
@@ -339,9 +371,77 @@ export type ListGenresQueryResult = Apollo.QueryResult<
   ListGenresQuery,
   ListGenresQueryVariables
 >;
+export const DiscoverShowsDocument = gql`
+  query DiscoverShows($genreIds: [Int!]!) {
+    discoverShows(input: { genreIds: $genreIds }) {
+      externalId
+      name
+      description
+      wideImage
+      tallImage
+      genres {
+        externalId
+        name
+      }
+    }
+  }
+`;
+
+/**
+ * __useDiscoverShowsQuery__
+ *
+ * To run a query within a React component, call `useDiscoverShowsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscoverShowsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiscoverShowsQuery({
+ *   variables: {
+ *      genreIds: // value for 'genreIds'
+ *   },
+ * });
+ */
+export function useDiscoverShowsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    DiscoverShowsQuery,
+    DiscoverShowsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<DiscoverShowsQuery, DiscoverShowsQueryVariables>(
+    DiscoverShowsDocument,
+    options,
+  );
+}
+export function useDiscoverShowsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    DiscoverShowsQuery,
+    DiscoverShowsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<DiscoverShowsQuery, DiscoverShowsQueryVariables>(
+    DiscoverShowsDocument,
+    options,
+  );
+}
+export type DiscoverShowsQueryHookResult = ReturnType<
+  typeof useDiscoverShowsQuery
+>;
+export type DiscoverShowsLazyQueryHookResult = ReturnType<
+  typeof useDiscoverShowsLazyQuery
+>;
+export type DiscoverShowsQueryResult = Apollo.QueryResult<
+  DiscoverShowsQuery,
+  DiscoverShowsQueryVariables
+>;
 export const SavePreferencesDocument = gql`
-  mutation SavePreferences($genreIds: [Int!]!) {
-    savePreferences(input: { genreIds: $genreIds }) {
+  mutation SavePreferences($genreIds: [Int!]!, $showIds: [Int!]!) {
+    savePreferences(input: { genreIds: $genreIds, showIds: $showIds }) {
       __typename
     }
   }
@@ -365,6 +465,7 @@ export type SavePreferencesMutationFn = Apollo.MutationFunction<
  * const [savePreferencesMutation, { data, loading, error }] = useSavePreferencesMutation({
  *   variables: {
  *      genreIds: // value for 'genreIds'
+ *      showIds: // value for 'showIds'
  *   },
  * });
  */
@@ -393,7 +494,12 @@ export type SavePreferencesMutationOptions = Apollo.BaseMutationOptions<
 export const GetPreferencesDocument = gql`
   query GetPreferences {
     getPreferences {
-      genreIds
+      genres {
+        externalId
+      }
+      shows {
+        externalId
+      }
     }
   }
 `;

@@ -16,11 +16,13 @@ import {
   Typography,
 } from '@mui/material';
 import { dec, inc } from 'rambda';
+import { LoadingButton } from '@mui/lab';
 import PrimaryLogo from '../../logo/components/PrimaryLogo';
 import WelcomeStep from './Steps/WelcomeStep';
 import ProfileStep from './Steps/ProfileStep';
 import GenresStep from './Steps/GenresStep';
-import { OnboardingContext } from '../contexts/OnboardingContext';
+import ShowsStep from './Steps/ShowsStep';
+import { PreferencesContext } from '../contexts/PreferencesContext';
 
 interface StepType {
   label: string;
@@ -30,7 +32,7 @@ interface StepType {
 }
 
 const VerticalStepper = () => {
-  const { savePreferences } = useContext(OnboardingContext);
+  const { savePreferences } = useContext(PreferencesContext);
   const [activeStep, setActiveStep] = useState(2);
   const [loading, setLoading] = useState(false);
   const handleNext = () => setActiveStep(inc);
@@ -42,7 +44,7 @@ const VerticalStepper = () => {
     await savePreferences();
     setLoading(false);
 
-    // handleNext();
+    handleNext();
   }, [savePreferences]);
 
   const steps = useMemo<StepType[]>(
@@ -69,6 +71,11 @@ const VerticalStepper = () => {
         title: 'Select your favorite genres',
         content: <GenresStep />,
         onContinue: saveGenrePrefences,
+      },
+      {
+        label: 'TV Shows',
+        title: 'Add some TV Shows to your profile',
+        content: <ShowsStep />,
       },
       {
         label: 'Finish',
@@ -98,14 +105,14 @@ const VerticalStepper = () => {
               </Box>
               <Box sx={{ mb: 2 }}>
                 <div>
-                  <Button
+                  <LoadingButton
                     variant="contained"
                     onClick={onContinue || handleNext}
                     sx={{ mt: 1, mr: 1 }}
-                    disabled={loading}
+                    loading={loading}
                   >
                     {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                  </Button>
+                  </LoadingButton>
                   <Button
                     disabled={index === 0}
                     onClick={handleBack}
