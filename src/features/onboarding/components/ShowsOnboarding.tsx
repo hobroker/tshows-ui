@@ -1,25 +1,44 @@
-import React, { useContext } from 'react';
-import { Box, CircularProgress } from '@mui/material';
+import React, { useContext, useEffect } from 'react';
+import { CircularProgress } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { ShowPreferencesContext } from '../contexts/ShowPreferencesContext';
 import useOnMount from '../../../hooks/useOnMount';
+import ShowCard from './ShowCard';
+import { GenrePreferencesContext } from '../contexts/GenrePreferencesContext';
+
+const StyledWrapper = styled('div')`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 1rem;
+  grid-auto-flow: dense;
+`;
 
 const ShowsOnboarding = () => {
   const { fetchShows, shows } = useContext(ShowPreferencesContext);
+  const { selectedGenres } = useContext(GenrePreferencesContext);
 
   const canRender = shows.length;
 
-  useOnMount(fetchShows);
+  useEffect(() => {
+    if (selectedGenres.length) {
+      fetchShows();
+    }
+  }, [fetchShows, selectedGenres]);
 
   return (
-    <Box>
-      <ul>
-        {canRender ? (
-          shows.map((show) => <li key={show.externalId}>{show.name}</li>)
-        ) : (
-          <CircularProgress />
-        )}
-      </ul>
-    </Box>
+    <StyledWrapper>
+      {canRender ? (
+        shows.map(({ externalId, name, tallImage }) => (
+          <ShowCard
+            key={externalId}
+            name={name}
+            tallImage={`https://image.tmdb.org/t/p/w500/${tallImage}`}
+          />
+        ))
+      ) : (
+        <CircularProgress />
+      )}
+    </StyledWrapper>
   );
 };
 

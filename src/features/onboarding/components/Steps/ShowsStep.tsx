@@ -3,7 +3,7 @@ import ShowsOnboarding from '../ShowsOnboarding';
 
 const ShowsStep = () => (
   <Box>
-    <Typography variant="body1" mb={1}>
+    <Typography variant="body1" mb={2}>
       We found some popular items based on your favorite genres.
     </Typography>
     <ShowsOnboarding />

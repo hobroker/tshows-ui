@@ -29,7 +29,6 @@ const PreferencesProvider = ({ children }: Props) => {
   const [savePreferences] = useSavePreferencesMutation({
     variables: {
       genreIds: selectedGenres,
-      showIds: [],
     },
   });
 

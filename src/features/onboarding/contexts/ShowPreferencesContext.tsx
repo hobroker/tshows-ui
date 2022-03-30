@@ -38,7 +38,7 @@ const ShowPreferencesProvider = ({ children }: Props) => {
   const fetchShows = useCallback(async () => {
     const { data } = await discoverShowsQuery({
       variables: {
-        genreIds: [10759, 16, 35],
+        genreIds: selectedGenres,
       },
     });
 

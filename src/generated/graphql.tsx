@@ -28,14 +28,6 @@ export type DiscoverShowsInput = {
   genreIds: Array<Scalars['Int']>;
 };
 
-export type Gender = {
-  __typename?: 'Gender';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
-};
-
 export type Genre = {
   __typename?: 'Genre';
   externalId: Scalars['Int'];
@@ -44,14 +36,6 @@ export type Genre = {
 
 export type JoinWithGoogleInput = {
   token: Scalars['String'];
-};
-
-export type Keyword = {
-  __typename?: 'Keyword';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
 };
 
 export type Mutation = {
@@ -80,19 +64,6 @@ export type PartialShow = {
   wideImage: Scalars['String'];
 };
 
-export type Person = {
-  __typename?: 'Person';
-  birthday?: Maybe<Scalars['Timestamp']>;
-  createdAt: Scalars['Timestamp'];
-  deathday?: Maybe<Scalars['Timestamp']>;
-  description: Scalars['String'];
-  gender: Gender;
-  id: Scalars['Int'];
-  image?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
-};
-
 export type Preference = {
   __typename?: 'Preference';
   genres: Array<Genre>;
@@ -100,69 +71,21 @@ export type Preference = {
   shows: Array<PartialShow>;
 };
 
-export type ProductionCompany = {
-  __typename?: 'ProductionCompany';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
-  logo: Scalars['String'];
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
-};
-
 export type Query = {
   __typename?: 'Query';
   allUsers: User;
   discoverShows: Array<PartialShow>;
-  genders?: Maybe<Array<Gender>>;
   getPreferences?: Maybe<Preference>;
-  listGenres: Array<Genre>;
+  listGenres?: Maybe<Array<Genre>>;
   me: User;
-  persons?: Maybe<Array<Person>>;
 };
 
 export type QueryDiscoverShowsArgs = {
   input: DiscoverShowsInput;
 };
 
-export type Season = {
-  __typename?: 'Season';
-  createdAt: Scalars['Timestamp'];
-  description: Scalars['String'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  number: Scalars['Int'];
-  show: Show;
-  tallImage: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
-};
-
-export type Show = {
-  __typename?: 'Show';
-  description: Scalars['String'];
-  episodeRuntime: Scalars['Int'];
-  externalId: Scalars['Int'];
-  genres: Array<Genre>;
-  isInProduction: Scalars['Boolean'];
-  keywords: Array<Keyword>;
-  name: Scalars['String'];
-  productionCompanies: Array<ProductionCompany>;
-  seasons: Array<Season>;
-  status: Status;
-  tallImage: Scalars['String'];
-  wideImage: Scalars['String'];
-};
-
-export type Status = {
-  __typename?: 'Status';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
-};
-
 export type UpsertPreferenceInput = {
   genreIds: Array<Scalars['Int']>;
-  showIds: Array<Scalars['Int']>;
 };
 
 export type User = {
@@ -193,7 +116,11 @@ export type ListGenresQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListGenresQuery = {
   __typename?: 'Query';
-  listGenres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
+  listGenres?: Array<{
+    __typename?: 'Genre';
+    externalId: number;
+    name: string;
+  }> | null;
 };
 
 export type DiscoverShowsQueryVariables = Exact<{
@@ -215,7 +142,6 @@ export type DiscoverShowsQuery = {
 
 export type SavePreferencesMutationVariables = Exact<{
   genreIds: Array<Scalars['Int']> | Scalars['Int'];
-  showIds: Array<Scalars['Int']> | Scalars['Int'];
 }>;
 
 export type SavePreferencesMutation = {
@@ -230,7 +156,6 @@ export type GetPreferencesQuery = {
   getPreferences?: {
     __typename?: 'Preference';
     genres: Array<{ __typename?: 'Genre'; externalId: number }>;
-    shows: Array<{ __typename?: 'PartialShow'; externalId: number }>;
   } | null;
 };
 
@@ -440,8 +365,8 @@ export type DiscoverShowsQueryResult = Apollo.QueryResult<
   DiscoverShowsQueryVariables
 >;
 export const SavePreferencesDocument = gql`
-  mutation SavePreferences($genreIds: [Int!]!, $showIds: [Int!]!) {
-    savePreferences(input: { genreIds: $genreIds, showIds: $showIds }) {
+  mutation SavePreferences($genreIds: [Int!]!) {
+    savePreferences(input: { genreIds: $genreIds }) {
       __typename
     }
   }
@@ -465,7 +390,6 @@ export type SavePreferencesMutationFn = Apollo.MutationFunction<
  * const [savePreferencesMutation, { data, loading, error }] = useSavePreferencesMutation({
  *   variables: {
  *      genreIds: // value for 'genreIds'
- *      showIds: // value for 'showIds'
  *   },
  * });
  */
@@ -495,9 +419,6 @@ export const GetPreferencesDocument = gql`
   query GetPreferences {
     getPreferences {
       genres {
-        externalId
-      }
-      shows {
         externalId
       }
     }

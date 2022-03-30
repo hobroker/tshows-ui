@@ -2,13 +2,6 @@ input DiscoverShowsInput {
   genreIds: [Int!]!
 }
 
-type Gender {
-  createdAt: Timestamp!
-  id: Int!
-  name: String!
-  updatedAt: Timestamp!
-}
-
 type Genre {
   externalId: Int!
   name: String!
@@ -16,13 +9,6 @@ type Genre {
 
 input JoinWithGoogleInput {
   token: String!
-}
-
-type Keyword {
-  createdAt: Timestamp!
-  id: Int!
-  name: String!
-  updatedAt: Timestamp!
 }
 
 type Mutation {
@@ -41,73 +27,18 @@ type PartialShow {
   wideImage: String!
 }
 
-type Person {
-  birthday: Timestamp
-  createdAt: Timestamp!
-  deathday: Timestamp
-  description: String!
-  gender: Gender!
-  id: Int!
-  image: String
-  name: String!
-  updatedAt: Timestamp!
-}
-
 type Preference {
   genres: [Genre!]!
   id: Int!
   shows: [PartialShow!]!
 }
 
-type ProductionCompany {
-  createdAt: Timestamp!
-  id: Int!
-  logo: String!
-  name: String!
-  updatedAt: Timestamp!
-}
-
 type Query {
   allUsers: User!
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
-  genders: [Gender!]
   getPreferences: Preference
-  listGenres: [Genre!]!
+  listGenres: [Genre!]
   me: User!
-  persons: [Person!]
-}
-
-type Season {
-  createdAt: Timestamp!
-  description: String!
-  id: Int!
-  name: String!
-  number: Int!
-  show: Show!
-  tallImage: String!
-  updatedAt: Timestamp!
-}
-
-type Show {
-  description: String!
-  episodeRuntime: Int!
-  externalId: Int!
-  genres: [Genre!]!
-  isInProduction: Boolean!
-  keywords: [Keyword!]!
-  name: String!
-  productionCompanies: [ProductionCompany!]!
-  seasons: [Season!]!
-  status: Status!
-  tallImage: String!
-  wideImage: String!
-}
-
-type Status {
-  createdAt: Timestamp!
-  id: Int!
-  name: String!
-  updatedAt: Timestamp!
 }
 
 """
@@ -117,7 +48,6 @@ scalar Timestamp
 
 input UpsertPreferenceInput {
   genreIds: [Int!]!
-  showIds: [Int!]!
 }
 
 type User {
