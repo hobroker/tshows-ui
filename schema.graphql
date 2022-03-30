@@ -12,10 +12,12 @@ input JoinWithGoogleInput {
 }
 
 type Mutation {
+  getWatchlist: Watchlist!
   joinWithGoogle(input: JoinWithGoogleInput!): User!
   logout: Void!
   refresh: User!
   savePreferences(input: UpsertPreferenceInput!): Preference!
+  upsertWatchlist(input: [ShowWithStatusInput!]!): Void!
 }
 
 type PartialShow {
@@ -29,8 +31,6 @@ type PartialShow {
 
 type Preference {
   genres: [Genre!]!
-  id: Int!
-  shows: [PartialShow!]!
 }
 
 type Query {
@@ -41,10 +41,15 @@ type Query {
   me: User!
 }
 
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
+input ShowWithStatusInput {
+  showId: Int!
+  statusId: Int!
+}
+
+type Status {
+  id: Int!
+  name: String!
+}
 
 input UpsertPreferenceInput {
   genreIds: [Int!]!
@@ -52,13 +57,18 @@ input UpsertPreferenceInput {
 
 type User {
   avatar: String
-  createdAt: Timestamp!
   email: String!
   id: Int!
   name: String!
-  updatedAt: Timestamp!
 }
 
 type Void {
   _: String
+}
+
+type Watchlist {
+  id: Int!
+  show: PartialShow!
+  status: Status!
+  user: User!
 }

@@ -10,7 +10,7 @@ const StyledBox = styled('div')(({ theme }) => ({
 }));
 
 interface Props {
-  sx: Sx;
+  sx?: Sx;
   children: ReactNode;
 }
 

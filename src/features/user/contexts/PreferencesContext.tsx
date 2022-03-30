@@ -1,15 +1,15 @@
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useCallback, useContext } from 'react';
 import { prop } from 'rambda';
 import { noop } from '../../../utils/fp';
 import {
   useGetPreferencesLazyQuery,
   useSavePreferencesMutation,
 } from '../../../generated/graphql';
-import useOnMount from '../../../hooks/useOnMount';
-import { GenrePreferencesContext } from './GenrePreferencesContext';
+import { GenrePreferencesContext } from '../../onboarding/contexts/GenrePreferencesContext';
 
 interface PreferencesContextType {
   savePreferences: () => void;
+  refreshPreferences: () => Promise<void>;
 }
 
 interface Props {
@@ -18,6 +18,7 @@ interface Props {
 
 const PreferencesContext = createContext<PreferencesContextType>({
   savePreferences: noop,
+  refreshPreferences: () => Promise.resolve(),
 });
 
 const PreferencesProvider = ({ children }: Props) => {
@@ -32,20 +33,20 @@ const PreferencesProvider = ({ children }: Props) => {
     },
   });
 
-  useOnMount(async () => {
+  const refreshPreferences = useCallback(async () => {
     try {
       const { data } = await getPreferences();
       const genreIds =
         data?.getPreferences?.genres.map(prop('externalId')) || [];
 
-      if (genreIds) {
-        setSelectedGenres(genreIds);
-      }
+      setSelectedGenres(genreIds);
     } catch (e) {}
-  });
+  }, [getPreferences, setSelectedGenres]);
 
   return (
-    <PreferencesContext.Provider value={{ savePreferences }}>
+    <PreferencesContext.Provider
+      value={{ savePreferences, refreshPreferences }}
+    >
       {children}
     </PreferencesContext.Provider>
   );

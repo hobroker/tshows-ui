@@ -8,7 +8,8 @@ interface UserContextType {
   userState: UserState;
   user: Partial<User> | null;
   resetUser: () => void;
-  refreshUser: () => void;
+  refreshUser: () => Promise<void>;
+  setUserState: (value: UserState) => void;
 }
 
 interface Props {
@@ -19,7 +20,8 @@ const UserContext = createContext<UserContextType>({
   userState: UserState.Idle,
   user: null,
   resetUser: noop,
-  refreshUser: noop,
+  refreshUser: () => Promise.resolve(),
+  setUserState: noop,
 });
 
 const UserProvider = ({ children }: Props) => {
@@ -30,6 +32,7 @@ const UserProvider = ({ children }: Props) => {
     setUser(null);
     setUserState(UserState.Anonymous);
   }, [setUser]);
+
   const refreshUser = useCallback(async () => {
     try {
       const { data } = await fetchUser();
@@ -49,7 +52,9 @@ const UserProvider = ({ children }: Props) => {
   useOnMount(refreshUser);
 
   return (
-    <UserContext.Provider value={{ user, resetUser, userState, refreshUser }}>
+    <UserContext.Provider
+      value={{ user, resetUser, userState, refreshUser, setUserState }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -22,7 +22,7 @@ import WelcomeStep from './Steps/WelcomeStep';
 import ProfileStep from './Steps/ProfileStep';
 import GenresStep from './Steps/GenresStep';
 import ShowsStep from './Steps/ShowsStep';
-import { PreferencesContext } from '../contexts/PreferencesContext';
+import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 
 interface StepType {
   label: string;

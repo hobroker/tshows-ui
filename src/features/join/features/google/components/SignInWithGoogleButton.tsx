@@ -7,8 +7,8 @@ import {
 import { GOOGLE_CLIENT_ID } from '../constants';
 import { useJoinWithGoogleMutation } from '../../../../../generated/graphql';
 import GoogleButton from './GoogleButton';
-import { UserContext } from '../../../../user/contexts/UserContext';
 import useAlert from '../../../../../hooks/useAlert';
+import { JoinContext } from '../../../contexts/JoinContext';
 
 interface Props {
   toggleBackdrop: () => void;
@@ -17,7 +17,7 @@ interface Props {
 const SignInWithGoogleButton = ({ toggleBackdrop }: Props) => {
   const { notifyError } = useAlert();
   const [joinWithGoogle, { loading }] = useJoinWithGoogleMutation();
-  const { refreshUser } = useContext(UserContext);
+  const { handlePostJoin } = useContext(JoinContext);
 
   const onSuccess = async (
     response: GoogleLoginResponse | GoogleLoginResponseOffline,
@@ -31,9 +31,10 @@ const SignInWithGoogleButton = ({ toggleBackdrop }: Props) => {
         },
       });
 
-      toggleBackdrop();
+      console.log('hhee');
 
-      refreshUser();
+      toggleBackdrop();
+      handlePostJoin();
     }
   };
 

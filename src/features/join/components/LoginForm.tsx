@@ -60,7 +60,7 @@ const LoginForm = () => {
           {...register('password')}
         />
       </Box>
-      <Box marginBottom={2} display="flex">
+      <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
         <FormControlLabel
           control={<Switch defaultChecked />}
           label="Remember me"
@@ -69,7 +69,7 @@ const LoginForm = () => {
           Forgot password?
         </Link>
       </Box>
-      <Box marginBottom={2}>
+      <Box sx={{ mb: 2 }}>
         <Button type="submit" variant="contained" size="large" fullWidth>
           Log in
         </Button>

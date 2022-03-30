@@ -20,8 +20,6 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
-  Timestamp: any;
 };
 
 export type DiscoverShowsInput = {
@@ -40,10 +38,12 @@ export type JoinWithGoogleInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  getWatchlist: Watchlist;
   joinWithGoogle: User;
   logout: Void;
   refresh: User;
   savePreferences: Preference;
+  upsertWatchlist: Void;
 };
 
 export type MutationJoinWithGoogleArgs = {
@@ -52,6 +52,10 @@ export type MutationJoinWithGoogleArgs = {
 
 export type MutationSavePreferencesArgs = {
   input: UpsertPreferenceInput;
+};
+
+export type MutationUpsertWatchlistArgs = {
+  input: Array<ShowWithStatusInput>;
 };
 
 export type PartialShow = {
@@ -67,8 +71,6 @@ export type PartialShow = {
 export type Preference = {
   __typename?: 'Preference';
   genres: Array<Genre>;
-  id: Scalars['Int'];
-  shows: Array<PartialShow>;
 };
 
 export type Query = {
@@ -84,6 +86,17 @@ export type QueryDiscoverShowsArgs = {
   input: DiscoverShowsInput;
 };
 
+export type ShowWithStatusInput = {
+  showId: Scalars['Int'];
+  statusId: Scalars['Int'];
+};
+
+export type Status = {
+  __typename?: 'Status';
+  id: Scalars['Int'];
+  name: Scalars['String'];
+};
+
 export type UpsertPreferenceInput = {
   genreIds: Array<Scalars['Int']>;
 };
@@ -91,16 +104,22 @@ export type UpsertPreferenceInput = {
 export type User = {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Timestamp'];
   email: Scalars['String'];
   id: Scalars['Int'];
   name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
 };
 
 export type Void = {
   __typename?: 'Void';
   _?: Maybe<Scalars['String']>;
+};
+
+export type Watchlist = {
+  __typename?: 'Watchlist';
+  id: Scalars['Int'];
+  show: PartialShow;
+  status: Status;
+  user: User;
 };
 
 export type JoinWithGoogleMutationVariables = Exact<{
@@ -170,6 +189,10 @@ export type MeQuery = {
     name: string;
     avatar?: string | null;
   };
+  getPreferences?: {
+    __typename?: 'Preference';
+    genres: Array<{ __typename?: 'Genre'; externalId: number }>;
+  } | null;
 };
 
 export type RefreshTokenMutationVariables = Exact<{ [key: string]: never }>;
@@ -483,6 +506,11 @@ export const MeDocument = gql`
       email
       name
       avatar
+    }
+    getPreferences {
+      genres {
+        externalId
+      }
     }
   }
 `;

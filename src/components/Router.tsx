@@ -4,6 +4,13 @@ import OnboardingPage from '../features/onboarding/components/OnboardingPage';
 import LoginPage from '../features/join/components/LoginPage';
 import RegisterPage from '../features/join/components/RegisterPage';
 
+export const ROUTES = {
+  HOME: '/',
+  ONBOARDING: '/onboarding',
+  LOGIN: '/login',
+  REGISTER: '/join',
+};
+
 const Router = () => (
   <Routes>
     <Route path="/" element={<Home />} />

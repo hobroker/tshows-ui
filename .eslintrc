@@ -5,8 +5,8 @@
     "plugin:import/recommended"
   ],
   "rules": {
-    "newline-after-var": "error",
-    "newline-before-return": "error",
+    "newline-after-var": "warn",
+    "newline-before-return": "warn",
     "prefer-arrow-callback": "error",
     "arrow-body-style": ["error", "as-needed"],
     "import/order": [
