@@ -1,7 +1,5 @@
-import { createContext, ReactNode, useCallback, useContext } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 import { UserContext } from '../../user/contexts/UserContext';
-import { PreferencesContext } from '../../user/contexts/PreferencesContext';
-import useHandlePreferences from '../hook/useHandlePreferences';
 import { noop } from '../../../utils/fp';
 
 interface JoinContextType {
@@ -18,16 +16,9 @@ const JoinContext = createContext<JoinContextType>({
 
 const JoinProvider = ({ children }: Props) => {
   const { refreshUser } = useContext(UserContext);
-  const { refreshPreferences } = useContext(PreferencesContext);
-  const handlePreferences = useHandlePreferences();
-  const handlePostJoin = useCallback(async () => {
-    await Promise.all([refreshUser(), refreshPreferences()]);
-
-    handlePreferences();
-  }, [handlePreferences, refreshPreferences, refreshUser]);
 
   return (
-    <JoinContext.Provider value={{ handlePostJoin }}>
+    <JoinContext.Provider value={{ handlePostJoin: refreshUser }}>
       {children}
     </JoinContext.Provider>
   );
