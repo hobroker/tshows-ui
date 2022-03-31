@@ -1,10 +1,11 @@
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 import { noop } from '../../../utils/fp';
 import { useSavePreferencesMutation } from '../../../generated/graphql';
-import { GenrePreferencesContext } from '../../onboarding/contexts/GenrePreferencesContext';
 
 interface PreferencesContextType {
   savePreferences: () => void;
+  selectedGenres: number[];
+  setSelectedGenres: (value: number[]) => void;
 }
 
 interface Props {
@@ -13,10 +14,12 @@ interface Props {
 
 const PreferencesContext = createContext<PreferencesContextType>({
   savePreferences: noop,
+  selectedGenres: [],
+  setSelectedGenres: noop,
 });
 
 const PreferencesProvider = ({ children }: Props) => {
-  const { selectedGenres } = useContext(GenrePreferencesContext);
+  const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [savePreferences] = useSavePreferencesMutation({
     variables: {
       genreIds: selectedGenres,
@@ -24,7 +27,9 @@ const PreferencesProvider = ({ children }: Props) => {
   });
 
   return (
-    <PreferencesContext.Provider value={{ savePreferences }}>
+    <PreferencesContext.Provider
+      value={{ savePreferences, selectedGenres, setSelectedGenres }}
+    >
       {children}
     </PreferencesContext.Provider>
   );

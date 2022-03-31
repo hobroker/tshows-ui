@@ -1,18 +1,13 @@
 import {
   createContext,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react';
 import { noop } from '../../../utils/fp';
-import {
-  PartialShow,
-  useDiscoverShowsLazyQuery,
-  useDiscoverShowsQuery,
-} from '../../../generated/graphql';
-import { GenrePreferencesContext } from './GenrePreferencesContext';
+import { PartialShow, useDiscoverShowsQuery } from '../../../generated/graphql';
+import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 
 interface ShowPreferenceContextType {
   shows: PartialShow[];
@@ -33,7 +28,7 @@ const ShowPreferencesContext = createContext<ShowPreferenceContextType>({
 });
 
 const ShowPreferencesProvider = ({ children }: Props) => {
-  const { selectedGenres } = useContext(GenrePreferencesContext);
+  const { selectedGenres } = useContext(PreferencesContext);
   const [selectedShows, setSelectedShows] = useState<number[]>([]);
   const [shows, setShows] = useState<PartialShow[]>([]);
 

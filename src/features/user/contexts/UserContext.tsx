@@ -11,7 +11,7 @@ import { noop } from '../../../utils/fp';
 import { UserState } from '../constants';
 import useOnMount from '../../../hooks/useOnMount';
 import useHandlePreferences from '../../../hooks/useHandlePreferences';
-import { GenrePreferencesContext } from '../../onboarding/contexts/GenrePreferencesContext';
+import { PreferencesContext } from './PreferencesContext';
 
 interface UserContextType {
   userState: UserState;
@@ -35,7 +35,7 @@ const UserContext = createContext<UserContextType>({
 
 const UserProvider = ({ children }: Props) => {
   const [fetchUser] = useMeLazyQuery();
-  const { setSelectedGenres } = useContext(GenrePreferencesContext);
+  const { setSelectedGenres } = useContext(PreferencesContext);
   const [user, setUser] = useState<UserContextType['user']>(null);
   const [userState, setUserState] = useState<UserState>(UserState.Idle);
   const handlePreferences = useHandlePreferences();
@@ -54,7 +54,7 @@ const UserProvider = ({ children }: Props) => {
         throw Error();
       }
 
-      setSelectedGenres(preferences?.genres?.map(prop('externalId')) || []);
+      // setSelectedGenres(preferences?.genres?.map(prop('externalId')) || []);
 
       setUser(user);
       setUserState(UserState.LoggedIn);
@@ -65,7 +65,7 @@ const UserProvider = ({ children }: Props) => {
     } catch (e) {
       setUserState(UserState.Anonymous);
     }
-  }, [fetchUser]);
+  }, [fetchUser, handlePreferences, setSelectedGenres]);
 
   useOnMount(refreshUser);
 
