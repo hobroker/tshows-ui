@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Button, Chip, CircularProgress, Stack } from '@mui/material';
+import { Chip, CircularProgress, Stack } from '@mui/material';
 import { toggleListItem } from '../../../utils/fp';
 import { GenrePreferencesContext } from '../contexts/GenrePreferencesContext';
 

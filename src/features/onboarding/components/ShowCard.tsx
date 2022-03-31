@@ -1,4 +1,4 @@
-import { Box, Chip, IconButton, Paper, Typography } from '@mui/material';
+import { Box, Chip, Paper, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -50,13 +50,13 @@ const StyledActions = styled(Box)`
   text-align: right;
 `;
 
-const StyledIconButton = styled(IconButton)`
-  background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.5)};
-
-  &:hover {
-    background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.8)};
-  }
-`;
+// const StyledIconButton = styled(IconButton)`
+//   background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.5)};
+//
+//   &:hover {
+//     background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.8)};
+//   }
+// `;
 
 const ShowCard = ({ tallImage, name }: Props) => (
   <StyledWrapper

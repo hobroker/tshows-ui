@@ -8,6 +8,11 @@ export const QUERY_ME = gql`
       name
       avatar
     }
+    getPreferences {
+      genres {
+        externalId
+      }
+    }
   }
 `;
 

@@ -3,12 +3,14 @@ import {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 import { noop } from '../../../utils/fp';
 import {
   PartialShow,
   useDiscoverShowsLazyQuery,
+  useDiscoverShowsQuery,
 } from '../../../generated/graphql';
 import { GenrePreferencesContext } from './GenrePreferencesContext';
 
@@ -32,24 +34,26 @@ const ShowPreferencesContext = createContext<ShowPreferenceContextType>({
 
 const ShowPreferencesProvider = ({ children }: Props) => {
   const { selectedGenres } = useContext(GenrePreferencesContext);
-  const [discoverShowsQuery] = useDiscoverShowsLazyQuery();
   const [selectedShows, setSelectedShows] = useState<number[]>([]);
   const [shows, setShows] = useState<PartialShow[]>([]);
-  const fetchShows = useCallback(async () => {
-    const { data } = await discoverShowsQuery({
-      variables: {
-        genreIds: selectedGenres,
-      },
-    });
 
-    setShows(data?.discoverShows || []);
-  }, [discoverShowsQuery, selectedGenres]);
+  const { data } = useDiscoverShowsQuery({
+    variables: {
+      genreIds: selectedGenres,
+    },
+  });
+
+  useEffect(() => {
+    if (data && data.discoverShows) {
+      setShows(data.discoverShows);
+    }
+  }, [data]);
 
   return (
     <ShowPreferencesContext.Provider
       value={{
         shows,
-        fetchShows,
+        fetchShows: () => {},
         selectedShows,
         setSelectedShows,
       }}

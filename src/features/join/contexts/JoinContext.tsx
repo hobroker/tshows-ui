@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-} from 'react';
+import { createContext, ReactNode, useCallback, useContext } from 'react';
 import { UserContext } from '../../user/contexts/UserContext';
 import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 import useHandlePreferences from '../hook/useHandlePreferences';

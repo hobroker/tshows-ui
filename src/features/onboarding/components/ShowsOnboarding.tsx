@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ShowPreferencesContext } from '../contexts/ShowPreferencesContext';
-import useOnMount from '../../../hooks/useOnMount';
 import ShowCard from './ShowCard';
 import { GenrePreferencesContext } from '../contexts/GenrePreferencesContext';
 
@@ -14,16 +13,9 @@ const StyledWrapper = styled('div')`
 `;
 
 const ShowsOnboarding = () => {
-  const { fetchShows, shows } = useContext(ShowPreferencesContext);
-  const { selectedGenres } = useContext(GenrePreferencesContext);
+  const { shows } = useContext(ShowPreferencesContext);
 
   const canRender = shows.length;
-
-  useEffect(() => {
-    if (selectedGenres.length) {
-      fetchShows();
-    }
-  }, [fetchShows, selectedGenres]);
 
   return (
     <StyledWrapper>
