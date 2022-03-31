@@ -9,7 +9,6 @@ const useHandlePreferences = () => {
 
   return useCallback(
     ({ genreIds }: { genreIds: number[] }) => {
-      console.log('useHandlePreferences genreIds', genreIds);
       if (!genreIds.length) {
         navigate(ROUTES.ONBOARDING);
 
@@ -18,7 +17,7 @@ const useHandlePreferences = () => {
 
       setSelectedGenres(genreIds);
 
-      // navigate(ROUTES.HOME);
+      navigate(ROUTES.HOME);
     },
     [navigate, setSelectedGenres],
   );

@@ -1,17 +1,10 @@
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useCallback, useState } from 'react';
 import { prop } from 'rambda';
 import { useMeLazyQuery, User } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
 import { UserState } from '../constants';
 import useOnMount from '../../../hooks/useOnMount';
 import useHandlePreferences from '../../../hooks/useHandlePreferences';
-import { PreferencesContext } from './PreferencesContext';
 
 interface UserContextType {
   userState: UserState;
@@ -35,7 +28,6 @@ const UserContext = createContext<UserContextType>({
 
 const UserProvider = ({ children }: Props) => {
   const [fetchUser] = useMeLazyQuery();
-  const { setSelectedGenres } = useContext(PreferencesContext);
   const [user, setUser] = useState<UserContextType['user']>(null);
   const [userState, setUserState] = useState<UserState>(UserState.Idle);
   const handlePreferences = useHandlePreferences();
@@ -54,18 +46,16 @@ const UserProvider = ({ children }: Props) => {
         throw Error();
       }
 
-      // setSelectedGenres(preferences?.genres?.map(prop('externalId')) || []);
-
       setUser(user);
       setUserState(UserState.LoggedIn);
 
       handlePreferences({
-        genreIds: preferences?.genres?.map(prop('externalId')) || [],
+        genreIds: preferences?.genres.map(prop('externalId')) || [],
       });
     } catch (e) {
       setUserState(UserState.Anonymous);
     }
-  }, [fetchUser, handlePreferences, setSelectedGenres]);
+  }, [fetchUser, handlePreferences]);
 
   useOnMount(refreshUser);
 

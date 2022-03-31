@@ -5,18 +5,18 @@ import { grey } from '@mui/material/colors';
 import useYupValidationResolver from '../hooks/useYupValidationResolver';
 
 type LoginFormInput = {
-  username: string;
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
 };
 
 const validationSchema = yup.object().shape({
-  username: yup
+  name: yup
     .string()
-    .required('Username is required')
-    .min(6, 'Username must be at least 6 characters')
-    .max(20, 'Username must not exceed 20 characters'),
+    .required('Name is required')
+    .min(6, 'Name must be at least 6 characters')
+    .max(20, 'Name must not exceed 20 characters'),
   email: yup.string().required('Email is required').email('Email is invalid'),
   password: yup
     .string()
@@ -43,9 +43,9 @@ const RegisterForm = () => {
           label="Name"
           variant="outlined"
           fullWidth
-          error={!!errors.username}
-          helperText={errors.username?.message}
-          {...register('username')}
+          error={!!errors.name}
+          helperText={errors.name?.message}
+          {...register('name')}
         />
         <Box width={48} />
         <TextField
