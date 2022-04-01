@@ -33,7 +33,7 @@ interface StepType {
 
 const VerticalStepper = () => {
   const { savePreferences } = useContext(PreferencesContext);
-  const [activeStep, setActiveStep] = useState(2);
+  const [activeStep, setActiveStep] = useState(3);
   const [loading, setLoading] = useState(false);
   const handleNext = () => setActiveStep(inc);
   const handleBack = () => setActiveStep(dec);

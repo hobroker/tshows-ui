@@ -1,10 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ShowPreferencesContext } from '../contexts/ShowPreferencesContext';
 import ShowCard from './ShowCard';
-import { GenrePreferencesContext } from '../contexts/GenrePreferencesContext';
-
 const StyledWrapper = styled('div')`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -23,6 +21,7 @@ const ShowsOnboarding = () => {
         shows.map(({ externalId, name, tallImage }) => (
           <ShowCard
             key={externalId}
+            externalId={externalId}
             name={name}
             tallImage={`https://image.tmdb.org/t/p/w500/${tallImage}`}
           />

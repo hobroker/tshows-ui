@@ -12,12 +12,11 @@ input JoinWithGoogleInput {
 }
 
 type Mutation {
-  getWatchlist: Watchlist!
   joinWithGoogle(input: JoinWithGoogleInput!): User!
   logout: Void!
   refresh: User!
   savePreferences(input: UpsertPreferenceInput!): Preference!
-  upsertWatchlist(input: [ShowWithStatusInput!]!): Void!
+  upsertWatchlistItem(input: ShowWithStatusInput!): Watchlist!
 }
 
 type PartialShow {
@@ -37,18 +36,20 @@ type Query {
   allUsers: User!
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
   getPreferences: Preference
+  getWatchlist: Watchlist!
   listGenres: [Genre!]
   me: User!
 }
 
 input ShowWithStatusInput {
   showId: Int!
-  statusId: Int!
+  status: Status!
 }
 
-type Status {
-  id: Int!
-  name: String!
+enum Status {
+  InWatchlist
+  None
+  StoppedWatching
 }
 
 input UpsertPreferenceInput {
@@ -70,5 +71,4 @@ type Watchlist {
   id: Int!
   show: PartialShow!
   status: Status!
-  user: User!
 }

@@ -1,8 +1,12 @@
-import { Box, Chip, Paper, Typography } from '@mui/material';
+import { Box, Paper, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
-import AddIcon from '@mui/icons-material/Add';
+import { useContext } from 'react';
+import CardWatchlistButton from './CardWatchlistButton';
+import { Status } from '../../../generated/graphql';
+import { WatchlistContext } from '../../shows/contexts/WatchlistContext';
 
 interface Props {
+  externalId: number;
   tallImage: string;
   name: string;
 }
@@ -50,32 +54,32 @@ const StyledActions = styled(Box)`
   text-align: right;
 `;
 
-// const StyledIconButton = styled(IconButton)`
-//   background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.5)};
-//
-//   &:hover {
-//     background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.8)};
-//   }
-// `;
+const ShowCard = ({ externalId, tallImage, name }: Props) => {
+  const { upsertWatchlistItem } = useContext(WatchlistContext);
 
-const ShowCard = ({ tallImage, name }: Props) => (
-  <StyledWrapper
-    variant="elevation"
-    elevation={4}
-    sx={{
-      ':hover': {
-        boxShadow: 10,
-      },
-    }}
-  >
-    <StyledActions>
-      <Chip label={<AddIcon />} />
-    </StyledActions>
-    <StyledImage src={tallImage} />
-    <StyledTitle variant="body2" className="title">
-      {name}
-    </StyledTitle>
-  </StyledWrapper>
-);
+  const onClick = (status: Status) => {
+    upsertWatchlistItem({ showId: externalId, status });
+  };
+
+  return (
+    <StyledWrapper
+      variant="elevation"
+      elevation={4}
+      sx={{
+        ':hover': {
+          boxShadow: 10,
+        },
+      }}
+    >
+      <StyledActions>
+        <CardWatchlistButton status={Status.None} onClick={onClick} />
+      </StyledActions>
+      <StyledImage src={tallImage} />
+      <StyledTitle variant="body2" className="title">
+        {name}
+      </StyledTitle>
+    </StyledWrapper>
+  );
+};
 
 export default ShowCard;

@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { grey } from '@mui/material/colors';
 import useYupValidationResolver from '../hooks/useYupValidationResolver';
+import FormRow from '../../forms/components/FormRow';
 
 type LoginFormInput = {
   name: string;
@@ -38,7 +39,7 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Box display="flex" height={80}>
+      <FormRow>
         <TextField
           label="Name"
           variant="outlined"
@@ -56,8 +57,8 @@ const RegisterForm = () => {
           helperText={errors.email?.message}
           {...register('email')}
         />
-      </Box>
-      <Box display="flex" height={80}>
+      </FormRow>
+      <FormRow>
         <TextField
           label="Password"
           variant="outlined"
@@ -66,7 +67,7 @@ const RegisterForm = () => {
           helperText={errors.password?.message}
           {...register('password')}
         />
-      </Box>
+      </FormRow>
       <Box marginBottom={2}>
         <Button type="submit" variant="contained" size="large" fullWidth>
           Sign Up

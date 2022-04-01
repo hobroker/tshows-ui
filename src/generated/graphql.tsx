@@ -38,12 +38,11 @@ export type JoinWithGoogleInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  getWatchlist: Watchlist;
   joinWithGoogle: User;
   logout: Void;
   refresh: User;
   savePreferences: Preference;
-  upsertWatchlist: Void;
+  upsertWatchlistItem: Watchlist;
 };
 
 export type MutationJoinWithGoogleArgs = {
@@ -54,8 +53,8 @@ export type MutationSavePreferencesArgs = {
   input: UpsertPreferenceInput;
 };
 
-export type MutationUpsertWatchlistArgs = {
-  input: Array<ShowWithStatusInput>;
+export type MutationUpsertWatchlistItemArgs = {
+  input: ShowWithStatusInput;
 };
 
 export type PartialShow = {
@@ -78,6 +77,7 @@ export type Query = {
   allUsers: User;
   discoverShows: Array<PartialShow>;
   getPreferences?: Maybe<Preference>;
+  getWatchlist: Watchlist;
   listGenres?: Maybe<Array<Genre>>;
   me: User;
 };
@@ -88,14 +88,14 @@ export type QueryDiscoverShowsArgs = {
 
 export type ShowWithStatusInput = {
   showId: Scalars['Int'];
-  statusId: Scalars['Int'];
+  status: Status;
 };
 
-export type Status = {
-  __typename?: 'Status';
-  id: Scalars['Int'];
-  name: Scalars['String'];
-};
+export enum Status {
+  InWatchlist = 'InWatchlist',
+  None = 'None',
+  StoppedWatching = 'StoppedWatching',
+}
 
 export type UpsertPreferenceInput = {
   genreIds: Array<Scalars['Int']>;
@@ -119,7 +119,6 @@ export type Watchlist = {
   id: Scalars['Int'];
   show: PartialShow;
   status: Status;
-  user: User;
 };
 
 export type JoinWithGoogleMutationVariables = Exact<{
@@ -176,6 +175,16 @@ export type GetPreferencesQuery = {
     __typename?: 'Preference';
     genres: Array<{ __typename?: 'Genre'; externalId: number }>;
   } | null;
+};
+
+export type UpsertWatchlistItemMutationVariables = Exact<{
+  showId: Scalars['Int'];
+  status: Status;
+}>;
+
+export type UpsertWatchlistItemMutation = {
+  __typename?: 'Mutation';
+  upsertWatchlistItem: { __typename: 'Watchlist' };
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -498,6 +507,58 @@ export type GetPreferencesLazyQueryHookResult = ReturnType<
 export type GetPreferencesQueryResult = Apollo.QueryResult<
   GetPreferencesQuery,
   GetPreferencesQueryVariables
+>;
+export const UpsertWatchlistItemDocument = gql`
+  mutation UpsertWatchlistItem($showId: Int!, $status: Status!) {
+    upsertWatchlistItem(input: { showId: $showId, status: $status }) {
+      __typename
+    }
+  }
+`;
+export type UpsertWatchlistItemMutationFn = Apollo.MutationFunction<
+  UpsertWatchlistItemMutation,
+  UpsertWatchlistItemMutationVariables
+>;
+
+/**
+ * __useUpsertWatchlistItemMutation__
+ *
+ * To run a mutation, you first call `useUpsertWatchlistItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertWatchlistItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertWatchlistItemMutation, { data, loading, error }] = useUpsertWatchlistItemMutation({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useUpsertWatchlistItemMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpsertWatchlistItemMutation,
+    UpsertWatchlistItemMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    UpsertWatchlistItemMutation,
+    UpsertWatchlistItemMutationVariables
+  >(UpsertWatchlistItemDocument, options);
+}
+export type UpsertWatchlistItemMutationHookResult = ReturnType<
+  typeof useUpsertWatchlistItemMutation
+>;
+export type UpsertWatchlistItemMutationResult =
+  Apollo.MutationResult<UpsertWatchlistItemMutation>;
+export type UpsertWatchlistItemMutationOptions = Apollo.BaseMutationOptions<
+  UpsertWatchlistItemMutation,
+  UpsertWatchlistItemMutationVariables
 >;
 export const MeDocument = gql`
   query Me {
