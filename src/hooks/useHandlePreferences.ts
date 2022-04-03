@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PreferencesContext } from '../features/user/contexts/PreferencesContext';
 import { HOME_ROUTE, WELCOME_ROUTE } from '../constants/routes';
+import { PreferencesContext } from '../features/preferences/contexts/PreferencesContext';
 
 const useHandlePreferences = () => {
   const { setSelectedGenres } = useContext(PreferencesContext);

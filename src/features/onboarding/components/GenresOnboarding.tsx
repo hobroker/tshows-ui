@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Chip, CircularProgress, Stack } from '@mui/material';
-import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 import { GenresContext } from '../../genres/contexts/GenresContext';
+import { PreferencesContext } from '../../preferences/contexts/PreferencesContext';
 
 const GenresOnboarding = () => {
   const { selectedGenres, toggleGenrePreference } =

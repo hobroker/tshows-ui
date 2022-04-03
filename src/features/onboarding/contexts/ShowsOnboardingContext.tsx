@@ -7,8 +7,8 @@ import {
   useState,
 } from 'react';
 import { PartialShow, useDiscoverShowsQuery } from '../../../generated/graphql';
-import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 import { noop } from '../../../utils/fp';
+import { PreferencesContext } from '../../preferences/contexts/PreferencesContext';
 
 interface ShowPreferenceContextType {
   shows: PartialShow[];

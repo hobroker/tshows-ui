@@ -121,15 +121,6 @@ export type Watchlist = {
   status: Status;
 };
 
-export type JoinWithGoogleMutationVariables = Exact<{
-  input: JoinWithGoogleInput;
-}>;
-
-export type JoinWithGoogleMutation = {
-  __typename?: 'Mutation';
-  joinWithGoogle: { __typename?: 'User'; name: string; email: string };
-};
-
 export type ListGenresQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ListGenresQuery = {
@@ -139,6 +130,15 @@ export type ListGenresQuery = {
     externalId: number;
     name: string;
   }> | null;
+};
+
+export type JoinWithGoogleMutationVariables = Exact<{
+  input: JoinWithGoogleInput;
+}>;
+
+export type JoinWithGoogleMutation = {
+  __typename?: 'Mutation';
+  joinWithGoogle: { __typename?: 'User'; name: string; email: string };
 };
 
 export type DiscoverShowsQueryVariables = Exact<{
@@ -255,58 +255,6 @@ export const ShowFragmentFragmentDoc = gql`
     }
   }
 `;
-export const JoinWithGoogleDocument = gql`
-  mutation JoinWithGoogle($input: JoinWithGoogleInput!) {
-    joinWithGoogle(input: $input) {
-      name
-      email
-    }
-  }
-`;
-export type JoinWithGoogleMutationFn = Apollo.MutationFunction<
-  JoinWithGoogleMutation,
-  JoinWithGoogleMutationVariables
->;
-
-/**
- * __useJoinWithGoogleMutation__
- *
- * To run a mutation, you first call `useJoinWithGoogleMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useJoinWithGoogleMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [joinWithGoogleMutation, { data, loading, error }] = useJoinWithGoogleMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useJoinWithGoogleMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    JoinWithGoogleMutation,
-    JoinWithGoogleMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useMutation<
-    JoinWithGoogleMutation,
-    JoinWithGoogleMutationVariables
-  >(JoinWithGoogleDocument, options);
-}
-export type JoinWithGoogleMutationHookResult = ReturnType<
-  typeof useJoinWithGoogleMutation
->;
-export type JoinWithGoogleMutationResult =
-  Apollo.MutationResult<JoinWithGoogleMutation>;
-export type JoinWithGoogleMutationOptions = Apollo.BaseMutationOptions<
-  JoinWithGoogleMutation,
-  JoinWithGoogleMutationVariables
->;
 export const ListGenresDocument = gql`
   query ListGenres {
     listGenres {
@@ -364,6 +312,58 @@ export type ListGenresLazyQueryHookResult = ReturnType<
 export type ListGenresQueryResult = Apollo.QueryResult<
   ListGenresQuery,
   ListGenresQueryVariables
+>;
+export const JoinWithGoogleDocument = gql`
+  mutation JoinWithGoogle($input: JoinWithGoogleInput!) {
+    joinWithGoogle(input: $input) {
+      name
+      email
+    }
+  }
+`;
+export type JoinWithGoogleMutationFn = Apollo.MutationFunction<
+  JoinWithGoogleMutation,
+  JoinWithGoogleMutationVariables
+>;
+
+/**
+ * __useJoinWithGoogleMutation__
+ *
+ * To run a mutation, you first call `useJoinWithGoogleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useJoinWithGoogleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [joinWithGoogleMutation, { data, loading, error }] = useJoinWithGoogleMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useJoinWithGoogleMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    JoinWithGoogleMutation,
+    JoinWithGoogleMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    JoinWithGoogleMutation,
+    JoinWithGoogleMutationVariables
+  >(JoinWithGoogleDocument, options);
+}
+export type JoinWithGoogleMutationHookResult = ReturnType<
+  typeof useJoinWithGoogleMutation
+>;
+export type JoinWithGoogleMutationResult =
+  Apollo.MutationResult<JoinWithGoogleMutation>;
+export type JoinWithGoogleMutationOptions = Apollo.BaseMutationOptions<
+  JoinWithGoogleMutation,
+  JoinWithGoogleMutationVariables
 >;
 export const DiscoverShowsDocument = gql`
   query DiscoverShows($genreIds: [Int!]!) {
