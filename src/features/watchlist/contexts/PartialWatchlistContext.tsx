@@ -1,9 +1,10 @@
-import { createContext, ReactNode, useCallback } from 'react';
+import { createContext, ReactNode, useCallback, useContext } from 'react';
 import { noop } from '../../../utils/fp';
 import {
   Status,
   useUpsertWatchlistItemMutation,
 } from '../../../generated/graphql';
+import { ShowsOnboardingContext } from '../../onboarding/contexts/ShowsOnboardingContext';
 
 interface UpsertWatchlistItemArgs {
   showId: number;
@@ -11,7 +12,6 @@ interface UpsertWatchlistItemArgs {
 }
 
 interface ShowPreferenceContextType {
-  watchlist: number[];
   upsertWatchlistItem: (args: UpsertWatchlistItemArgs) => void;
 }
 
@@ -19,14 +19,13 @@ interface Props {
   children: ReactNode;
 }
 
-const WatchlistContext = createContext<ShowPreferenceContextType>({
-  watchlist: [],
+const PartialWatchlistContext = createContext<ShowPreferenceContextType>({
   upsertWatchlistItem: noop,
 });
 
-const WatchlistProvider = ({ children }: Props) => {
-  const watchlist: number[] = [];
+const PartialWatchlistProvider = ({ children }: Props) => {
   const [upsertWatchlistItemMutation] = useUpsertWatchlistItemMutation();
+  const { updateShow } = useContext(ShowsOnboardingContext);
 
   const upsertWatchlistItem = useCallback(
     ({ showId, status }: UpsertWatchlistItemArgs) => {
@@ -36,22 +35,18 @@ const WatchlistProvider = ({ children }: Props) => {
           status,
         },
       });
+      updateShow(showId, { status });
     },
-    [upsertWatchlistItemMutation],
+    [updateShow, upsertWatchlistItemMutation],
   );
 
   return (
-    <WatchlistContext.Provider
-      value={{
-        watchlist,
-        upsertWatchlistItem,
-      }}
-    >
+    <PartialWatchlistContext.Provider value={{ upsertWatchlistItem }}>
       {children}
-    </WatchlistContext.Provider>
+    </PartialWatchlistContext.Provider>
   );
 };
 
-export { WatchlistContext };
+export { PartialWatchlistContext };
 
-export default WatchlistProvider;
+export default PartialWatchlistProvider;

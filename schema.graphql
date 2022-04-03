@@ -24,6 +24,7 @@ type PartialShow {
   externalId: Int!
   genres: [Genre!]!
   name: String!
+  status: Status!
   tallImage: String!
   wideImage: String!
 }
@@ -36,7 +37,7 @@ type Query {
   allUsers: User!
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
   getPreferences: Preference
-  getWatchlist: Watchlist!
+  getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
   me: User!
 }
@@ -68,7 +69,6 @@ type Void {
 }
 
 type Watchlist {
-  id: Int!
   show: PartialShow!
   status: Status!
 }

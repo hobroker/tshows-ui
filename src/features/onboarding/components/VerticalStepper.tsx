@@ -18,11 +18,11 @@ import {
 import { dec, inc } from 'rambda';
 import { LoadingButton } from '@mui/lab';
 import PrimaryLogo from '../../logo/components/PrimaryLogo';
+import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 import WelcomeStep from './Steps/WelcomeStep';
 import ProfileStep from './Steps/ProfileStep';
 import GenresStep from './Steps/GenresStep';
 import ShowsStep from './Steps/ShowsStep';
-import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 
 interface StepType {
   label: string;

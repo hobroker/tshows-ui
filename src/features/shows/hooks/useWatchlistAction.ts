@@ -1,3 +1,1 @@
-const useWatchlistAction = () => {
-
-}
+const useWatchlistAction = () => {};

@@ -1,15 +1,10 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import { useContext } from 'react';
-import CardWatchlistButton from './CardWatchlistButton';
 import { Status } from '../../../generated/graphql';
-import { WatchlistContext } from '../../shows/contexts/WatchlistContext';
-
-interface Props {
-  externalId: number;
-  tallImage: string;
-  name: string;
-}
+import { PartialWatchlistContext } from '../../watchlist/contexts/PartialWatchlistContext';
+import { makeTallSmallImage } from '../utils/image';
+import CardWatchlistButton from './CardWatchlistButton';
 
 const StyledWrapper = styled(Paper)`
   aspect-ratio: 2/3;
@@ -20,7 +15,7 @@ const StyledWrapper = styled(Paper)`
   overflow: hidden;
 
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 `;
 
@@ -48,14 +43,25 @@ const StyledImage = styled('img')`
 `;
 
 const StyledActions = styled(Box)`
-  padding: ${({ theme }) => theme.spacing(0.5)};
   position: absolute;
   width: 100%;
   text-align: right;
 `;
 
-const ShowCard = ({ externalId, tallImage, name }: Props) => {
-  const { upsertWatchlistItem } = useContext(WatchlistContext);
+interface Props {
+  externalId: number;
+  tallImage: string;
+  name: string;
+  status: Status;
+}
+
+const SmallVerticalShowCard = ({
+  externalId,
+  tallImage,
+  name,
+  status,
+}: Props) => {
+  const { upsertWatchlistItem } = useContext(PartialWatchlistContext);
 
   const onClick = (status: Status) => {
     upsertWatchlistItem({ showId: externalId, status });
@@ -72,9 +78,9 @@ const ShowCard = ({ externalId, tallImage, name }: Props) => {
       }}
     >
       <StyledActions>
-        <CardWatchlistButton status={Status.None} onClick={onClick} />
+        <CardWatchlistButton status={status} onClick={onClick} />
       </StyledActions>
-      <StyledImage src={tallImage} />
+      <StyledImage src={makeTallSmallImage(tallImage)} />
       <StyledTitle variant="body2" className="title">
         {name}
       </StyledTitle>
@@ -82,4 +88,4 @@ const ShowCard = ({ externalId, tallImage, name }: Props) => {
   );
 };
 
-export default ShowCard;
+export default SmallVerticalShowCard;

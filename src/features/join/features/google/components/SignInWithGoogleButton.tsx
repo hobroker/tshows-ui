@@ -1,6 +1,6 @@
 import React from 'react';
-import GoogleButton from './GoogleButton';
 import useJoinWithGoogle from '../hooks/useJoinWithGoogle';
+import GoogleButton from './GoogleButton';
 
 interface Props {
   toggleBackdrop: () => void;

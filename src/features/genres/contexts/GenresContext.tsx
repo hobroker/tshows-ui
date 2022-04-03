@@ -9,25 +9,25 @@ interface Props {
   children: ReactNode;
 }
 
-const GenrePreferencesContext = createContext<GenrePreferenceContextType>({
+const GenresContext = createContext<GenrePreferenceContextType>({
   genres: [],
 });
 
-const GenrePreferencesProvider = ({ children }: Props) => {
+const GenresProvider = ({ children }: Props) => {
   const { data } = useListGenresQuery();
   const genres: Genre[] = data?.listGenres || [];
 
   return (
-    <GenrePreferencesContext.Provider
+    <GenresContext.Provider
       value={{
         genres,
       }}
     >
       {children}
-    </GenrePreferencesContext.Provider>
+    </GenresContext.Provider>
   );
 };
 
-export { GenrePreferencesContext };
+export { GenresContext };
 
-export default GenrePreferencesProvider;
+export default GenresProvider;

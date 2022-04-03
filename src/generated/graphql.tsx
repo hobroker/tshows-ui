@@ -63,6 +63,7 @@ export type PartialShow = {
   externalId: Scalars['Int'];
   genres: Array<Genre>;
   name: Scalars['String'];
+  status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
 };
@@ -77,7 +78,7 @@ export type Query = {
   allUsers: User;
   discoverShows: Array<PartialShow>;
   getPreferences?: Maybe<Preference>;
-  getWatchlist: Watchlist;
+  getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
   me: User;
 };
@@ -116,7 +117,6 @@ export type Void = {
 
 export type Watchlist = {
   __typename?: 'Watchlist';
-  id: Scalars['Int'];
   show: PartialShow;
   status: Status;
 };
@@ -154,6 +154,7 @@ export type DiscoverShowsQuery = {
     description: string;
     wideImage: string;
     tallImage: string;
+    status: Status;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   }>;
 };
@@ -187,6 +188,28 @@ export type UpsertWatchlistItemMutation = {
   upsertWatchlistItem: { __typename: 'Watchlist' };
 };
 
+export type GetPartialWatchlistQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPartialWatchlistQuery = {
+  __typename?: 'Query';
+  getWatchlist: Array<{
+    __typename?: 'Watchlist';
+    status: Status;
+    show: { __typename?: 'PartialShow'; externalId: number };
+  }>;
+};
+
+export type ShowFragmentFragment = {
+  __typename?: 'PartialShow';
+  externalId: number;
+  name: string;
+  description: string;
+  wideImage: string;
+  tallImage: string;
+  status: Status;
+  genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
+};
+
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
@@ -218,6 +241,20 @@ export type LogoutMutation = {
   logout: { __typename: 'Void' };
 };
 
+export const ShowFragmentFragmentDoc = gql`
+  fragment ShowFragment on PartialShow {
+    externalId
+    name
+    description
+    wideImage
+    tallImage
+    status
+    genres {
+      externalId
+      name
+    }
+  }
+`;
 export const JoinWithGoogleDocument = gql`
   mutation JoinWithGoogle($input: JoinWithGoogleInput!) {
     joinWithGoogle(input: $input) {
@@ -331,17 +368,10 @@ export type ListGenresQueryResult = Apollo.QueryResult<
 export const DiscoverShowsDocument = gql`
   query DiscoverShows($genreIds: [Int!]!) {
     discoverShows(input: { genreIds: $genreIds }) {
-      externalId
-      name
-      description
-      wideImage
-      tallImage
-      genres {
-        externalId
-        name
-      }
+      ...ShowFragment
     }
   }
+  ${ShowFragmentFragmentDoc}
 `;
 
 /**
@@ -559,6 +589,68 @@ export type UpsertWatchlistItemMutationResult =
 export type UpsertWatchlistItemMutationOptions = Apollo.BaseMutationOptions<
   UpsertWatchlistItemMutation,
   UpsertWatchlistItemMutationVariables
+>;
+export const GetPartialWatchlistDocument = gql`
+  query GetPartialWatchlist {
+    getWatchlist {
+      status
+      show {
+        externalId
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetPartialWatchlistQuery__
+ *
+ * To run a query within a React component, call `useGetPartialWatchlistQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPartialWatchlistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPartialWatchlistQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPartialWatchlistQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetPartialWatchlistQuery,
+    GetPartialWatchlistQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<
+    GetPartialWatchlistQuery,
+    GetPartialWatchlistQueryVariables
+  >(GetPartialWatchlistDocument, options);
+}
+export function useGetPartialWatchlistLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPartialWatchlistQuery,
+    GetPartialWatchlistQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    GetPartialWatchlistQuery,
+    GetPartialWatchlistQueryVariables
+  >(GetPartialWatchlistDocument, options);
+}
+export type GetPartialWatchlistQueryHookResult = ReturnType<
+  typeof useGetPartialWatchlistQuery
+>;
+export type GetPartialWatchlistLazyQueryHookResult = ReturnType<
+  typeof useGetPartialWatchlistLazyQuery
+>;
+export type GetPartialWatchlistQueryResult = Apollo.QueryResult<
+  GetPartialWatchlistQuery,
+  GetPartialWatchlistQueryVariables
 >;
 export const MeDocument = gql`
   query Me {

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
+import NavigationProvider from '../contexts/NavigationContext';
+import Logo from '../../logo/components/Logo';
 import ElevationScroll from './ElevationScroll';
 import Search from './Search';
 import NotificationsBadge from './NotificationsBadge';
-import NavigationProvider from '../contexts/NavigationContext';
-import Logo from '../../logo/components/Logo';
 import UserItem from './UserItem/UserItem';
 
 const Navigation = () => (

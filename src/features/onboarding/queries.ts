@@ -12,15 +12,7 @@ export const QUERY_LIST_GENRES = gql`
 export const QUERY_LIST_SHOW_SUGESTIONS = gql`
   query DiscoverShows($genreIds: [Int!]!) {
     discoverShows(input: { genreIds: $genreIds }) {
-      externalId
-      name
-      description
-      wideImage
-      tallImage
-      genres {
-        externalId
-        name
-      }
+      ...ShowFragment
     }
   }
 `;
