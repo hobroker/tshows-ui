@@ -9,7 +9,9 @@ import {
 } from '@mui/material';
 import { inc } from 'rambda';
 import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
 import LogoText from '../../logo/components/LogoText';
+import { HOME_ROUTE } from '../../../constants/routes';
 import WelcomeStep from './Steps/WelcomeStep';
 import ProfileStep from './Steps/ProfileStep';
 import GenresStep from './Steps/GenresStep';
@@ -22,9 +24,8 @@ interface StepType {
 }
 
 const VerticalStepper = () => {
-  const [activeStep, setActiveStep] = useState(3);
-  const handleNext = () => setActiveStep(inc);
-
+  const navigate = useNavigate();
+  const [activeStep, setActiveStep] = useState(0);
   const steps = useMemo<StepType[]>(
     () => [
       {
@@ -32,9 +33,7 @@ const VerticalStepper = () => {
         title: (
           <Box sx={{ display: 'flex' }}>
             Welcome to
-            <Box py={1} ml={0.5}>
-              <LogoText sx={{ height: 16 }} />
-            </Box>
+            <LogoText sx={{ height: 32, py: 1, ml: 0.5 }} />
           </Box>
         ),
         content: <WelcomeStep />,
@@ -57,6 +56,14 @@ const VerticalStepper = () => {
     ],
     [],
   );
+
+  const handleNext = () => {
+    if (activeStep === steps.length - 1) {
+      navigate(HOME_ROUTE);
+    } else {
+      setActiveStep(inc);
+    }
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -85,7 +92,7 @@ const VerticalStepper = () => {
                     onClick={handleNext}
                     sx={{ mt: 1, mr: 1 }}
                   >
-                    {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                    {index === steps.length - 1 ? 'Finish' : 'Next step'}
                   </LoadingButton>
                 </div>
               </Box>
