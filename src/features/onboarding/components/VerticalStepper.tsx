@@ -1,6 +1,7 @@
 import React, { ReactNode, useMemo, useState } from 'react';
 import {
   Box,
+  Button,
   Step,
   StepButton,
   StepContent,
@@ -8,12 +9,10 @@ import {
   Typography,
 } from '@mui/material';
 import { inc } from 'rambda';
-import { LoadingButton } from '@mui/lab';
 import { useNavigate } from 'react-router-dom';
 import LogoText from '../../logo/components/LogoText';
 import { HOME_ROUTE } from '../../../constants/routes';
 import WelcomeStep from './Steps/WelcomeStep';
-import ProfileStep from './Steps/ProfileStep';
 import GenresStep from './Steps/GenresStep';
 import ShowsStep from './Steps/ShowsStep';
 
@@ -37,11 +36,6 @@ const VerticalStepper = () => {
           </Box>
         ),
         content: <WelcomeStep />,
-      },
-      {
-        label: 'Profile',
-        title: "Let's personalize your profile",
-        content: <ProfileStep />,
       },
       {
         label: 'Genres',
@@ -87,13 +81,13 @@ const VerticalStepper = () => {
               </Box>
               <Box sx={{ mb: 2 }}>
                 <div>
-                  <LoadingButton
+                  <Button
                     variant="contained"
                     onClick={handleNext}
                     sx={{ mt: 1, mr: 1 }}
                   >
                     {index === steps.length - 1 ? 'Finish' : 'Next step'}
-                  </LoadingButton>
+                  </Button>
                 </div>
               </Box>
             </StepContent>
