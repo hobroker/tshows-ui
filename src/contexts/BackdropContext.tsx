@@ -18,12 +18,9 @@ const BackdropContext = createContext<ShowPreferenceContextType>({
 });
 
 const BackdropProvider = ({ children }: Props) => {
-  const [isBackdropOpen, setIsBackdropOpen] = useState(true);
+  const [isBackdropOpen, setIsBackdropOpen] = useState(false);
 
-  const toggleBackdrop = useCallback(() => {
-    console.log('here');
-    setIsBackdropOpen(not);
-  }, []);
+  const toggleBackdrop = useCallback(() => setIsBackdropOpen(not), []);
 
   return (
     <BackdropContext.Provider
@@ -36,7 +33,7 @@ const BackdropProvider = ({ children }: Props) => {
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.appBar + 1 }}
         open={isBackdropOpen}
       >
-        <CircularProgress color="inherit" />
+        <CircularProgress color="inherit" size={72} thickness={4} />
       </Backdrop>
       {children}
     </BackdropContext.Provider>
