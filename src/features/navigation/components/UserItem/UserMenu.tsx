@@ -54,8 +54,8 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 const UserMenu = () => {
-  const [logout] = useLogoutMutation();
-  const { resetUser } = useContext(UserContext);
+  const [logoutMutation] = useLogoutMutation();
+  const { logout } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) =>
@@ -63,8 +63,8 @@ const UserMenu = () => {
   const handleClose = () => setAnchorEl(null);
   const handleLogout = async () => {
     handleClose();
-    resetUser();
-    await logout();
+    logout();
+    await logoutMutation();
   };
 
   const { user } = useContext(UserContext);
@@ -79,7 +79,7 @@ const UserMenu = () => {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        <Avatar src={avatar} />
+        <Avatar src={avatar} sx={{ background: 'white' }} />
       </Button>
       <StyledMenu anchorEl={anchorEl} open={isOpen} onClose={handleClose}>
         <MenuItem onClick={handleClose} disableRipple>

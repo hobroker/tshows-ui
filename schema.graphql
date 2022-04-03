@@ -1,114 +1,74 @@
-type Gender {
-  createdAt: Timestamp!
-  id: Int!
-  name: String!
-  updatedAt: Timestamp!
+input DiscoverShowsInput {
+  genreIds: [Int!]!
 }
 
 type Genre {
-  createdAt: Timestamp!
-  id: Int!
+  externalId: Int!
   name: String!
-  shows: [Show!]
-  updatedAt: Timestamp!
 }
 
 input JoinWithGoogleInput {
   token: String!
 }
 
-type Keyword {
-  createdAt: Timestamp!
-  id: Int!
-  name: String!
-  updatedAt: Timestamp!
-}
-
 type Mutation {
   joinWithGoogle(input: JoinWithGoogleInput!): User!
   logout: Void!
   refresh: User!
+  toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
+  upsertWatchlistItem(input: ShowWithStatusInput!): Watchlist!
 }
 
-type Person {
-  birthday: Timestamp
-  createdAt: Timestamp!
-  deathday: Timestamp
+type PartialShow {
   description: String!
-  gender: Gender!
-  id: Int!
-  image: String
+  externalId: Int!
+  genres: [Genre!]!
   name: String!
-  updatedAt: Timestamp!
+  status: Status!
+  tallImage: String!
+  wideImage: String!
 }
 
-type ProductionCompany {
-  createdAt: Timestamp!
-  id: Int!
-  logo: String!
-  name: String!
-  updatedAt: Timestamp!
+type Preference {
+  genres: [Genre!]!
 }
 
 type Query {
   allUsers: User!
-  genders: [Gender!]
-  genres: [Genre!]
-  keywords: [Keyword!]!
+  discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
+  getPreferences: Preference
+  getWatchlist: [Watchlist!]!
+  listGenres: [Genre!]
   me: User!
-  persons: [Person!]
-  trending: [Show!]!
 }
 
-type Season {
-  createdAt: Timestamp!
-  description: String!
-  id: Int!
-  name: String!
-  number: Int!
-  show: Show!
-  tallImage: String!
-  updatedAt: Timestamp!
-}
-
-type Show {
-  createdAt: Timestamp!
-  description: String!
-  episodeRuntime: Int!
-  externalId: Int!
-  genres: [Genre!]!
-  isInProduction: Boolean!
-  keywords: [Keyword!]!
-  name: String!
-  productionCompanies: [ProductionCompany!]!
-  seasons: [Season!]!
+input ShowWithStatusInput {
+  showId: Int!
   status: Status!
-  tallImage: String!
-  updatedAt: Timestamp!
-  wideImage: String!
 }
 
-type Status {
-  createdAt: Timestamp!
-  id: Int!
-  name: String!
-  updatedAt: Timestamp!
+enum Status {
+  InWatchlist
+  None
+  StoppedWatching
 }
 
-"""
-`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
-"""
-scalar Timestamp
+input ToggleGenrePreferenceInput {
+  genreId: Int!
+}
 
 type User {
   avatar: String
-  createdAt: Timestamp!
   email: String!
   id: Int!
   name: String!
-  updatedAt: Timestamp!
 }
 
 type Void {
   _: String
+}
+
+type Watchlist {
+  show: PartialShow!
+  status: Status!
 }

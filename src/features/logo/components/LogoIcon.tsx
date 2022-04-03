@@ -2,18 +2,21 @@ import { Box } from '@mui/material';
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import { ReactComponent as LogoIconSvg } from '../assets/icon.svg';
+import { Sx } from '../../../utils/types';
 
-const StyledLogoIcon = styled(LogoIconSvg)(({ theme }) => ({
-  fill: theme.palette.primary.main,
+const StyledLogoIcon = styled(LogoIconSvg)(({ theme, color }) => ({
+  fill: theme.palette[color as Color].main,
 }));
 
+type Color = 'primary' | 'secondary';
 interface Props {
-  width: number;
+  sx: Sx;
+  color?: Color;
 }
 
-const LogoIcon = ({ width }: Props) => (
-  <Box sx={{ width }}>
-    <StyledLogoIcon />
+const LogoIcon = ({ sx, color = 'primary' }: Props) => (
+  <Box sx={sx}>
+    <StyledLogoIcon color={color} />
   </Box>
 );
 

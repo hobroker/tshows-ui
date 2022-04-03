@@ -20,37 +20,20 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
-  Timestamp: any;
 };
 
-export type Gender = {
-  __typename?: 'Gender';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
+export type DiscoverShowsInput = {
+  genreIds: Array<Scalars['Int']>;
 };
 
 export type Genre = {
   __typename?: 'Genre';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
+  externalId: Scalars['Int'];
   name: Scalars['String'];
-  shows?: Maybe<Array<Show>>;
-  updatedAt: Scalars['Timestamp'];
 };
 
 export type JoinWithGoogleInput = {
   token: Scalars['String'];
-};
-
-export type Keyword = {
-  __typename?: 'Keyword';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
 };
 
 export type Mutation = {
@@ -58,96 +41,95 @@ export type Mutation = {
   joinWithGoogle: User;
   logout: Void;
   refresh: User;
+  toggleGenrePreference: Void;
+  upsertWatchlistItem: Watchlist;
 };
 
 export type MutationJoinWithGoogleArgs = {
   input: JoinWithGoogleInput;
 };
 
-export type Person = {
-  __typename?: 'Person';
-  birthday?: Maybe<Scalars['Timestamp']>;
-  createdAt: Scalars['Timestamp'];
-  deathday?: Maybe<Scalars['Timestamp']>;
-  description: Scalars['String'];
-  gender: Gender;
-  id: Scalars['Int'];
-  image?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
+export type MutationToggleGenrePreferenceArgs = {
+  input: ToggleGenrePreferenceInput;
 };
 
-export type ProductionCompany = {
-  __typename?: 'ProductionCompany';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
-  logo: Scalars['String'];
+export type MutationUpsertWatchlistItemArgs = {
+  input: ShowWithStatusInput;
+};
+
+export type PartialShow = {
+  __typename?: 'PartialShow';
+  description: Scalars['String'];
+  externalId: Scalars['Int'];
+  genres: Array<Genre>;
   name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
+  status: Status;
+  tallImage: Scalars['String'];
+  wideImage: Scalars['String'];
+};
+
+export type Preference = {
+  __typename?: 'Preference';
+  genres: Array<Genre>;
 };
 
 export type Query = {
   __typename?: 'Query';
   allUsers: User;
-  genders?: Maybe<Array<Gender>>;
-  genres?: Maybe<Array<Genre>>;
-  keywords: Array<Keyword>;
+  discoverShows: Array<PartialShow>;
+  getPreferences?: Maybe<Preference>;
+  getWatchlist: Array<Watchlist>;
+  listGenres?: Maybe<Array<Genre>>;
   me: User;
-  persons?: Maybe<Array<Person>>;
-  trending: Array<Show>;
 };
 
-export type Season = {
-  __typename?: 'Season';
-  createdAt: Scalars['Timestamp'];
-  description: Scalars['String'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  number: Scalars['Int'];
-  show: Show;
-  tallImage: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
+export type QueryDiscoverShowsArgs = {
+  input: DiscoverShowsInput;
 };
 
-export type Show = {
-  __typename?: 'Show';
-  createdAt: Scalars['Timestamp'];
-  description: Scalars['String'];
-  episodeRuntime: Scalars['Int'];
-  externalId: Scalars['Int'];
-  genres: Array<Genre>;
-  isInProduction: Scalars['Boolean'];
-  keywords: Array<Keyword>;
-  name: Scalars['String'];
-  productionCompanies: Array<ProductionCompany>;
-  seasons: Array<Season>;
+export type ShowWithStatusInput = {
+  showId: Scalars['Int'];
   status: Status;
-  tallImage: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
-  wideImage: Scalars['String'];
 };
 
-export type Status = {
-  __typename?: 'Status';
-  createdAt: Scalars['Timestamp'];
-  id: Scalars['Int'];
-  name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
+export enum Status {
+  InWatchlist = 'InWatchlist',
+  None = 'None',
+  StoppedWatching = 'StoppedWatching',
+}
+
+export type ToggleGenrePreferenceInput = {
+  genreId: Scalars['Int'];
 };
 
 export type User = {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Timestamp'];
   email: Scalars['String'];
   id: Scalars['Int'];
   name: Scalars['String'];
-  updatedAt: Scalars['Timestamp'];
 };
 
 export type Void = {
   __typename?: 'Void';
   _?: Maybe<Scalars['String']>;
+};
+
+export type Watchlist = {
+  __typename?: 'Watchlist';
+  show: PartialShow;
+  status: Status;
+};
+
+export type ListGenresQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListGenresQuery = {
+  __typename?: 'Query';
+  listGenres?: Array<{
+    __typename?: 'Genre';
+    externalId: number;
+    name: string;
+  }> | null;
 };
 
 export type JoinWithGoogleMutationVariables = Exact<{
@@ -157,6 +139,75 @@ export type JoinWithGoogleMutationVariables = Exact<{
 export type JoinWithGoogleMutation = {
   __typename?: 'Mutation';
   joinWithGoogle: { __typename?: 'User'; name: string; email: string };
+};
+
+export type DiscoverShowsQueryVariables = Exact<{
+  genreIds: Array<Scalars['Int']> | Scalars['Int'];
+}>;
+
+export type DiscoverShowsQuery = {
+  __typename?: 'Query';
+  discoverShows: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage: string;
+    tallImage: string;
+    status: Status;
+    genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
+  }>;
+};
+
+export type ToggleGenrePreferenceMutationVariables = Exact<{
+  genreId: Scalars['Int'];
+}>;
+
+export type ToggleGenrePreferenceMutation = {
+  __typename?: 'Mutation';
+  toggleGenrePreference: { __typename: 'Void' };
+};
+
+export type GetPreferencesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPreferencesQuery = {
+  __typename?: 'Query';
+  getPreferences?: {
+    __typename?: 'Preference';
+    genres: Array<{ __typename?: 'Genre'; externalId: number }>;
+  } | null;
+};
+
+export type UpsertWatchlistItemMutationVariables = Exact<{
+  showId: Scalars['Int'];
+  status: Status;
+}>;
+
+export type UpsertWatchlistItemMutation = {
+  __typename?: 'Mutation';
+  upsertWatchlistItem: { __typename: 'Watchlist' };
+};
+
+export type GetPartialWatchlistQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetPartialWatchlistQuery = {
+  __typename?: 'Query';
+  getWatchlist: Array<{
+    __typename?: 'Watchlist';
+    status: Status;
+    show: { __typename?: 'PartialShow'; externalId: number };
+  }>;
+};
+
+export type ShowFragmentFragment = {
+  __typename?: 'PartialShow';
+  externalId: number;
+  name: string;
+  description: string;
+  wideImage: string;
+  tallImage: string;
+  status: Status;
+  genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
@@ -170,6 +221,10 @@ export type MeQuery = {
     name: string;
     avatar?: string | null;
   };
+  getPreferences?: {
+    __typename?: 'Preference';
+    genres: Array<{ __typename?: 'Genre'; externalId: number }>;
+  } | null;
 };
 
 export type RefreshTokenMutationVariables = Exact<{ [key: string]: never }>;
@@ -186,6 +241,78 @@ export type LogoutMutation = {
   logout: { __typename: 'Void' };
 };
 
+export const ShowFragmentFragmentDoc = gql`
+  fragment ShowFragment on PartialShow {
+    externalId
+    name
+    description
+    wideImage
+    tallImage
+    status
+    genres {
+      externalId
+      name
+    }
+  }
+`;
+export const ListGenresDocument = gql`
+  query ListGenres {
+    listGenres {
+      externalId
+      name
+    }
+  }
+`;
+
+/**
+ * __useListGenresQuery__
+ *
+ * To run a query within a React component, call `useListGenresQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListGenresQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListGenresQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListGenresQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListGenresQuery,
+    ListGenresQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<ListGenresQuery, ListGenresQueryVariables>(
+    ListGenresDocument,
+    options,
+  );
+}
+export function useListGenresLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListGenresQuery,
+    ListGenresQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<ListGenresQuery, ListGenresQueryVariables>(
+    ListGenresDocument,
+    options,
+  );
+}
+export type ListGenresQueryHookResult = ReturnType<typeof useListGenresQuery>;
+export type ListGenresLazyQueryHookResult = ReturnType<
+  typeof useListGenresLazyQuery
+>;
+export type ListGenresQueryResult = Apollo.QueryResult<
+  ListGenresQuery,
+  ListGenresQueryVariables
+>;
 export const JoinWithGoogleDocument = gql`
   mutation JoinWithGoogle($input: JoinWithGoogleInput!) {
     joinWithGoogle(input: $input) {
@@ -238,6 +365,293 @@ export type JoinWithGoogleMutationOptions = Apollo.BaseMutationOptions<
   JoinWithGoogleMutation,
   JoinWithGoogleMutationVariables
 >;
+export const DiscoverShowsDocument = gql`
+  query DiscoverShows($genreIds: [Int!]!) {
+    discoverShows(input: { genreIds: $genreIds }) {
+      ...ShowFragment
+    }
+  }
+  ${ShowFragmentFragmentDoc}
+`;
+
+/**
+ * __useDiscoverShowsQuery__
+ *
+ * To run a query within a React component, call `useDiscoverShowsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDiscoverShowsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDiscoverShowsQuery({
+ *   variables: {
+ *      genreIds: // value for 'genreIds'
+ *   },
+ * });
+ */
+export function useDiscoverShowsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    DiscoverShowsQuery,
+    DiscoverShowsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<DiscoverShowsQuery, DiscoverShowsQueryVariables>(
+    DiscoverShowsDocument,
+    options,
+  );
+}
+export function useDiscoverShowsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    DiscoverShowsQuery,
+    DiscoverShowsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<DiscoverShowsQuery, DiscoverShowsQueryVariables>(
+    DiscoverShowsDocument,
+    options,
+  );
+}
+export type DiscoverShowsQueryHookResult = ReturnType<
+  typeof useDiscoverShowsQuery
+>;
+export type DiscoverShowsLazyQueryHookResult = ReturnType<
+  typeof useDiscoverShowsLazyQuery
+>;
+export type DiscoverShowsQueryResult = Apollo.QueryResult<
+  DiscoverShowsQuery,
+  DiscoverShowsQueryVariables
+>;
+export const ToggleGenrePreferenceDocument = gql`
+  mutation ToggleGenrePreference($genreId: Int!) {
+    toggleGenrePreference(input: { genreId: $genreId }) {
+      __typename
+    }
+  }
+`;
+export type ToggleGenrePreferenceMutationFn = Apollo.MutationFunction<
+  ToggleGenrePreferenceMutation,
+  ToggleGenrePreferenceMutationVariables
+>;
+
+/**
+ * __useToggleGenrePreferenceMutation__
+ *
+ * To run a mutation, you first call `useToggleGenrePreferenceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleGenrePreferenceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleGenrePreferenceMutation, { data, loading, error }] = useToggleGenrePreferenceMutation({
+ *   variables: {
+ *      genreId: // value for 'genreId'
+ *   },
+ * });
+ */
+export function useToggleGenrePreferenceMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ToggleGenrePreferenceMutation,
+    ToggleGenrePreferenceMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    ToggleGenrePreferenceMutation,
+    ToggleGenrePreferenceMutationVariables
+  >(ToggleGenrePreferenceDocument, options);
+}
+export type ToggleGenrePreferenceMutationHookResult = ReturnType<
+  typeof useToggleGenrePreferenceMutation
+>;
+export type ToggleGenrePreferenceMutationResult =
+  Apollo.MutationResult<ToggleGenrePreferenceMutation>;
+export type ToggleGenrePreferenceMutationOptions = Apollo.BaseMutationOptions<
+  ToggleGenrePreferenceMutation,
+  ToggleGenrePreferenceMutationVariables
+>;
+export const GetPreferencesDocument = gql`
+  query GetPreferences {
+    getPreferences {
+      genres {
+        externalId
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetPreferencesQuery__
+ *
+ * To run a query within a React component, call `useGetPreferencesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPreferencesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPreferencesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPreferencesQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetPreferencesQuery,
+    GetPreferencesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetPreferencesQuery, GetPreferencesQueryVariables>(
+    GetPreferencesDocument,
+    options,
+  );
+}
+export function useGetPreferencesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPreferencesQuery,
+    GetPreferencesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<GetPreferencesQuery, GetPreferencesQueryVariables>(
+    GetPreferencesDocument,
+    options,
+  );
+}
+export type GetPreferencesQueryHookResult = ReturnType<
+  typeof useGetPreferencesQuery
+>;
+export type GetPreferencesLazyQueryHookResult = ReturnType<
+  typeof useGetPreferencesLazyQuery
+>;
+export type GetPreferencesQueryResult = Apollo.QueryResult<
+  GetPreferencesQuery,
+  GetPreferencesQueryVariables
+>;
+export const UpsertWatchlistItemDocument = gql`
+  mutation UpsertWatchlistItem($showId: Int!, $status: Status!) {
+    upsertWatchlistItem(input: { showId: $showId, status: $status }) {
+      __typename
+    }
+  }
+`;
+export type UpsertWatchlistItemMutationFn = Apollo.MutationFunction<
+  UpsertWatchlistItemMutation,
+  UpsertWatchlistItemMutationVariables
+>;
+
+/**
+ * __useUpsertWatchlistItemMutation__
+ *
+ * To run a mutation, you first call `useUpsertWatchlistItemMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertWatchlistItemMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertWatchlistItemMutation, { data, loading, error }] = useUpsertWatchlistItemMutation({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useUpsertWatchlistItemMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpsertWatchlistItemMutation,
+    UpsertWatchlistItemMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    UpsertWatchlistItemMutation,
+    UpsertWatchlistItemMutationVariables
+  >(UpsertWatchlistItemDocument, options);
+}
+export type UpsertWatchlistItemMutationHookResult = ReturnType<
+  typeof useUpsertWatchlistItemMutation
+>;
+export type UpsertWatchlistItemMutationResult =
+  Apollo.MutationResult<UpsertWatchlistItemMutation>;
+export type UpsertWatchlistItemMutationOptions = Apollo.BaseMutationOptions<
+  UpsertWatchlistItemMutation,
+  UpsertWatchlistItemMutationVariables
+>;
+export const GetPartialWatchlistDocument = gql`
+  query GetPartialWatchlist {
+    getWatchlist {
+      status
+      show {
+        externalId
+      }
+    }
+  }
+`;
+
+/**
+ * __useGetPartialWatchlistQuery__
+ *
+ * To run a query within a React component, call `useGetPartialWatchlistQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPartialWatchlistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPartialWatchlistQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPartialWatchlistQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetPartialWatchlistQuery,
+    GetPartialWatchlistQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<
+    GetPartialWatchlistQuery,
+    GetPartialWatchlistQueryVariables
+  >(GetPartialWatchlistDocument, options);
+}
+export function useGetPartialWatchlistLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetPartialWatchlistQuery,
+    GetPartialWatchlistQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    GetPartialWatchlistQuery,
+    GetPartialWatchlistQueryVariables
+  >(GetPartialWatchlistDocument, options);
+}
+export type GetPartialWatchlistQueryHookResult = ReturnType<
+  typeof useGetPartialWatchlistQuery
+>;
+export type GetPartialWatchlistLazyQueryHookResult = ReturnType<
+  typeof useGetPartialWatchlistLazyQuery
+>;
+export type GetPartialWatchlistQueryResult = Apollo.QueryResult<
+  GetPartialWatchlistQuery,
+  GetPartialWatchlistQueryVariables
+>;
 export const MeDocument = gql`
   query Me {
     me {
@@ -245,6 +659,11 @@ export const MeDocument = gql`
       email
       name
       avatar
+    }
+    getPreferences {
+      genres {
+        externalId
+      }
     }
   }
 `;

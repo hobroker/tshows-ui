@@ -3,20 +3,22 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { grey } from '@mui/material/colors';
 import useYupValidationResolver from '../hooks/useYupValidationResolver';
+import FormRow from '../../forms/components/FormRow';
+import { RoutePath } from '../../router/constants';
 
 type LoginFormInput = {
-  username: string;
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
 };
 
 const validationSchema = yup.object().shape({
-  username: yup
+  name: yup
     .string()
-    .required('Username is required')
-    .min(6, 'Username must be at least 6 characters')
-    .max(20, 'Username must not exceed 20 characters'),
+    .required('Name is required')
+    .min(6, 'Name must be at least 6 characters')
+    .max(20, 'Name must not exceed 20 characters'),
   email: yup.string().required('Email is required').email('Email is invalid'),
   password: yup
     .string()
@@ -38,14 +40,14 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <Box display="flex" height={80}>
+      <FormRow>
         <TextField
           label="Name"
           variant="outlined"
           fullWidth
-          error={!!errors.username}
-          helperText={errors.username?.message}
-          {...register('username')}
+          error={!!errors.name}
+          helperText={errors.name?.message}
+          {...register('name')}
         />
         <Box width={48} />
         <TextField
@@ -56,8 +58,8 @@ const RegisterForm = () => {
           helperText={errors.email?.message}
           {...register('email')}
         />
-      </Box>
-      <Box display="flex" height={80}>
+      </FormRow>
+      <FormRow>
         <TextField
           label="Password"
           variant="outlined"
@@ -66,7 +68,7 @@ const RegisterForm = () => {
           helperText={errors.password?.message}
           {...register('password')}
         />
-      </Box>
+      </FormRow>
       <Box marginBottom={2}>
         <Button type="submit" variant="contained" size="large" fullWidth>
           Sign Up
@@ -75,7 +77,7 @@ const RegisterForm = () => {
       <Box textAlign="center">
         <Typography variant="subtitle2" color={grey[700]}>
           Already have an account?{' '}
-          <Link color="primary" href="/login">
+          <Link color="primary" href={RoutePath.Login}>
             Log in
           </Link>
         </Typography>

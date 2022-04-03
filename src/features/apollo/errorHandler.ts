@@ -1,7 +1,7 @@
 import { fromPromise } from '@apollo/client';
 import type { ErrorResponse } from '@apollo/client/link/error';
-import client from './client';
 import { MUTATION_REFRESH_TOKEN } from '../user/queries';
+import client from './client';
 
 function errorHandler({ graphQLErrors, operation, forward }: ErrorResponse) {
   if (operation.operationName === 'RefreshToken') {

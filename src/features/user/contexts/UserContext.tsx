@@ -1,14 +1,24 @@
-import { createContext, ReactNode, useCallback, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
+import { prop } from 'rambda';
 import { useMeLazyQuery, User } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
 import { UserState } from '../constants';
 import useOnMount from '../../../hooks/useOnMount';
+import useHandlePreferences from '../../../hooks/useHandlePreferences';
+import { BackdropContext } from '../../../contexts/BackdropContext';
 
 interface UserContextType {
   userState: UserState;
   user: Partial<User> | null;
-  resetUser: () => void;
-  refreshUser: () => void;
+  logout: () => void;
+  refreshUser: () => Promise<void>;
+  setUserState: (value: UserState) => void;
 }
 
 interface Props {
@@ -18,22 +28,27 @@ interface Props {
 const UserContext = createContext<UserContextType>({
   userState: UserState.Idle,
   user: null,
-  resetUser: noop,
-  refreshUser: noop,
+  logout: noop,
+  refreshUser: () => Promise.resolve(),
+  setUserState: noop,
 });
 
 const UserProvider = ({ children }: Props) => {
+  const { toggleBackdrop } = useContext(BackdropContext);
   const [fetchUser] = useMeLazyQuery();
   const [user, setUser] = useState<UserContextType['user']>(null);
   const [userState, setUserState] = useState<UserState>(UserState.Idle);
-  const resetUser = useCallback(() => {
+  const handlePreferences = useHandlePreferences();
+  const logout = useCallback(() => {
     setUser(null);
     setUserState(UserState.Anonymous);
   }, [setUser]);
+
   const refreshUser = useCallback(async () => {
     try {
       const { data } = await fetchUser();
       const user = data?.me;
+      const preferences = data?.getPreferences;
 
       if (!user) {
         throw Error();
@@ -41,15 +56,25 @@ const UserProvider = ({ children }: Props) => {
 
       setUser(user);
       setUserState(UserState.LoggedIn);
+
+      handlePreferences({
+        genreIds: preferences?.genres.map(prop('externalId')) || [],
+      });
     } catch (e) {
       setUserState(UserState.Anonymous);
     }
-  }, [fetchUser]);
+  }, [fetchUser, handlePreferences]);
 
-  useOnMount(refreshUser);
+  useOnMount(async () => {
+    toggleBackdrop();
+    await refreshUser();
+    toggleBackdrop();
+  });
 
   return (
-    <UserContext.Provider value={{ user, resetUser, userState, refreshUser }}>
+    <UserContext.Provider
+      value={{ user, logout, userState, refreshUser, setUserState }}
+    >
       {children}
     </UserContext.Provider>
   );
