@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import useJoinWithGoogle from '../hooks/useJoinWithGoogle';
+import { BackdropContext } from '../../../../../contexts/BackdropContext';
 import GoogleButton from './GoogleButton';
 
-interface Props {
-  toggleBackdrop: () => void;
-}
-
-const SignInWithGoogleButton = ({ toggleBackdrop }: Props) => {
+const SignInWithGoogleButton = () => {
+  const { toggleBackdrop } = useContext(BackdropContext);
   const { loading, signIn } = useJoinWithGoogle({
     toggleLoading: toggleBackdrop,
   });

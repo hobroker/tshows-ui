@@ -32,6 +32,7 @@ const useJoinWithGoogle = ({ toggleLoading = noop }: Props = {}) => {
       });
 
       await refreshUser();
+      toggleLoading();
     }
   };
 
