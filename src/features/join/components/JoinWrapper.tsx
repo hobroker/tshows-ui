@@ -28,7 +28,7 @@ const JoinWrapper = ({ title, children }: Props) => (
       <Card elevation={8} sx={{ width: 600 }}>
         <CardContent>
           <Row marginBottom={3}>
-            <LogoIcon width={50} />
+            <LogoIcon sx={{ width: 50 }} />
           </Row>
           <Row marginBottom={3}>
             <Typography align="center" variant="h4">

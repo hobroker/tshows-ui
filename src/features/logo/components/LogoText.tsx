@@ -15,10 +15,10 @@ interface Props {
   color?: Color;
 }
 
-const PrimaryLogo = ({ sx, color = 'primary' }: Props) => (
+const LogoText = ({ sx, color = 'primary' }: Props) => (
   <Box sx={{ display: 'flex', ...sx }}>
     <StyledLogo color={color} />
   </Box>
 );
 
-export default PrimaryLogo;
+export default LogoText;

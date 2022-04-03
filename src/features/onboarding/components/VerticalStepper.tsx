@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { dec, inc } from 'rambda';
 import { LoadingButton } from '@mui/lab';
-import PrimaryLogo from '../../logo/components/PrimaryLogo';
+import LogoText from '../../logo/components/LogoText';
 import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 import WelcomeStep from './Steps/WelcomeStep';
 import ProfileStep from './Steps/ProfileStep';
@@ -55,7 +55,7 @@ const VerticalStepper = () => {
           <Box sx={{ display: 'flex' }}>
             Welcome to
             <Box py={1} ml={0.5}>
-              <PrimaryLogo sx={{ height: 16 }} />
+              <LogoText sx={{ height: 16 }} />
             </Box>
           </Box>
         ),

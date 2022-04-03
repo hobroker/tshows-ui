@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
 import NavigationProvider from '../contexts/NavigationContext';
-import Logo from '../../logo/components/Logo';
+import LogoText from '../../logo/components/LogoText';
 import ElevationScroll from './ElevationScroll';
 import Search from './Search';
 import NotificationsBadge from './NotificationsBadge';
@@ -14,7 +14,10 @@ const Navigation = () => (
         <Toolbar>
           <Box>
             <Button href="/" sx={{ padding: 0 }}>
-              <Logo />
+              <LogoText
+                sx={{ width: 150, marginTop: -0.625 }}
+                color="secondary"
+              />
             </Button>
           </Box>
           <Search />
