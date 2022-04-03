@@ -9,6 +9,7 @@ import {
 import { PartialShow, useDiscoverShowsQuery } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
 import { PreferencesContext } from '../../preferences/contexts/PreferencesContext';
+import { DEFAULT_GENRE_RECOMMENDATION } from '../constants';
 
 interface ShowPreferenceContextType {
   shows: PartialShow[];
@@ -32,7 +33,9 @@ const ShowsOnboardingProvider = ({ children }: Props) => {
 
   const { data, loading } = useDiscoverShowsQuery({
     variables: {
-      genreIds: selectedGenres,
+      genreIds: selectedGenres.length
+        ? selectedGenres
+        : [DEFAULT_GENRE_RECOMMENDATION],
     },
   });
 

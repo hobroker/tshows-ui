@@ -61,19 +61,14 @@ const VerticalStepper = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Stepper activeStep={activeStep} orientation="vertical">
+      <Stepper activeStep={activeStep} orientation="vertical" nonLinear>
         {steps.map(({ label, title, content }, index) => (
           <Step key={label}>
-            <StepButton
-              color="inherit"
-              onClick={() => setActiveStep(index)}
-              disabled={false}
-              sx={{ width: 'auto', borderRadius: 1, paddingY: 0, marginY: 1 }}
-            >
+            <StepButton color="inherit" onClick={() => setActiveStep(index)}>
               {label}
             </StepButton>
             <StepContent>
-              <Box sx={{ mb: 2 }}>
+              <Box sx={{ my: 2 }}>
                 <Typography variant="h6" sx={{ marginBottom: 1 }}>
                   {title}
                 </Typography>
