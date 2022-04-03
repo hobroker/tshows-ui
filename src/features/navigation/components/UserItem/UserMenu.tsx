@@ -79,7 +79,7 @@ const UserMenu = () => {
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        <Avatar src={avatar} />
+        <Avatar src={avatar} sx={{ background: 'white' }} />
       </Button>
       <StyledMenu anchorEl={anchorEl} open={isOpen} onClose={handleClose}>
         <MenuItem onClick={handleClose} disableRipple>
