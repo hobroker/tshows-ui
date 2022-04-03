@@ -15,7 +15,7 @@ type Mutation {
   joinWithGoogle(input: JoinWithGoogleInput!): User!
   logout: Void!
   refresh: User!
-  savePreferences(input: UpsertPreferenceInput!): Preference!
+  toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
   upsertWatchlistItem(input: ShowWithStatusInput!): Watchlist!
 }
 
@@ -53,8 +53,8 @@ enum Status {
   StoppedWatching
 }
 
-input UpsertPreferenceInput {
-  genreIds: [Int!]!
+input ToggleGenrePreferenceInput {
+  genreId: Int!
 }
 
 type User {

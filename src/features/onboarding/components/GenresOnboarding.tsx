@@ -1,15 +1,13 @@
 import React, { useContext } from 'react';
 import { Chip, CircularProgress, Stack } from '@mui/material';
-import { toggleListItem } from '../../../utils/fp';
 import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 import { GenresContext } from '../../genres/contexts/GenresContext';
 
 const GenresOnboarding = () => {
-  const { selectedGenres, setSelectedGenres } = useContext(PreferencesContext);
+  const { selectedGenres, toggleGenrePreference } =
+    useContext(PreferencesContext);
   const { genres } = useContext(GenresContext);
-  const onToggle = (value: number) => {
-    setSelectedGenres(toggleListItem(value, selectedGenres));
-  };
+  const onToggle = (value: number) => toggleGenrePreference(value);
   const canRender = genres.length;
 
   return (

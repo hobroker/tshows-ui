@@ -17,9 +17,9 @@ export const QUERY_LIST_SHOW_SUGESTIONS = gql`
   }
 `;
 
-export const MUTATION_SAVE_PREFERENCES = gql`
-  mutation SavePreferences($genreIds: [Int!]!) {
-    savePreferences(input: { genreIds: $genreIds }) {
+export const MUTATION_TOGGLE_GENRE_PREFERENCE = gql`
+  mutation ToggleGenrePreference($genreId: Int!) {
+    toggleGenrePreference(input: { genreId: $genreId }) {
       __typename
     }
   }

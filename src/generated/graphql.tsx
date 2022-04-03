@@ -41,7 +41,7 @@ export type Mutation = {
   joinWithGoogle: User;
   logout: Void;
   refresh: User;
-  savePreferences: Preference;
+  toggleGenrePreference: Void;
   upsertWatchlistItem: Watchlist;
 };
 
@@ -49,8 +49,8 @@ export type MutationJoinWithGoogleArgs = {
   input: JoinWithGoogleInput;
 };
 
-export type MutationSavePreferencesArgs = {
-  input: UpsertPreferenceInput;
+export type MutationToggleGenrePreferenceArgs = {
+  input: ToggleGenrePreferenceInput;
 };
 
 export type MutationUpsertWatchlistItemArgs = {
@@ -98,8 +98,8 @@ export enum Status {
   StoppedWatching = 'StoppedWatching',
 }
 
-export type UpsertPreferenceInput = {
-  genreIds: Array<Scalars['Int']>;
+export type ToggleGenrePreferenceInput = {
+  genreId: Scalars['Int'];
 };
 
 export type User = {
@@ -159,13 +159,13 @@ export type DiscoverShowsQuery = {
   }>;
 };
 
-export type SavePreferencesMutationVariables = Exact<{
-  genreIds: Array<Scalars['Int']> | Scalars['Int'];
+export type ToggleGenrePreferenceMutationVariables = Exact<{
+  genreId: Scalars['Int'];
 }>;
 
-export type SavePreferencesMutation = {
+export type ToggleGenrePreferenceMutation = {
   __typename?: 'Mutation';
-  savePreferences: { __typename: 'Preference' };
+  toggleGenrePreference: { __typename: 'Void' };
 };
 
 export type GetPreferencesQueryVariables = Exact<{ [key: string]: never }>;
@@ -426,56 +426,56 @@ export type DiscoverShowsQueryResult = Apollo.QueryResult<
   DiscoverShowsQuery,
   DiscoverShowsQueryVariables
 >;
-export const SavePreferencesDocument = gql`
-  mutation SavePreferences($genreIds: [Int!]!) {
-    savePreferences(input: { genreIds: $genreIds }) {
+export const ToggleGenrePreferenceDocument = gql`
+  mutation ToggleGenrePreference($genreId: Int!) {
+    toggleGenrePreference(input: { genreId: $genreId }) {
       __typename
     }
   }
 `;
-export type SavePreferencesMutationFn = Apollo.MutationFunction<
-  SavePreferencesMutation,
-  SavePreferencesMutationVariables
+export type ToggleGenrePreferenceMutationFn = Apollo.MutationFunction<
+  ToggleGenrePreferenceMutation,
+  ToggleGenrePreferenceMutationVariables
 >;
 
 /**
- * __useSavePreferencesMutation__
+ * __useToggleGenrePreferenceMutation__
  *
- * To run a mutation, you first call `useSavePreferencesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSavePreferencesMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useToggleGenrePreferenceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleGenrePreferenceMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [savePreferencesMutation, { data, loading, error }] = useSavePreferencesMutation({
+ * const [toggleGenrePreferenceMutation, { data, loading, error }] = useToggleGenrePreferenceMutation({
  *   variables: {
- *      genreIds: // value for 'genreIds'
+ *      genreId: // value for 'genreId'
  *   },
  * });
  */
-export function useSavePreferencesMutation(
+export function useToggleGenrePreferenceMutation(
   baseOptions?: Apollo.MutationHookOptions<
-    SavePreferencesMutation,
-    SavePreferencesMutationVariables
+    ToggleGenrePreferenceMutation,
+    ToggleGenrePreferenceMutationVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
 
   return Apollo.useMutation<
-    SavePreferencesMutation,
-    SavePreferencesMutationVariables
-  >(SavePreferencesDocument, options);
+    ToggleGenrePreferenceMutation,
+    ToggleGenrePreferenceMutationVariables
+  >(ToggleGenrePreferenceDocument, options);
 }
-export type SavePreferencesMutationHookResult = ReturnType<
-  typeof useSavePreferencesMutation
+export type ToggleGenrePreferenceMutationHookResult = ReturnType<
+  typeof useToggleGenrePreferenceMutation
 >;
-export type SavePreferencesMutationResult =
-  Apollo.MutationResult<SavePreferencesMutation>;
-export type SavePreferencesMutationOptions = Apollo.BaseMutationOptions<
-  SavePreferencesMutation,
-  SavePreferencesMutationVariables
+export type ToggleGenrePreferenceMutationResult =
+  Apollo.MutationResult<ToggleGenrePreferenceMutation>;
+export type ToggleGenrePreferenceMutationOptions = Apollo.BaseMutationOptions<
+  ToggleGenrePreferenceMutation,
+  ToggleGenrePreferenceMutationVariables
 >;
 export const GetPreferencesDocument = gql`
   query GetPreferences {

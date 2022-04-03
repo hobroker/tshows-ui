@@ -1,25 +1,15 @@
-import React, {
-  ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import {
   Box,
-  Button,
-  Paper,
   Step,
   StepButton,
   StepContent,
-  StepLabel,
   Stepper,
   Typography,
 } from '@mui/material';
-import { dec, inc } from 'rambda';
+import { inc } from 'rambda';
 import { LoadingButton } from '@mui/lab';
 import LogoText from '../../logo/components/LogoText';
-import { PreferencesContext } from '../../user/contexts/PreferencesContext';
 import WelcomeStep from './Steps/WelcomeStep';
 import ProfileStep from './Steps/ProfileStep';
 import GenresStep from './Steps/GenresStep';
@@ -29,22 +19,11 @@ interface StepType {
   label: string;
   title: ReactNode;
   content: ReactNode;
-  onContinue?: () => void;
 }
 
 const VerticalStepper = () => {
-  const { savePreferences } = useContext(PreferencesContext);
   const [activeStep, setActiveStep] = useState(3);
-  const [loading, setLoading] = useState(false);
   const handleNext = () => setActiveStep(inc);
-
-  const saveGenrePrefences = useCallback(async () => {
-    setLoading(true);
-    await savePreferences();
-    setLoading(false);
-
-    handleNext();
-  }, [savePreferences]);
 
   const steps = useMemo<StepType[]>(
     () => [
@@ -69,7 +48,6 @@ const VerticalStepper = () => {
         label: 'Genres',
         title: 'Select your favorite genres',
         content: <GenresStep />,
-        onContinue: saveGenrePrefences,
       },
       {
         label: 'TV Shows',
@@ -77,13 +55,13 @@ const VerticalStepper = () => {
         content: <ShowsStep />,
       },
     ],
-    [saveGenrePrefences],
+    [],
   );
 
   return (
     <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map(({ onContinue, label, title, content }, index) => (
+        {steps.map(({ label, title, content }, index) => (
           <Step key={label}>
             <StepButton
               color="inherit"
@@ -104,9 +82,8 @@ const VerticalStepper = () => {
                 <div>
                   <LoadingButton
                     variant="contained"
-                    onClick={onContinue || handleNext}
+                    onClick={handleNext}
                     sx={{ mt: 1, mr: 1 }}
-                    loading={loading}
                   >
                     {index === steps.length - 1 ? 'Finish' : 'Continue'}
                   </LoadingButton>

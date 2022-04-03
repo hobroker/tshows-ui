@@ -1,9 +1,9 @@
-import { createContext, ReactNode, useState } from 'react';
-import { noop } from '../../../utils/fp';
-import { useSavePreferencesMutation } from '../../../generated/graphql';
+import { createContext, ReactNode, useCallback, useState } from 'react';
+import { noop, toggleListItem } from '../../../utils/fp';
+import { useToggleGenrePreferenceMutation } from '../../../generated/graphql';
 
 interface PreferencesContextType {
-  savePreferences: () => void;
+  toggleGenrePreference: (genreId: number) => void;
   selectedGenres: number[];
   setSelectedGenres: (value: number[]) => void;
 }
@@ -13,22 +13,30 @@ interface Props {
 }
 
 const PreferencesContext = createContext<PreferencesContextType>({
-  savePreferences: noop,
+  toggleGenrePreference: noop,
   selectedGenres: [],
   setSelectedGenres: noop,
 });
 
 const PreferencesProvider = ({ children }: Props) => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
-  const [savePreferences] = useSavePreferencesMutation({
-    variables: {
-      genreIds: selectedGenres,
+  const [toggleGenrePreferenceMutation] = useToggleGenrePreferenceMutation();
+
+  const toggleGenrePreference = useCallback(
+    (genreId: number) => {
+      toggleGenrePreferenceMutation({ variables: { genreId } });
+      setSelectedGenres(toggleListItem(genreId));
     },
-  });
+    [toggleGenrePreferenceMutation],
+  );
 
   return (
     <PreferencesContext.Provider
-      value={{ savePreferences, selectedGenres, setSelectedGenres }}
+      value={{
+        toggleGenrePreference,
+        selectedGenres,
+        setSelectedGenres,
+      }}
     >
       {children}
     </PreferencesContext.Provider>
