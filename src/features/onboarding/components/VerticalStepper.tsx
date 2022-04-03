@@ -10,6 +10,7 @@ import {
   Button,
   Paper,
   Step,
+  StepButton,
   StepContent,
   StepLabel,
   Stepper,
@@ -36,8 +37,6 @@ const VerticalStepper = () => {
   const [activeStep, setActiveStep] = useState(3);
   const [loading, setLoading] = useState(false);
   const handleNext = () => setActiveStep(inc);
-  const handleBack = () => setActiveStep(dec);
-  const handleReset = () => setActiveStep(0);
 
   const saveGenrePrefences = useCallback(async () => {
     setLoading(true);
@@ -77,15 +76,6 @@ const VerticalStepper = () => {
         title: 'Add some TV Shows to your profile',
         content: <ShowsStep />,
       },
-      {
-        label: 'Finish',
-        title: 'Finish',
-        content: (
-          <Box>
-            <Typography variant="body1">This is the finish section.</Typography>
-          </Box>
-        ),
-      },
     ],
     [saveGenrePrefences],
   );
@@ -95,7 +85,14 @@ const VerticalStepper = () => {
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map(({ onContinue, label, title, content }, index) => (
           <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+            <StepButton
+              color="inherit"
+              onClick={() => setActiveStep(index)}
+              disabled={false}
+              sx={{ width: 'auto', borderRadius: 1, paddingY: 0, marginY: 1 }}
+            >
+              {label}
+            </StepButton>
             <StepContent>
               <Box sx={{ mb: 2 }}>
                 <Typography variant="h6" sx={{ marginBottom: 1 }}>
@@ -113,27 +110,12 @@ const VerticalStepper = () => {
                   >
                     {index === steps.length - 1 ? 'Finish' : 'Continue'}
                   </LoadingButton>
-                  <Button
-                    disabled={index === 0}
-                    onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    Back
-                  </Button>
                 </div>
               </Box>
             </StepContent>
           </Step>
         ))}
       </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Reset
-          </Button>
-        </Paper>
-      )}
     </Box>
   );
 };
