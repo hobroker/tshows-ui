@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { HOME_ROUTE, WELCOME_ROUTE } from '../constants/routes';
+import { RoutePath } from '../features/router/constants';
 import { PreferencesContext } from '../features/preferences/contexts/PreferencesContext';
 
 const useHandlePreferences = () => {
@@ -10,14 +10,14 @@ const useHandlePreferences = () => {
   return useCallback(
     ({ genreIds }: { genreIds: number[] }) => {
       if (!genreIds.length) {
-        navigate(WELCOME_ROUTE);
+        navigate(RoutePath.Welcome);
 
         return;
       }
 
       setSelectedGenres(genreIds);
 
-      navigate(HOME_ROUTE);
+      navigate(RoutePath.Home);
     },
     [navigate, setSelectedGenres],
   );

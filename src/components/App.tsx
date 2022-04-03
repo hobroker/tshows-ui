@@ -5,7 +5,7 @@ import Navigation from '../features/navigation/components/Navigation';
 import Theme from '../features/theme/components/Theme';
 import client from '../features/apollo/client';
 import RootContextProvider from '../contexts/RootContextProvider';
-import Router from './Router';
+import Router from '../features/router/components/Router';
 
 const App = () => (
   <ApolloProvider client={client}>

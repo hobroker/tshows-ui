@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { grey } from '@mui/material/colors';
 import useYupValidationResolver from '../hooks/useYupValidationResolver';
 import FormRow from '../../forms/components/FormRow';
-import { LOGIN_ROUTE } from '../../../constants/routes';
+import { RoutePath } from '../../router/constants';
 
 type LoginFormInput = {
   name: string;
@@ -77,7 +77,7 @@ const RegisterForm = () => {
       <Box textAlign="center">
         <Typography variant="subtitle2" color={grey[700]}>
           Already have an account?{' '}
-          <Link color="primary" href={LOGIN_ROUTE}>
+          <Link color="primary" href={RoutePath.Login}>
             Log in
           </Link>
         </Typography>

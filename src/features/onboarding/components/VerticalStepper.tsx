@@ -11,7 +11,7 @@ import {
 import { inc } from 'rambda';
 import { useNavigate } from 'react-router-dom';
 import LogoText from '../../logo/components/LogoText';
-import { HOME_ROUTE } from '../../../constants/routes';
+import { RoutePath } from '../../router/constants';
 import WelcomeStep from './Steps/WelcomeStep';
 import GenresStep from './Steps/GenresStep';
 import ShowsStep from './Steps/ShowsStep';
@@ -53,7 +53,7 @@ const VerticalStepper = () => {
 
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
-      navigate(HOME_ROUTE);
+      navigate(RoutePath.Home);
     } else {
       setActiveStep(inc);
     }
