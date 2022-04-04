@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useContext } from 'react';
 import { MenuItem, Divider } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { UserContext } from '../../../user/contexts/UserContext';
 import UserMenu from './UserMenu';
 
@@ -19,7 +19,7 @@ const AuthenticatedUserMenu = () => {
       </MenuItem>
       <Divider key="divider" sx={{ my: 0.5 }} />
       <MenuItem key="logout" onClick={logout} disableRipple>
-        <EditIcon />
+        <LogoutIcon />
         Logout
       </MenuItem>
     </UserMenu>
