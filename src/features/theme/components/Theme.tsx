@@ -6,11 +6,20 @@ interface Props {
   children: ReactNode;
 }
 
-const Theme = ({ children }: Props) => (
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    {children}
-  </ThemeProvider>
-);
+const Theme = ({ children }: Props) => {
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  return (
+    <ThemeProvider theme={theme({ mode: isDarkMode ? 'dark' : 'light' })}>
+      <CssBaseline />
+      {children}
+      <input
+        type="checkbox"
+        checked={isDarkMode}
+        onChange={() => setIsDarkMode(!isDarkMode)}
+      />
+    </ThemeProvider>
+  );
+};
 
 export default Theme;

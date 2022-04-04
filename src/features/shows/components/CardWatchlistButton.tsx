@@ -6,7 +6,7 @@ import { Status } from '../../../generated/graphql';
 
 const StyledIconButton = styled(IconButton)`
   .icon {
-    color: white;
+    color: ${({ theme }) => theme.palette.secondary.main};
     filter: drop-shadow(0 0 5px black);
   }
 `;

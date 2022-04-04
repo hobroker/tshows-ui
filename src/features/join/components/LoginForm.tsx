@@ -9,7 +9,6 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { grey } from '@mui/material/colors';
 import useYupValidationResolver from '../hooks/useYupValidationResolver';
 
 type LoginFormInput = {
@@ -53,6 +52,7 @@ const LoginForm = () => {
         <Box width={48} />
         <TextField
           label="Password"
+          type="password"
           variant="outlined"
           fullWidth
           error={!!errors.password}
@@ -75,7 +75,10 @@ const LoginForm = () => {
         </Button>
       </Box>
       <Box textAlign="center">
-        <Typography variant="subtitle2" color={grey[700]}>
+        <Typography
+          variant="subtitle2"
+          sx={{ color: (theme) => theme.palette.text.secondary }}
+        >
           Don't have an account{' '}
           <Link color="primary" href="/join">
             Create an account

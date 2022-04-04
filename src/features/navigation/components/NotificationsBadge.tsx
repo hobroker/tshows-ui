@@ -9,9 +9,9 @@ const NotificationsBadge = () => {
 
   return (
     <Box sx={{ marginRight: 1, marginTop: 0.5 }}>
-      <IconButton size="large" color="inherit">
+      <IconButton size="large">
         <Badge badgeContent={notificationsCount} color="secondary">
-          <NotificationsIcon />
+          <NotificationsIcon color="primary" />
         </Badge>
       </IconButton>
     </Box>
