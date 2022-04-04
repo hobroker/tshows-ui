@@ -25,7 +25,7 @@ const StyledTitle = styled(Typography)`
   bottom: 0;
   left: 0;
   font-weight: bold;
-  transition: background 0.2s ease-in-out;
+  transition: ${({ theme }) => theme.transitions.create('background')};
   width: 100%;
   padding: ${({ theme }) => theme.spacing(0.5, 1, 1)};
   text-shadow: 0 0 8px ${({ theme }) => alpha(theme.palette.primary.main, 0.7)};

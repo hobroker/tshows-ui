@@ -8,7 +8,7 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const LoginButton = () => (
-  <StyledButton href="/login" color="secondary" variant="contained">
+  <StyledButton href="/login" color="primary" variant="contained">
     Login
   </StyledButton>
 );

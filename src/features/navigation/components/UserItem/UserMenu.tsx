@@ -1,15 +1,9 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { ReactNode } from 'react';
+import type { MenuProps } from '@mui/material';
+import { Button, Menu, Avatar, MenuItem } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import type { MenuProps } from '@mui/material/Menu';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import EditIcon from '@mui/icons-material/Edit';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Avatar, Divider } from '@mui/material';
-import { UserContext } from '../../../user/contexts/UserContext';
-import { useLogoutMutation } from '../../../../generated/graphql';
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -53,43 +47,43 @@ const StyledMenu = styled((props: MenuProps) => (
   },
 }));
 
-const UserMenu = () => {
-  const [logoutMutation] = useLogoutMutation();
-  const { logout } = useContext(UserContext);
+interface Props {
+  children: ReactNode[];
+  avatar?: string;
+}
+
+const UserMenu = ({ children, avatar }: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
-  const handleLogout = async () => {
-    handleClose();
-    logout();
-    await logoutMutation();
-  };
-
-  const { user } = useContext(UserContext);
-  const avatar = user?.avatar as string;
-  const name = user?.name as string;
+  const close = () => setAnchorEl(null);
 
   return (
     <div>
       <Button
-        variant="contained"
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
       >
-        <Avatar src={avatar} sx={{ background: 'white' }} />
+        <Avatar src={avatar} sx={avatar ? { backgroundColor: 'white' } : {}} />
       </Button>
-      <StyledMenu anchorEl={anchorEl} open={isOpen} onClose={handleClose}>
-        <MenuItem onClick={handleClose} disableRipple>
-          {name}
-        </MenuItem>
-        <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleLogout} disableRipple>
-          <EditIcon />
-          Logout
-        </MenuItem>
+      <StyledMenu anchorEl={anchorEl} open={isOpen} onClose={close}>
+        {React.Children.map(children, (item: ReactNode) => {
+          const child = item as React.ReactElement;
+
+          if (child.type !== MenuItem) {
+            return child;
+          }
+
+          return React.cloneElement(child, {
+            disableRipple: true,
+            onClick: async () => {
+              await child.props?.onClick?.();
+              close();
+            },
+          });
+        })}
       </StyledMenu>
     </div>
   );
