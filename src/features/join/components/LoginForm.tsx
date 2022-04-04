@@ -53,6 +53,7 @@ const LoginForm = () => {
         <Box width={48} />
         <TextField
           label="Password"
+          type="password"
           variant="outlined"
           fullWidth
           error={!!errors.password}
@@ -75,7 +76,10 @@ const LoginForm = () => {
         </Button>
       </Box>
       <Box textAlign="center">
-        <Typography variant="subtitle2" color={grey[700]}>
+        <Typography
+          variant="subtitle2"
+          sx={{ color: (theme) => theme.palette.text.secondary }}
+        >
           Don't have an account{' '}
           <Link color="primary" href="/join">
             Create an account

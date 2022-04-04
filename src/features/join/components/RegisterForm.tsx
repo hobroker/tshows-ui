@@ -62,6 +62,7 @@ const RegisterForm = () => {
       <FormRow>
         <TextField
           label="Password"
+          type="password"
           variant="outlined"
           fullWidth
           error={!!errors.password}
@@ -75,7 +76,10 @@ const RegisterForm = () => {
         </Button>
       </Box>
       <Box textAlign="center">
-        <Typography variant="subtitle2" color={grey[700]}>
+        <Typography
+          variant="subtitle2"
+          sx={{ color: (theme) => theme.palette.text.secondary }}
+        >
           Already have an account?{' '}
           <Link color="primary" href={RoutePath.Login}>
             Log in
