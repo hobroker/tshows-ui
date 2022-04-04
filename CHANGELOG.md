@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/hobroker/tshows-ui/compare/v1.6.0...v1.7.0) (2022-04-04)
+
+
+### Features
+
+* style in light/dark mode ([#21](https://github.com/hobroker/tshows-ui/issues/21)) ([145ca8a](https://github.com/hobroker/tshows-ui/commit/145ca8a29fb6798918d0427288f2c585fea69fb6))
+
 # [1.6.0](https://github.com/hobroker/tshows-ui/compare/v1.5.0...v1.6.0) (2022-04-03)
 
 
