@@ -22,10 +22,9 @@ const Navigation = () => (
               <LogoText sx={{ width: 150 }} />
             </Button>
           </Box>
-          <Box sx={{ mr: 1, width: '100%' }}>
+          <Box sx={{ mr: 1, flexGrow: 1 }}>
             <Search />
           </Box>
-          <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex' }}>
             <NotificationsBadge />
             <UserItem />
