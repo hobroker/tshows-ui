@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Home from '../../home/components/Home';
+import HomePage from '../../home/components/HomePage';
 import OnboardingPage from '../../onboarding/components/OnboardingPage';
 import LoginPage from '../../join/components/LoginPage';
 import RegisterPage from '../../join/components/RegisterPage';
@@ -8,7 +8,7 @@ import PrivateOutlet from './PrivateOutlet';
 
 const Router = () => (
   <Routes>
-    <Route path={RoutePath.Home} element={<Home />} />
+    <Route path={RoutePath.Home} element={<HomePage />} />
     <Route path={RoutePath.Login} element={<LoginPage />} />
     <Route path={RoutePath.Register} element={<RegisterPage />} />
     <Route path={RoutePath.Welcome} element={<PrivateOutlet />}>
