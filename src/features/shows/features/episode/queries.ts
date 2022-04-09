@@ -27,3 +27,11 @@ export const EPISODE_SHOW_FRAGMENT = gql`
     tallImage
   }
 `;
+
+export const MUTATION_UPSERT_EPISODE = gql`
+  mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean!) {
+    upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
+      __typename
+    }
+  }
+`;

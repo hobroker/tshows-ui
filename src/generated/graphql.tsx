@@ -58,6 +58,7 @@ export type Mutation = {
   logout: Void;
   refresh: User;
   toggleGenrePreference: Void;
+  upsertEpisode: Array<Void>;
   upsertWatchlistItem: Watchlist;
 };
 
@@ -67,6 +68,10 @@ export type MutationJoinWithGoogleArgs = {
 
 export type MutationToggleGenrePreferenceArgs = {
   input: ToggleGenrePreferenceInput;
+};
+
+export type MutationUpsertEpisodeArgs = {
+  input: UpsertEpisodeInput;
 };
 
 export type MutationUpsertWatchlistItemArgs = {
@@ -98,15 +103,10 @@ export type Query = {
   listGenres?: Maybe<Array<Genre>>;
   listUpNext: Array<Episode>;
   me: User;
-  upsertEpisode: Array<Void>;
 };
 
 export type QueryDiscoverShowsArgs = {
   input: DiscoverShowsInput;
-};
-
-export type QueryUpsertEpisodeArgs = {
-  input: UpsertEpisodeInput;
 };
 
 export type Season = {
@@ -244,6 +244,16 @@ export type EpisodeShowFragment = {
   name: string;
   wideImage: string;
   tallImage: string;
+};
+
+export type UpsertEpisodeMutationVariables = Exact<{
+  episodeId: Scalars['Int'];
+  isWatched: Scalars['Boolean'];
+}>;
+
+export type UpsertEpisodeMutation = {
+  __typename?: 'Mutation';
+  upsertEpisode: Array<{ __typename: 'Void' }>;
 };
 
 export type UpsertWatchlistItemMutationVariables = Exact<{
@@ -682,6 +692,58 @@ export type ListUpNextLazyQueryHookResult = ReturnType<
 export type ListUpNextQueryResult = Apollo.QueryResult<
   ListUpNextQuery,
   ListUpNextQueryVariables
+>;
+export const UpsertEpisodeDocument = gql`
+  mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean!) {
+    upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
+      __typename
+    }
+  }
+`;
+export type UpsertEpisodeMutationFn = Apollo.MutationFunction<
+  UpsertEpisodeMutation,
+  UpsertEpisodeMutationVariables
+>;
+
+/**
+ * __useUpsertEpisodeMutation__
+ *
+ * To run a mutation, you first call `useUpsertEpisodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertEpisodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertEpisodeMutation, { data, loading, error }] = useUpsertEpisodeMutation({
+ *   variables: {
+ *      episodeId: // value for 'episodeId'
+ *      isWatched: // value for 'isWatched'
+ *   },
+ * });
+ */
+export function useUpsertEpisodeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpsertEpisodeMutation,
+    UpsertEpisodeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    UpsertEpisodeMutation,
+    UpsertEpisodeMutationVariables
+  >(UpsertEpisodeDocument, options);
+}
+export type UpsertEpisodeMutationHookResult = ReturnType<
+  typeof useUpsertEpisodeMutation
+>;
+export type UpsertEpisodeMutationResult =
+  Apollo.MutationResult<UpsertEpisodeMutation>;
+export type UpsertEpisodeMutationOptions = Apollo.BaseMutationOptions<
+  UpsertEpisodeMutation,
+  UpsertEpisodeMutationVariables
 >;
 export const UpsertWatchlistItemDocument = gql`
   mutation UpsertWatchlistItem($showId: Int!, $status: Status!) {

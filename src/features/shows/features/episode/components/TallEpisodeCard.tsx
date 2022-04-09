@@ -1,11 +1,10 @@
 import { Box } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
+import { not } from 'rambda';
 import { Episode, EpisodeShowFragment } from '../../../../../generated/graphql';
 import TallCard from '../../../components/base/TallCard';
-import ActionButton from '../../../components/base/ActionButton';
-import EpisodeWatchedAction from './EpisodeWatchedAction';
+import EllipsisButton from '../../../../../components/EllipsisButton';
+import UpsertEpisodeAction from './UpsertEpisodeAction';
 
 interface Props {
   episode: Omit<Episode, 'show'> & {
@@ -15,24 +14,19 @@ interface Props {
 
 const TallEpisodeCard = ({ episode }: Props) => {
   const [isWatched, setIsWatched] = useState(false);
-  const onMarkAsWatched = () => {
-    console.log('Mark as watched', episode.id);
-    setIsWatched(true);
-  };
+  const toggleIsWatched = useCallback(() => setIsWatched(not), []);
 
   return (
     <TallCard tallImage={episode.show.tallImage}>
       <Box sx={{ p: 0.5, display: 'flex' }}>
-        <EpisodeWatchedAction isWatched={episode.isWatched}>
+        <EllipsisButton>
           {`${episode.seasonNumber}x${episode.number}`} - {episode.name}
-        </EpisodeWatchedAction>
-        <ActionButton
-          size="small"
-          tooltip="Mark as watched"
-          onClick={onMarkAsWatched}
-        >
-          {isWatched ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
-        </ActionButton>
+        </EllipsisButton>
+        <UpsertEpisodeAction
+          isWatched={isWatched}
+          episodeId={episode.id}
+          toggleIsWatched={toggleIsWatched}
+        />
       </Box>
     </TallCard>
   );

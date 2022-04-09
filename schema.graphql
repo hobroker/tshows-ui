@@ -34,6 +34,7 @@ type Mutation {
   logout: Void!
   refresh: User!
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
+  upsertEpisode(input: UpsertEpisodeInput!): [Void!]!
   upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
 }
 
@@ -59,7 +60,6 @@ type Query {
   listGenres: [Genre!]
   listUpNext: [Episode!]!
   me: User!
-  upsertEpisode(input: UpsertEpisodeInput!): [Void!]!
 }
 
 type Season {
