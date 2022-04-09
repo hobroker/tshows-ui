@@ -17,7 +17,7 @@ const useHandlePreferences = () => {
 
       setSelectedGenres(genreIds);
 
-      navigate(RoutePath.Home);
+      // navigate(RoutePath.Home);
     },
     [navigate, setSelectedGenres],
   );

@@ -33,9 +33,11 @@ export type Episode = {
   airDate?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   externalId: Scalars['Int'];
+  isWatched: Scalars['Boolean'];
   name: Scalars['String'];
   number: Scalars['Int'];
   seasonNumber: Scalars['Int'];
+  show: PartialShow;
   wideImage?: Maybe<Scalars['String']>;
 };
 
@@ -67,7 +69,7 @@ export type MutationToggleGenrePreferenceArgs = {
 };
 
 export type MutationUpsertWatchlistItemArgs = {
-  input: ShowWithStatusInput;
+  input: UpsertWatchlistInput;
 };
 
 export type PartialShow = {
@@ -101,9 +103,12 @@ export type QueryDiscoverShowsArgs = {
   input: DiscoverShowsInput;
 };
 
-export type ShowWithStatusInput = {
-  showId: Scalars['Int'];
-  status: Status;
+export type Season = {
+  __typename?: 'Season';
+  description?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  number: Scalars['Int'];
+  tallImage: Scalars['String'];
 };
 
 export enum Status {
@@ -114,6 +119,11 @@ export enum Status {
 
 export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
+};
+
+export type UpsertWatchlistInput = {
+  showId: Scalars['Int'];
+  status: Status;
 };
 
 export type User = {
@@ -264,11 +274,27 @@ export type ListUpNextQuery = {
     externalId: number;
     number: number;
     seasonNumber: number;
+    isWatched: boolean;
     name: string;
     description?: string | null;
     wideImage?: string | null;
     airDate?: any | null;
+    show: {
+      __typename?: 'PartialShow';
+      externalId: number;
+      name: string;
+      wideImage: string;
+      tallImage: string;
+    };
   }>;
+};
+
+export type EpisodeShowFragment = {
+  __typename?: 'PartialShow';
+  externalId: number;
+  name: string;
+  wideImage: string;
+  tallImage: string;
 };
 
 export const ShowFragmentFragmentDoc = gql`
@@ -283,6 +309,14 @@ export const ShowFragmentFragmentDoc = gql`
       externalId
       name
     }
+  }
+`;
+export const EpisodeShowFragmentDoc = gql`
+  fragment EpisodeShow on PartialShow {
+    externalId
+    name
+    wideImage
+    tallImage
   }
 `;
 export const ListGenresDocument = gql`
@@ -833,12 +867,17 @@ export const ListUpNextDocument = gql`
       externalId
       number
       seasonNumber
+      isWatched
       name
       description
       wideImage
       airDate
+      show {
+        ...EpisodeShow
+      }
     }
   }
+  ${EpisodeShowFragmentDoc}
 `;
 
 /**

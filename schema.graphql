@@ -11,9 +11,11 @@ type Episode {
   airDate: DateTime
   description: String
   externalId: Int!
+  isWatched: Boolean!
   name: String!
   number: Int!
   seasonNumber: Int!
+  show: PartialShow!
   wideImage: String
 }
 
@@ -31,7 +33,7 @@ type Mutation {
   logout: Void!
   refresh: User!
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
-  upsertWatchlistItem(input: ShowWithStatusInput!): Watchlist!
+  upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
 }
 
 type PartialShow {
@@ -58,9 +60,11 @@ type Query {
   me: User!
 }
 
-input ShowWithStatusInput {
-  showId: Int!
-  status: Status!
+type Season {
+  description: String
+  name: String!
+  number: Int!
+  tallImage: String!
 }
 
 enum Status {
@@ -71,6 +75,11 @@ enum Status {
 
 input ToggleGenrePreferenceInput {
   genreId: Int!
+}
+
+input UpsertWatchlistInput {
+  showId: Int!
+  status: Status!
 }
 
 type User {
