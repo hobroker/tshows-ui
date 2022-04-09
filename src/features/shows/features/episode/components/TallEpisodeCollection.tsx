@@ -11,7 +11,7 @@ interface Props {
   >;
 }
 
-const EpisodesCollection = ({ episodes, loading }: Props) => (
+const TallEpisodeCollection = ({ episodes, loading }: Props) => (
   <TallCardCollection loading={loading} scroll>
     {episodes.map((episode) => (
       <TallEpisodeCard key={episode.externalId} episode={episode} />
@@ -19,4 +19,4 @@ const EpisodesCollection = ({ episodes, loading }: Props) => (
   </TallCardCollection>
 );
 
-export default EpisodesCollection;
+export default TallEpisodeCollection;

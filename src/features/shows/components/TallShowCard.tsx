@@ -1,29 +1,28 @@
 import { useContext } from 'react';
-import { Status } from '../../../generated/graphql';
+import { PartialShow, Status } from '../../../generated/graphql';
 import { PartialWatchlistContext } from '../../watchlist/contexts/PartialWatchlistContext';
 import WatchlistAction from './WatchlistAction';
 import TallCard from './base/TallCard';
 
 interface Props {
-  externalId: number;
-  tallImage: string;
-  name: string;
-  status: Status;
+  show: PartialShow;
 }
 
-const TallShowCard = ({ externalId, tallImage, name, status }: Props) => {
+const TallShowCard = ({ show }: Props) => {
   const { upsertWatchlistItem } = useContext(PartialWatchlistContext);
 
   const onClick = (status: Status) => {
-    upsertWatchlistItem({ showId: externalId, status });
+    const showId = show.externalId;
+
+    upsertWatchlistItem({ showId, status });
   };
 
   return (
     <TallCard
-      tallImage={tallImage}
+      tallImage={show.tallImage}
       actions={
         <>
-          <WatchlistAction status={status} onClick={onClick} />
+          <WatchlistAction status={show.status} onClick={onClick} />
         </>
       }
     />

@@ -8,18 +8,12 @@ interface Props {
   loading: boolean;
 }
 
-const TallShowCardCollection = ({ shows, loading }: Props) => (
+const TallShowCollection = ({ shows, loading }: Props) => (
   <TallCardCollection loading={loading}>
-    {shows.map(({ externalId, name, tallImage, status }) => (
-      <TallShowCard
-        key={externalId}
-        externalId={externalId}
-        name={name}
-        tallImage={tallImage}
-        status={status}
-      />
+    {shows.map((show) => (
+      <TallShowCard key={show.externalId} show={show} />
     ))}
   </TallCardCollection>
 );
 
-export default TallShowCardCollection;
+export default TallShowCollection;

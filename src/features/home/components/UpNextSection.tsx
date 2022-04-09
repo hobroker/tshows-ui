@@ -1,5 +1,5 @@
 import { useListUpNextQuery } from '../../../generated/graphql';
-import EpisodesCollection from '../../shows/features/episode/components/EpisodesCollection';
+import TallEpisodeCollection from '../../shows/features/episode/components/TallEpisodeCollection';
 import Section from './Section';
 
 const UpNextSection = () => {
@@ -9,7 +9,7 @@ const UpNextSection = () => {
 
   return (
     <Section title="Up next to watch">
-      <EpisodesCollection episodes={episodes} loading={loading} />
+      <TallEpisodeCollection episodes={episodes} loading={loading} />
     </Section>
   );
 };
