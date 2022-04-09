@@ -1,21 +1,10 @@
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useCallback, useState } from 'react';
 import { prop } from 'rambda';
-import {
-  useLogoutMutation,
-  useMeLazyQuery,
-  User,
-} from '../../../generated/graphql';
+import { useLogoutMutation, useMeLazyQuery, User } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
 import { UserState } from '../constants';
 import useOnMount from '../../../hooks/useOnMount';
 import useHandlePreferences from '../../../hooks/useHandlePreferences';
-import { BackdropContext } from '../../../contexts/BackdropContext';
 
 interface UserContextType {
   userState: UserState;
@@ -38,7 +27,6 @@ const UserContext = createContext<UserContextType>({
 });
 
 const UserProvider = ({ children }: Props) => {
-  const { toggleBackdrop } = useContext(BackdropContext);
   const [fetchUser] = useMeLazyQuery();
   const [logoutMutation] = useLogoutMutation();
   const [user, setUser] = useState<UserContextType['user']>(null);
@@ -72,9 +60,7 @@ const UserProvider = ({ children }: Props) => {
   }, [fetchUser, handlePreferences]);
 
   useOnMount(async () => {
-    toggleBackdrop();
     await refreshUser();
-    toggleBackdrop();
   });
 
   return (

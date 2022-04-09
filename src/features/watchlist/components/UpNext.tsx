@@ -1,7 +1,6 @@
 import { useListUpNextQuery } from '../../../generated/graphql';
 import TallEpisodeCard from '../../shows/features/episode/components/TallEpisodeCard';
 import TallCardCollection from '../../shows/components/base/TallCardCollection';
-import TallEpisodeCardPlaceholder from '../../shows/features/episode/components/TallEpisodeCardPlaceholder';
 import Section from './Section';
 
 const UpNext = () => {
