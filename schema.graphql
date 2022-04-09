@@ -11,6 +11,7 @@ type Episode {
   airDate: DateTime
   description: String
   externalId: Int!
+  id: Int!
   isWatched: Boolean!
   name: String!
   number: Int!
@@ -58,6 +59,7 @@ type Query {
   listGenres: [Genre!]
   listUpNext: [Episode!]!
   me: User!
+  upsertEpisode(input: UpsertEpisodeInput!): [Void!]!
 }
 
 type Season {
@@ -75,6 +77,11 @@ enum Status {
 
 input ToggleGenrePreferenceInput {
   genreId: Int!
+}
+
+input UpsertEpisodeInput {
+  episodeId: Int!
+  isWatched: Boolean!
 }
 
 input UpsertWatchlistInput {

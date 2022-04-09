@@ -1,6 +1,10 @@
 import { createContext, ReactNode, useCallback, useState } from 'react';
 import { prop } from 'rambda';
-import { useLogoutMutation, useMeLazyQuery, User } from '../../../generated/graphql';
+import {
+  useLogoutMutation,
+  useMeLazyQuery,
+  User,
+} from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
 import { UserState } from '../constants';
 import useOnMount from '../../../hooks/useOnMount';

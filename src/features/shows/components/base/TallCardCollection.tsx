@@ -24,14 +24,14 @@ const TallCardCollection = ({
   loading,
   scroll = false,
 }: PropsWithChildren<Props>) => {
-  const placeholders = Array.from(Array(12).keys());
+  const placeholders = Array.from(Array(6).keys());
 
   return (
     <StyledWrapper
       sx={{ gridAutoFlow: scroll ? 'column' : 'dense', paddingBottom: 1 }}
     >
       {loading
-        ? placeholders.map((idx) => <TallEpisodeCardPlaceholder />)
+        ? placeholders.map((idx) => <TallEpisodeCardPlaceholder key={idx} />)
         : children}
     </StyledWrapper>
   );

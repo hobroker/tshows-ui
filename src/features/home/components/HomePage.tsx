@@ -1,6 +1,6 @@
 import React from 'react';
 import PageWrapper from '../../../components/PageWrapper';
-import UpNext from '../../watchlist/components/UpNext';
+import UpNext from '../../shows/features/episode/components/UpNext';
 
 const HomePage = () => (
   <PageWrapper>

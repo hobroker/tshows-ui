@@ -1,7 +1,7 @@
-import { useListUpNextQuery } from '../../../generated/graphql';
-import TallEpisodeCard from '../../shows/features/episode/components/TallEpisodeCard';
-import TallCardCollection from '../../shows/components/base/TallCardCollection';
-import Section from './Section';
+import { useListUpNextQuery } from '../../../../../generated/graphql';
+import TallCardCollection from '../../../components/base/TallCardCollection';
+import Section from '../../../../home/components/Section';
+import TallEpisodeCard from './TallEpisodeCard';
 
 const UpNext = () => {
   const { data, loading } = useListUpNextQuery();
