@@ -7,7 +7,7 @@ interface Props {
 
 const Section = ({ title, children }: PropsWithChildren<Props>) => (
   <Box sx={{ width: '100%' }}>
-    <Typography variant="h5" sx={{ mb: 2 }}>
+    <Typography variant="h5" sx={{ mb: 1 }}>
       {title}
     </Typography>
     {children}

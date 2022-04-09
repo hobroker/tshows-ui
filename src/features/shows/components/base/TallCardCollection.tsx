@@ -1,35 +1,40 @@
 import React, { PropsWithChildren } from 'react';
-import { CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import TallEpisodeCardPlaceholder from '../../features/episode/components/TallEpisodeCardPlaceholder';
 
 const StyledWrapper = styled('div')`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
-  grid-auto-flow: dense;
+  overflow-x: scroll;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 
-  ${({ theme }) => theme.breakpoints.up('sm')} {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  ${({ theme }) => theme.breakpoints.up('md')} {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  ${({ theme }) => theme.breakpoints.up('lg')} {
-    grid-template-columns: repeat(6, 1fr);
+  & > * {
+    min-width: 200px;
   }
 `;
 
 interface Props {
   loading: boolean;
+  scroll?: boolean;
 }
 
 const TallCardCollection = ({
   children,
   loading,
-}: PropsWithChildren<Props>) => (
-  <StyledWrapper>{loading ? <CircularProgress /> : children}</StyledWrapper>
-);
+  scroll = false,
+}: PropsWithChildren<Props>) => {
+  const placeholders = Array.from(Array(12).keys());
+
+  return (
+    <StyledWrapper
+      sx={{ gridAutoFlow: scroll ? 'column' : 'dense', paddingBottom: 1 }}
+    >
+      {loading
+        ? placeholders.map((idx) => <TallEpisodeCardPlaceholder />)
+        : children}
+    </StyledWrapper>
+  );
+};
 
 export default TallCardCollection;
