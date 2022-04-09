@@ -1,10 +1,10 @@
 import React from 'react';
 import PageWrapper from '../../../components/PageWrapper';
-import UpNext from '../../shows/features/episode/components/UpNext';
+import UpNextSection from './UpNextSection';
 
 const HomePage = () => (
   <PageWrapper>
-    <UpNext />
+    <UpNextSection />
   </PageWrapper>
 );
 
