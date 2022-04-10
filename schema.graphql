@@ -1,5 +1,23 @@
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 input DiscoverShowsInput {
   genreIds: [Int!]!
+}
+
+type Episode {
+  airDate: DateTime
+  description: String
+  externalId: Int!
+  id: Int!
+  isWatched: Boolean!
+  name: String!
+  number: Int!
+  seasonNumber: Int!
+  show: PartialShow!
+  wideImage: String
 }
 
 type Genre {
@@ -16,7 +34,8 @@ type Mutation {
   logout: Void!
   refresh: User!
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
-  upsertWatchlistItem(input: ShowWithStatusInput!): Watchlist!
+  upsertEpisode(input: UpsertEpisodeInput!): Episode
+  upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
 }
 
 type PartialShow {
@@ -39,12 +58,15 @@ type Query {
   getPreferences: Preference
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
+  listUpNext: [Episode!]!
   me: User!
 }
 
-input ShowWithStatusInput {
-  showId: Int!
-  status: Status!
+type Season {
+  description: String
+  name: String!
+  number: Int!
+  tallImage: String!
 }
 
 enum Status {
@@ -55,6 +77,16 @@ enum Status {
 
 input ToggleGenrePreferenceInput {
   genreId: Int!
+}
+
+input UpsertEpisodeInput {
+  episodeId: Int!
+  isWatched: Boolean!
+}
+
+input UpsertWatchlistInput {
+  showId: Int!
+  status: Status!
 }
 
 type User {

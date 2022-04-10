@@ -1,15 +1,8 @@
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { styled } from '@mui/material/styles';
-import { IconButton } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
 import { Status } from '../../../generated/graphql';
-
-const StyledIconButton = styled(IconButton)`
-  .icon {
-    color: ${({ theme }) => theme.palette.secondary.main};
-    filter: drop-shadow(0 0 5px black);
-  }
-`;
+import ActionButton from './base/ActionButton';
 
 interface Props {
   onClick: (status: Status) => void;
@@ -22,20 +15,24 @@ const STATUS_TOGGLE_MAP = {
   [Status.StoppedWatching]: Status.InWatchlist,
 } as const;
 
-const CardWatchlistButton = ({ status, onClick }: Props) => {
+const StyledActionButton = styled(ActionButton)`
+  background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.4)};
+`;
+
+const WatchlistAction = ({ status, onClick }: Props) => {
   const handleClick = () => {
     onClick(STATUS_TOGGLE_MAP[status]);
   };
 
   return (
-    <StyledIconButton size="small" onClick={handleClick}>
+    <StyledActionButton size="small" onClick={handleClick}>
       {status === Status.InWatchlist ? (
-        <BookmarkIcon className="icon" />
+        <BookmarkIcon />
       ) : (
-        <BookmarkBorderIcon className="icon" />
+        <BookmarkBorderIcon />
       )}
-    </StyledIconButton>
+    </StyledActionButton>
   );
 };
 
-export default CardWatchlistButton;
+export default WatchlistAction;

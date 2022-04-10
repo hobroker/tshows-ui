@@ -20,10 +20,26 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: any;
 };
 
 export type DiscoverShowsInput = {
   genreIds: Array<Scalars['Int']>;
+};
+
+export type Episode = {
+  __typename?: 'Episode';
+  airDate?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  externalId: Scalars['Int'];
+  id: Scalars['Int'];
+  isWatched: Scalars['Boolean'];
+  name: Scalars['String'];
+  number: Scalars['Int'];
+  seasonNumber: Scalars['Int'];
+  show: PartialShow;
+  wideImage?: Maybe<Scalars['String']>;
 };
 
 export type Genre = {
@@ -42,6 +58,7 @@ export type Mutation = {
   logout: Void;
   refresh: User;
   toggleGenrePreference: Void;
+  upsertEpisode?: Maybe<Episode>;
   upsertWatchlistItem: Watchlist;
 };
 
@@ -53,8 +70,12 @@ export type MutationToggleGenrePreferenceArgs = {
   input: ToggleGenrePreferenceInput;
 };
 
+export type MutationUpsertEpisodeArgs = {
+  input: UpsertEpisodeInput;
+};
+
 export type MutationUpsertWatchlistItemArgs = {
-  input: ShowWithStatusInput;
+  input: UpsertWatchlistInput;
 };
 
 export type PartialShow = {
@@ -80,6 +101,7 @@ export type Query = {
   getPreferences?: Maybe<Preference>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
+  listUpNext: Array<Episode>;
   me: User;
 };
 
@@ -87,9 +109,12 @@ export type QueryDiscoverShowsArgs = {
   input: DiscoverShowsInput;
 };
 
-export type ShowWithStatusInput = {
-  showId: Scalars['Int'];
-  status: Status;
+export type Season = {
+  __typename?: 'Season';
+  description?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  number: Scalars['Int'];
+  tallImage: Scalars['String'];
 };
 
 export enum Status {
@@ -100,6 +125,16 @@ export enum Status {
 
 export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
+};
+
+export type UpsertEpisodeInput = {
+  episodeId: Scalars['Int'];
+  isWatched: Scalars['Boolean'];
+};
+
+export type UpsertWatchlistInput = {
+  showId: Scalars['Int'];
+  status: Status;
 };
 
 export type User = {
@@ -178,6 +213,87 @@ export type GetPreferencesQuery = {
   } | null;
 };
 
+export type ListUpNextQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListUpNextQuery = {
+  __typename?: 'Query';
+  listUpNext: Array<{
+    __typename?: 'Episode';
+    id: number;
+    externalId: number;
+    number: number;
+    seasonNumber: number;
+    isWatched: boolean;
+    name: string;
+    description?: string | null;
+    wideImage?: string | null;
+    airDate?: any | null;
+    show: {
+      __typename?: 'PartialShow';
+      externalId: number;
+      name: string;
+      wideImage: string;
+      tallImage: string;
+    };
+  }>;
+};
+
+export type UpsertEpisodeMutationVariables = Exact<{
+  episodeId: Scalars['Int'];
+  isWatched?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpsertEpisodeMutation = {
+  __typename?: 'Mutation';
+  upsertEpisode?: {
+    __typename?: 'Episode';
+    id: number;
+    externalId: number;
+    number: number;
+    seasonNumber: number;
+    isWatched: boolean;
+    name: string;
+    description?: string | null;
+    wideImage?: string | null;
+    airDate?: any | null;
+    show: {
+      __typename?: 'PartialShow';
+      externalId: number;
+      name: string;
+      wideImage: string;
+      tallImage: string;
+    };
+  } | null;
+};
+
+export type EpisodeShowFragment = {
+  __typename?: 'PartialShow';
+  externalId: number;
+  name: string;
+  wideImage: string;
+  tallImage: string;
+};
+
+export type EpisodeFragment = {
+  __typename?: 'Episode';
+  id: number;
+  externalId: number;
+  number: number;
+  seasonNumber: number;
+  isWatched: boolean;
+  name: string;
+  description?: string | null;
+  wideImage?: string | null;
+  airDate?: any | null;
+  show: {
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    wideImage: string;
+    tallImage: string;
+  };
+};
+
 export type UpsertWatchlistItemMutationVariables = Exact<{
   showId: Scalars['Int'];
   status: Status;
@@ -241,6 +357,31 @@ export type LogoutMutation = {
   logout: { __typename: 'Void' };
 };
 
+export const EpisodeShowFragmentDoc = gql`
+  fragment EpisodeShow on PartialShow {
+    externalId
+    name
+    wideImage
+    tallImage
+  }
+`;
+export const EpisodeFragmentDoc = gql`
+  fragment Episode on Episode {
+    id
+    externalId
+    number
+    seasonNumber
+    isWatched
+    name
+    description
+    wideImage
+    airDate
+    show {
+      ...EpisodeShow
+    }
+  }
+  ${EpisodeShowFragmentDoc}
+`;
 export const ShowFragmentFragmentDoc = gql`
   fragment ShowFragment on PartialShow {
     externalId
@@ -537,6 +678,117 @@ export type GetPreferencesLazyQueryHookResult = ReturnType<
 export type GetPreferencesQueryResult = Apollo.QueryResult<
   GetPreferencesQuery,
   GetPreferencesQueryVariables
+>;
+export const ListUpNextDocument = gql`
+  query ListUpNext {
+    listUpNext {
+      ...Episode
+    }
+  }
+  ${EpisodeFragmentDoc}
+`;
+
+/**
+ * __useListUpNextQuery__
+ *
+ * To run a query within a React component, call `useListUpNextQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListUpNextQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListUpNextQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListUpNextQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListUpNextQuery,
+    ListUpNextQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<ListUpNextQuery, ListUpNextQueryVariables>(
+    ListUpNextDocument,
+    options,
+  );
+}
+export function useListUpNextLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListUpNextQuery,
+    ListUpNextQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<ListUpNextQuery, ListUpNextQueryVariables>(
+    ListUpNextDocument,
+    options,
+  );
+}
+export type ListUpNextQueryHookResult = ReturnType<typeof useListUpNextQuery>;
+export type ListUpNextLazyQueryHookResult = ReturnType<
+  typeof useListUpNextLazyQuery
+>;
+export type ListUpNextQueryResult = Apollo.QueryResult<
+  ListUpNextQuery,
+  ListUpNextQueryVariables
+>;
+export const UpsertEpisodeDocument = gql`
+  mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {
+    upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
+      ...Episode
+    }
+  }
+  ${EpisodeFragmentDoc}
+`;
+export type UpsertEpisodeMutationFn = Apollo.MutationFunction<
+  UpsertEpisodeMutation,
+  UpsertEpisodeMutationVariables
+>;
+
+/**
+ * __useUpsertEpisodeMutation__
+ *
+ * To run a mutation, you first call `useUpsertEpisodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertEpisodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertEpisodeMutation, { data, loading, error }] = useUpsertEpisodeMutation({
+ *   variables: {
+ *      episodeId: // value for 'episodeId'
+ *      isWatched: // value for 'isWatched'
+ *   },
+ * });
+ */
+export function useUpsertEpisodeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpsertEpisodeMutation,
+    UpsertEpisodeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    UpsertEpisodeMutation,
+    UpsertEpisodeMutationVariables
+  >(UpsertEpisodeDocument, options);
+}
+export type UpsertEpisodeMutationHookResult = ReturnType<
+  typeof useUpsertEpisodeMutation
+>;
+export type UpsertEpisodeMutationResult =
+  Apollo.MutationResult<UpsertEpisodeMutation>;
+export type UpsertEpisodeMutationOptions = Apollo.BaseMutationOptions<
+  UpsertEpisodeMutation,
+  UpsertEpisodeMutationVariables
 >;
 export const UpsertWatchlistItemDocument = gql`
   mutation UpsertWatchlistItem($showId: Int!, $status: Status!) {

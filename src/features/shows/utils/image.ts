@@ -12,6 +12,14 @@ enum TallImageSizes {
   original = 'original',
 }
 
+enum WideImageSize {
+  w300 = 'w300',
+  w780 = 'w780',
+  w1280 = 'w1280',
+  original = 'original',
+}
+
 const makeImageUrl = compose(concat, concat(IMAGE_URL), concat('/'));
 
 export const makeTallSmallImage = makeImageUrl(TallImageSizes.w185);
+export const makeWideSmallImage = makeImageUrl(WideImageSize.w300);
