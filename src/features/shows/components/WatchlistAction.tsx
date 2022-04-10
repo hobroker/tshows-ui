@@ -1,5 +1,6 @@
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { alpha, styled } from '@mui/material/styles';
 import { Status } from '../../../generated/graphql';
 import ActionButton from './base/ActionButton';
 
@@ -14,19 +15,23 @@ const STATUS_TOGGLE_MAP = {
   [Status.StoppedWatching]: Status.InWatchlist,
 } as const;
 
+const StyledActionButton = styled(ActionButton)`
+  background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.4)};
+`;
+
 const WatchlistAction = ({ status, onClick }: Props) => {
   const handleClick = () => {
     onClick(STATUS_TOGGLE_MAP[status]);
   };
 
   return (
-    <ActionButton onClick={handleClick}>
+    <StyledActionButton size="small" onClick={handleClick}>
       {status === Status.InWatchlist ? (
         <BookmarkIcon />
       ) : (
         <BookmarkBorderIcon />
       )}
-    </ActionButton>
+    </StyledActionButton>
   );
 };
 
