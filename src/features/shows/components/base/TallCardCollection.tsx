@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { styled } from '@mui/material/styles';
 import classNames from 'classnames';
-import TallEpisodeCardPlaceholder from '../../features/episode/components/TallEpisodeCardPlaceholder';
 
 const StyledWrapper = styled('div')`
   --min-width: 200px;
@@ -26,12 +25,14 @@ const StyledWrapper = styled('div')`
 
 interface Props {
   loading: boolean;
+  PlaceholderComponent: React.JSXElementConstructor<any>;
   scroll?: boolean;
 }
 
 const TallCardCollection = ({
   children,
   loading,
+  PlaceholderComponent,
   scroll = false,
 }: PropsWithChildren<Props>) => {
   const placeholders = Array.from(Array(6).keys());
@@ -39,7 +40,7 @@ const TallCardCollection = ({
   return (
     <StyledWrapper className={classNames({ 'with-scroll': scroll })}>
       {loading
-        ? placeholders.map((idx) => <TallEpisodeCardPlaceholder key={idx} />)
+        ? placeholders.map((idx) => <PlaceholderComponent key={idx} />)
         : children}
     </StyledWrapper>
   );
