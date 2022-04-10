@@ -1,17 +1,17 @@
 import { useContext } from 'react';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TallEpisodeCollection from '../../shows/features/episode/components/TallEpisodeCollection';
 import { UpNextContext } from '../contexts/UpNextContext';
 import Section from './Section';
 
-const UpNextSection = () => {
+const UpcomingSection = () => {
   const { episodes, loading } = useContext(UpNextContext);
 
   return (
-    <Section title="Up next to watch" icon={<AccessTimeIcon />}>
+    <Section title="Upcoming schedule" icon={<CalendarMonthIcon />}>
       <TallEpisodeCollection episodes={episodes} loading={loading} />
     </Section>
   );
 };
 
-export default UpNextSection;
+export default UpcomingSection;

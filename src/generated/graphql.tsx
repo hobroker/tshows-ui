@@ -102,6 +102,7 @@ export type Query = {
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
   listUpNext: Array<Episode>;
+  listUpcoming: Array<Episode>;
   me: User;
 };
 

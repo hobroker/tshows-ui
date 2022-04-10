@@ -24,9 +24,7 @@ const TallEpisodeCard = ({ episode }: Props) => {
     <TallCard tallImage={episode.show.tallImage}>
       <Box sx={{ p: 0.5, display: 'flex' }}>
         <Tooltip title={title}>
-          <EllipsisButton size="small" variant="outlined">
-            {title}
-          </EllipsisButton>
+          <EllipsisButton size="small">{title}</EllipsisButton>
         </Tooltip>
         <UpsertEpisodeAction
           isWatched={isWatched}

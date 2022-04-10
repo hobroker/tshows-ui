@@ -10,7 +10,7 @@ const StyledWrapper = styled('div')`
   grid-template-columns: repeat(auto-fit, minmax(var(--min-width), 1fr));
   padding: ${({ theme }) => theme.spacing(1)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-  margin-inline: -${({ theme }) => theme.spacing(0.5)};
+  margin-inline: -${({ theme }) => theme.spacing(0.75)};
   grid-auto-flow: dense;
 
   &.with-scroll {

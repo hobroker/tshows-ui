@@ -23,7 +23,7 @@ interface Props {
 }
 
 const JoinWrapper = ({ title, children }: Props) => (
-  <PageWrapper>
+  <PageWrapper sx={{ justifyContent: 'center' }}>
     <Wrapper>
       <Card elevation={8} sx={{ width: 600 }}>
         <CardContent>

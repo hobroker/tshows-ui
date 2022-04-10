@@ -15,8 +15,8 @@ const StyledAppBar = styled(AppBar)`
 const Navigation = () => (
   <NavigationProvider>
     <ElevationScroll>
-      <StyledAppBar>
-        <Toolbar>
+      <StyledAppBar elevation={1}>
+        <Toolbar sx={{ px: { xs: 1.5 } }}>
           <Box sx={{ mr: 1.5 }}>
             <Button href="/" sx={{ paddingY: 1.75 }} size="large">
               <LogoText sx={{ width: 150 }} />
