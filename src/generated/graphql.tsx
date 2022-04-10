@@ -58,7 +58,7 @@ export type Mutation = {
   logout: Void;
   refresh: User;
   toggleGenrePreference: Void;
-  upsertEpisode: Array<Void>;
+  upsertEpisode?: Maybe<Episode>;
   upsertWatchlistItem: Watchlist;
 };
 
@@ -238,6 +238,34 @@ export type ListUpNextQuery = {
   }>;
 };
 
+export type UpsertEpisodeMutationVariables = Exact<{
+  episodeId: Scalars['Int'];
+  isWatched?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpsertEpisodeMutation = {
+  __typename?: 'Mutation';
+  upsertEpisode?: {
+    __typename?: 'Episode';
+    id: number;
+    externalId: number;
+    number: number;
+    seasonNumber: number;
+    isWatched: boolean;
+    name: string;
+    description?: string | null;
+    wideImage?: string | null;
+    airDate?: any | null;
+    show: {
+      __typename?: 'PartialShow';
+      externalId: number;
+      name: string;
+      wideImage: string;
+      tallImage: string;
+    };
+  } | null;
+};
+
 export type EpisodeShowFragment = {
   __typename?: 'PartialShow';
   externalId: number;
@@ -246,14 +274,24 @@ export type EpisodeShowFragment = {
   tallImage: string;
 };
 
-export type UpsertEpisodeMutationVariables = Exact<{
-  episodeId: Scalars['Int'];
-  isWatched: Scalars['Boolean'];
-}>;
-
-export type UpsertEpisodeMutation = {
-  __typename?: 'Mutation';
-  upsertEpisode: Array<{ __typename: 'Void' }>;
+export type EpisodeFragment = {
+  __typename?: 'Episode';
+  id: number;
+  externalId: number;
+  number: number;
+  seasonNumber: number;
+  isWatched: boolean;
+  name: string;
+  description?: string | null;
+  wideImage?: string | null;
+  airDate?: any | null;
+  show: {
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    wideImage: string;
+    tallImage: string;
+  };
 };
 
 export type UpsertWatchlistItemMutationVariables = Exact<{
@@ -326,6 +364,23 @@ export const EpisodeShowFragmentDoc = gql`
     wideImage
     tallImage
   }
+`;
+export const EpisodeFragmentDoc = gql`
+  fragment Episode on Episode {
+    id
+    externalId
+    number
+    seasonNumber
+    isWatched
+    name
+    description
+    wideImage
+    airDate
+    show {
+      ...EpisodeShow
+    }
+  }
+  ${EpisodeShowFragmentDoc}
 `;
 export const ShowFragmentFragmentDoc = gql`
   fragment ShowFragment on PartialShow {
@@ -627,21 +682,10 @@ export type GetPreferencesQueryResult = Apollo.QueryResult<
 export const ListUpNextDocument = gql`
   query ListUpNext {
     listUpNext {
-      id
-      externalId
-      number
-      seasonNumber
-      isWatched
-      name
-      description
-      wideImage
-      airDate
-      show {
-        ...EpisodeShow
-      }
+      ...Episode
     }
   }
-  ${EpisodeShowFragmentDoc}
+  ${EpisodeFragmentDoc}
 `;
 
 /**
@@ -694,11 +738,12 @@ export type ListUpNextQueryResult = Apollo.QueryResult<
   ListUpNextQueryVariables
 >;
 export const UpsertEpisodeDocument = gql`
-  mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean!) {
+  mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {
     upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
-      __typename
+      ...Episode
     }
   }
+  ${EpisodeFragmentDoc}
 `;
 export type UpsertEpisodeMutationFn = Apollo.MutationFunction<
   UpsertEpisodeMutation,

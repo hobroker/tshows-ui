@@ -1,14 +1,10 @@
-import { Episode, EpisodeShowFragment } from '../../../../../generated/graphql';
 import TallCardCollection from '../../../components/base/TallCardCollection';
+import { EpisodeType } from '../../../../home/contexts/UpNextContext';
 import TallEpisodeCard from './TallEpisodeCard';
 
 interface Props {
   loading: boolean;
-  episodes: Array<
-    Omit<Episode, 'show'> & {
-      show: EpisodeShowFragment;
-    }
-  >;
+  episodes: Array<EpisodeType>;
 }
 
 const TallEpisodeCollection = ({ episodes, loading }: Props) => (

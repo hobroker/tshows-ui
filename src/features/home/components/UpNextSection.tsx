@@ -1,11 +1,10 @@
-import { useListUpNextQuery } from '../../../generated/graphql';
+import { useContext } from 'react';
 import TallEpisodeCollection from '../../shows/features/episode/components/TallEpisodeCollection';
+import { UpNextContext } from '../contexts/UpNextContext';
 import Section from './Section';
 
 const UpNextSection = () => {
-  const { data, loading } = useListUpNextQuery();
-
-  const episodes = data?.listUpNext ?? [];
+  const { episodes, loading } = useContext(UpNextContext);
 
   return (
     <Section title="Up next to watch">

@@ -9,6 +9,11 @@ const StyledWrapper = styled(Paper)`
   display: flex;
   flex-direction: column;
   position: relative;
+  box-shadow: ${({ theme }) => theme.shadows[3]};
+
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows[6]};
+  }
 `;
 
 const StyledImage = styled('img')`
@@ -36,16 +41,7 @@ const TallCard = ({
   onClick,
   children,
 }: PropsWithChildren<Props>) => (
-  <StyledWrapper
-    variant="elevation"
-    elevation={4}
-    sx={{
-      ':hover': {
-        boxShadow: 10,
-      },
-    }}
-    onClick={onClick}
-  >
+  <StyledWrapper variant="elevation" onClick={onClick}>
     <StyledActions>{actions}</StyledActions>
     <StyledImage src={makeTallSmallImage(tallImage || '')} />
     {children}

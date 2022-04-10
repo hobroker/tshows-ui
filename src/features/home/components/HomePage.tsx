@@ -1,10 +1,13 @@
 import React from 'react';
 import PageWrapper from '../../../components/PageWrapper';
+import UpNextProvider from '../contexts/UpNextContext';
 import UpNextSection from './UpNextSection';
 
 const HomePage = () => (
   <PageWrapper>
-    <UpNextSection />
+    <UpNextProvider>
+      <UpNextSection />
+    </UpNextProvider>
   </PageWrapper>
 );
 

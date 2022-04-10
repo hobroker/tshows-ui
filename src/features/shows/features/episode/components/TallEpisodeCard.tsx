@@ -1,27 +1,33 @@
-import { Box } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { not } from 'rambda';
-import { Episode, EpisodeShowFragment } from '../../../../../generated/graphql';
 import TallCard from '../../../components/base/TallCard';
 import EllipsisButton from '../../../../../components/EllipsisButton';
+import type { EpisodeType } from '../../../../home/contexts/UpNextContext';
 import UpsertEpisodeAction from './UpsertEpisodeAction';
+import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
 interface Props {
-  episode: Omit<Episode, 'show'> & {
-    show: EpisodeShowFragment;
-  };
+  episode: EpisodeType;
 }
 
 const TallEpisodeCard = ({ episode }: Props) => {
   const [isWatched, setIsWatched] = useState(false);
   const toggleIsWatched = useCallback(() => setIsWatched(not), []);
+  const title = `${episode.seasonNumber}x${episode.number}  - ${episode.name}`;
+
+  if (episode.loading) {
+    return <TallEpisodeCardPlaceholder />;
+  }
 
   return (
     <TallCard tallImage={episode.show.tallImage}>
       <Box sx={{ p: 0.5, display: 'flex' }}>
-        <EllipsisButton>
-          {`${episode.seasonNumber}x${episode.number}`} - {episode.name}
-        </EllipsisButton>
+        <Tooltip title={title}>
+          <EllipsisButton size="small" variant="outlined">
+            {title}
+          </EllipsisButton>
+        </Tooltip>
         <UpsertEpisodeAction
           isWatched={isWatched}
           episodeId={episode.id}

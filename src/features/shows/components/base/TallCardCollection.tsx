@@ -3,14 +3,18 @@ import { styled } from '@mui/material/styles';
 import TallEpisodeCardPlaceholder from '../../features/episode/components/TallEpisodeCardPlaceholder';
 
 const StyledWrapper = styled('div')`
+  --min-width: 200px;
   display: grid;
   grid-gap: 1rem;
   overflow-x: scroll;
   grid-auto-flow: column;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, var(--min-width));
+  padding: ${({ theme }) => theme.spacing(1)};
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  margin-inline: -${({ theme }) => theme.spacing(0.5)};
 
   & > * {
-    min-width: 200px;
+    min-width: var(--min-width);
   }
 `;
 
@@ -27,9 +31,7 @@ const TallCardCollection = ({
   const placeholders = Array.from(Array(6).keys());
 
   return (
-    <StyledWrapper
-      sx={{ gridAutoFlow: scroll ? 'column' : 'dense', paddingBottom: 1 }}
-    >
+    <StyledWrapper sx={{ gridAutoFlow: scroll ? 'column' : 'dense' }}>
       {loading
         ? placeholders.map((idx) => <TallEpisodeCardPlaceholder key={idx} />)
         : children}
