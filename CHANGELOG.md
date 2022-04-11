@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/hobroker/tshows-ui/compare/v1.9.0...v1.9.1) (2022-04-11)
+
+
+### Bug Fixes
+
+* duplicate UpNextProvider ([#24](https://github.com/hobroker/tshows-ui/issues/24)) ([1bd67a5](https://github.com/hobroker/tshows-ui/commit/1bd67a531eb408994f84cebe3351d8d71450aab0))
+
 # [1.9.0](https://github.com/hobroker/tshows-ui/compare/v1.8.0...v1.9.0) (2022-04-11)
 
 
