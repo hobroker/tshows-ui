@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/hobroker/tshows-ui/compare/v1.8.0...v1.9.0) (2022-04-11)
+
+
+### Features
+
+* add upcoming section ([#23](https://github.com/hobroker/tshows-ui/issues/23)) ([56c12c4](https://github.com/hobroker/tshows-ui/commit/56c12c45a6861f1a8669a800efb2ac393829468e))
+
 # [1.8.0](https://github.com/hobroker/tshows-ui/compare/v1.7.0...v1.8.0) (2022-04-10)
 
 
