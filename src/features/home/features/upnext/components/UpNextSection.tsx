@@ -15,7 +15,7 @@ const UpNextSection = () => {
         {loading || episodes.length ? (
           <TallEpisodeCollection
             episodes={episodes}
-            loading
+            loading={loading}
             actions={[UpsertEpisodeAction]}
           />
         ) : (

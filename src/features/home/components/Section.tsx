@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 
 const StyledWrapper = styled(Box)`
   width: 100%;
-  margin-bottom: ${({ theme }) => theme.spacing(2)};
+  margin-block: ${({ theme }) => theme.spacing(2)};
 `;
 
 interface Props {
