@@ -7,14 +7,14 @@ import React, {
   useState,
 } from 'react';
 import { assoc, compose, not, propEq } from 'ramda';
-import { noop, updateListItem } from '../../../utils/fp';
+import { noop, updateListItem } from '../../../../../utils/fp';
 import {
   useListUpNextLazyQuery,
   useUpsertEpisodeMutation,
-} from '../../../generated/graphql';
-import { UserContext } from '../../user/contexts/UserContext';
-import { UserState } from '../../user/constants';
-import type { EpisodeType } from './types';
+} from '../../../../../generated/graphql';
+import { UserContext } from '../../../../user/contexts/UserContext';
+import { UserState } from '../../../../user/constants';
+import { EpisodeType } from '../../../../shows/features/episode/types';
 
 interface ContextType {
   episodes: EpisodeType[];

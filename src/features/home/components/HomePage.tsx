@@ -1,18 +1,15 @@
 import React from 'react';
 import PageWrapper from '../../../components/PageWrapper';
-import HomeProvider from '../contexts/HomeContext';
 import WhenLoggedIn from '../../user/components/WhenLoggedIn';
-import UpNextSection from './UpNextSection';
-import UpcomingSection from './UpcomingSection';
+import Upcoming from '../features/upcoming/components/Upcoming';
+import UpNext from '../features/upnext/components/UpNext';
 
 const HomePage = () => (
   <PageWrapper>
-    <HomeProvider>
-      <WhenLoggedIn>
-        <UpNextSection />
-        <UpcomingSection />
-      </WhenLoggedIn>
-    </HomeProvider>
+    <WhenLoggedIn>
+      <UpNext />
+      <Upcoming />
+    </WhenLoggedIn>
   </PageWrapper>
 );
 

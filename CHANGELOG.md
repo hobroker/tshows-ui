@@ -3,7 +3,7 @@
 
 ### Features
 
-* add UpNext section ([#22](https://github.com/hobroker/tshows-ui/issues/22)) ([e73c1df](https://github.com/hobroker/tshows-ui/commit/e73c1dff3948987a677811694d741fc9a6464469))
+* add Upcoming section ([#22](https://github.com/hobroker/tshows-ui/issues/22)) ([e73c1df](https://github.com/hobroker/tshows-ui/commit/e73c1dff3948987a677811694d741fc9a6464469))
 
 # [1.7.0](https://github.com/hobroker/tshows-ui/compare/v1.6.0...v1.7.0) (2022-04-04)
 

@@ -1,17 +1,20 @@
 import { Box, Tooltip } from '@mui/material';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import TallCard from '../../../components/base/TallCard';
 import EllipsisButton from '../../../../../components/EllipsisButton';
-import { ActionProps } from '../types';
-import type { EpisodeType } from '../../../../home/contexts/types';
+import { ActionProps, EpisodeType } from '../types';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
 interface Props {
   episode: EpisodeType;
-  actions: React.JSXElementConstructor<ActionProps>[];
+  actions?: React.JSXElementConstructor<ActionProps>[];
 }
 
-const TallEpisodeCard = ({ episode, actions }: Props) => {
+const TallEpisodeCard = ({
+  episode,
+  children,
+  actions = [],
+}: PropsWithChildren<Props>) => {
   if (episode.loading) {
     return <TallEpisodeCardPlaceholder />;
   }
@@ -28,6 +31,7 @@ const TallEpisodeCard = ({ episode, actions }: Props) => {
           <Action key={episode.id} episode={episode} />
         ))}
       </Box>
+      {children}
     </TallCard>
   );
 };

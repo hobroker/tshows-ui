@@ -5,18 +5,10 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import {
-  Episode,
-  EpisodeShowFragment,
-  useListUpcomingLazyQuery,
-} from '../../../generated/graphql';
-import { UserContext } from '../../user/contexts/UserContext';
-import { UserState } from '../../user/constants';
-
-export type EpisodeType = Omit<Episode, 'show'> & {
-  show: EpisodeShowFragment;
-  loading?: boolean;
-};
+import { useListUpcomingLazyQuery } from '../../../../../generated/graphql';
+import { UserContext } from '../../../../user/contexts/UserContext';
+import { UserState } from '../../../../user/constants';
+import { EpisodeType } from '../../../../shows/features/episode/types';
 
 interface ContextType {
   episodes: EpisodeType[];

@@ -1,7 +1,6 @@
 import React from 'react';
 import TallCardCollection from '../../../components/base/TallCardCollection';
-import { ActionProps } from '../types';
-import type { EpisodeType } from '../../../../home/contexts/types';
+import { ActionProps, EpisodeType } from '../types';
 import TallEpisodeCard from './TallEpisodeCard';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
