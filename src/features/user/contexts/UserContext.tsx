@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useCallback, useState } from 'react';
-import { prop } from 'rambda';
+import { prop } from 'ramda';
 import {
   useLogoutMutation,
   useMeLazyQuery,

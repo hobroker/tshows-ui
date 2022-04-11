@@ -16,7 +16,10 @@ const STATUS_TOGGLE_MAP = {
 } as const;
 
 const StyledActionButton = styled(ActionButton)`
-  background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.4)};
+  background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.2)};
+  &:hover {
+    background-color: ${({ theme }) => alpha(theme.palette.common.white, 0.4)};
+  }
 `;
 
 const WatchlistAction = ({ status, onClick }: Props) => {

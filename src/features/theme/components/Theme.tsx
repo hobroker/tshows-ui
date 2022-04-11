@@ -17,6 +17,7 @@ const Theme = ({ children }: Props) => {
         type="checkbox"
         checked={isDarkMode}
         onChange={() => setIsDarkMode(!isDarkMode)}
+        style={{ position: 'absolute' }}
       />
     </ThemeProvider>
   );

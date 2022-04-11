@@ -8,7 +8,7 @@ import {
   Stepper,
   Typography,
 } from '@mui/material';
-import { inc } from 'rambda';
+import { inc } from 'ramda';
 import { useNavigate } from 'react-router-dom';
 import LogoText from '../../logo/components/LogoText';
 import { RoutePath } from '../../router/constants';

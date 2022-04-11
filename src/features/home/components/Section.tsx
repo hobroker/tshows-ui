@@ -1,17 +1,33 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 import { Box, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+
+const StyledWrapper = styled(Box)`
+  width: 100%;
+  margin-block: ${({ theme }) => theme.spacing(2)};
+`;
 
 interface Props {
   title: string;
+  icon: ReactNode;
 }
 
-const Section = ({ title, children }: PropsWithChildren<Props>) => (
-  <Box sx={{ width: '100%' }}>
-    <Typography variant="h5" sx={{ mb: 1 }}>
-      {title}
-    </Typography>
+const Section = ({ title, icon, children }: PropsWithChildren<Props>) => (
+  <StyledWrapper>
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          mr: 0.5,
+          color: ({ palette }) => palette.primary.main,
+        }}
+      >
+        {icon}
+      </Box>
+      <Typography variant="h5">{title}</Typography>
+    </Box>
     {children}
-  </Box>
+  </StyledWrapper>
 );
 
 export default Section;

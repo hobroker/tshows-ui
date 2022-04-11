@@ -59,6 +59,7 @@ type Query {
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
   listUpNext: [Episode!]!
+  listUpcoming: [Episode!]!
   me: User!
 }
 

@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode, useCallback, useState } from 'react';
-import { not } from 'rambda';
+import { not } from 'ramda';
 import { Backdrop, CircularProgress } from '@mui/material';
 import { noop } from '../utils/fp';
 

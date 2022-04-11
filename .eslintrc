@@ -10,7 +10,7 @@
     "prefer-arrow-callback": "error",
     "arrow-body-style": ["error", "as-needed"],
     "import/order": [
-      "error",
+      "warn",
       {
         "groups": [
           "builtin",

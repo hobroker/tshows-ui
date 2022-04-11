@@ -1,18 +1,20 @@
-import React, { createContext, ReactNode, useCallback, useState } from 'react';
-import { assoc, propEq } from 'rambda/immutable';
-import { noop, replaceListItem, updateListItem } from '../../../utils/fp';
+import React, {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { assoc, compose, not, propEq } from 'ramda';
+import { noop, updateListItem } from '../../../../../utils/fp';
 import {
-  Episode,
-  EpisodeShowFragment,
   useListUpNextLazyQuery,
   useUpsertEpisodeMutation,
-} from '../../../generated/graphql';
-import useOnMount from '../../../hooks/useOnMount';
-
-export type EpisodeType = Omit<Episode, 'show'> & {
-  show: EpisodeShowFragment;
-  loading?: boolean;
-};
+} from '../../../../../generated/graphql';
+import { UserContext } from '../../../../user/contexts/UserContext';
+import { UserState } from '../../../../user/constants';
+import { EpisodeType } from '../../../../shows/features/episode/types';
 
 interface ContextType {
   episodes: EpisodeType[];
@@ -34,6 +36,7 @@ const beforeEpisodeUpdate = (episodeId: number) =>
   updateListItem(propEq('id', episodeId), assoc('loading', true));
 
 const UpNextProvider = ({ children }: Props) => {
+  const { userState } = useContext(UserContext);
   const [fetchUpNextEpisodes, { loading }] = useListUpNextLazyQuery();
   const [upsertEpisode] = useUpsertEpisodeMutation();
   const [episodes, setEpisodes] = useState<EpisodeType[]>([]);
@@ -46,22 +49,30 @@ const UpNextProvider = ({ children }: Props) => {
 
       const episode = data?.upsertEpisode;
 
-      setEpisodes((episodes) =>
-        replaceListItem(propEq('id', episodeId), episode, episodes).filter(
-          Boolean,
-        ),
-      );
+      if (!episode) {
+        setEpisodes((episodes) =>
+          episodes.filter(compose(not, propEq('id', episodeId))),
+        );
+      } else {
+        setEpisodes((episodes) =>
+          episodes.map((item) => (item.id === episodeId ? episode : item)),
+        );
+      }
     },
     [upsertEpisode],
   );
 
-  useOnMount(async () => {
-    const { data } = await fetchUpNextEpisodes();
-
-    if (data?.listUpNext) {
-      setEpisodes(data.listUpNext);
+  useEffect(() => {
+    if (userState !== UserState.LoggedIn) {
+      return;
     }
-  });
+
+    fetchUpNextEpisodes().then(({ data }) => {
+      if (data?.listUpNext) {
+        setEpisodes(data.listUpNext);
+      }
+    });
+  }, [fetchUpNextEpisodes, userState]);
 
   return (
     <UpNextContext.Provider
