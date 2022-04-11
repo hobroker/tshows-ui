@@ -1,4 +1,4 @@
-import { compose, concat } from 'rambda';
+import { compose, concat } from 'ramda';
 
 const IMAGE_URL = 'https://image.tmdb.org/t/p';
 

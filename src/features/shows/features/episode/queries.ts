@@ -8,6 +8,14 @@ export const QUERY_LIST_UP_NEXT = gql`
   }
 `;
 
+export const QUERY_LIST_UPCOMING_NEXT = gql`
+  query ListUpcoming {
+    listUpcoming {
+      ...Episode
+    }
+  }
+`;
+
 export const MUTATION_UPSERT_EPISODE = gql`
   mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {
     upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {

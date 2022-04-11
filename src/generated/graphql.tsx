@@ -239,6 +239,31 @@ export type ListUpNextQuery = {
   }>;
 };
 
+export type ListUpcomingQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListUpcomingQuery = {
+  __typename?: 'Query';
+  listUpcoming: Array<{
+    __typename?: 'Episode';
+    id: number;
+    externalId: number;
+    number: number;
+    seasonNumber: number;
+    isWatched: boolean;
+    name: string;
+    description?: string | null;
+    wideImage?: string | null;
+    airDate?: any | null;
+    show: {
+      __typename?: 'PartialShow';
+      externalId: number;
+      name: string;
+      wideImage: string;
+      tallImage: string;
+    };
+  }>;
+};
+
 export type UpsertEpisodeMutationVariables = Exact<{
   episodeId: Scalars['Int'];
   isWatched?: InputMaybe<Scalars['Boolean']>;
@@ -737,6 +762,66 @@ export type ListUpNextLazyQueryHookResult = ReturnType<
 export type ListUpNextQueryResult = Apollo.QueryResult<
   ListUpNextQuery,
   ListUpNextQueryVariables
+>;
+export const ListUpcomingDocument = gql`
+  query ListUpcoming {
+    listUpcoming {
+      ...Episode
+    }
+  }
+  ${EpisodeFragmentDoc}
+`;
+
+/**
+ * __useListUpcomingQuery__
+ *
+ * To run a query within a React component, call `useListUpcomingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListUpcomingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListUpcomingQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListUpcomingQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListUpcomingQuery,
+    ListUpcomingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<ListUpcomingQuery, ListUpcomingQueryVariables>(
+    ListUpcomingDocument,
+    options,
+  );
+}
+export function useListUpcomingLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListUpcomingQuery,
+    ListUpcomingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<ListUpcomingQuery, ListUpcomingQueryVariables>(
+    ListUpcomingDocument,
+    options,
+  );
+}
+export type ListUpcomingQueryHookResult = ReturnType<
+  typeof useListUpcomingQuery
+>;
+export type ListUpcomingLazyQueryHookResult = ReturnType<
+  typeof useListUpcomingLazyQuery
+>;
+export type ListUpcomingQueryResult = Apollo.QueryResult<
+  ListUpcomingQuery,
+  ListUpcomingQueryVariables
 >;
 export const UpsertEpisodeDocument = gql`
   mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {

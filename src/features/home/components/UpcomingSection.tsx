@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TallEpisodeCollection from '../../shows/features/episode/components/TallEpisodeCollection';
-import { UpNextContext } from '../contexts/UpNextContext';
+import { UpcomingContext } from '../contexts/UpcomingContext';
 import Section from './Section';
 
 const UpcomingSection = () => {
-  const { episodes, loading } = useContext(UpNextContext);
+  const { episodes, loading } = useContext(UpcomingContext);
 
   return (
     <Section title="Upcoming schedule" icon={<CalendarMonthIcon />}>

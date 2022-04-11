@@ -6,21 +6,15 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { assoc, propEq } from 'rambda/immutable';
-import { noop, replaceListItem, updateListItem } from '../../../utils/fp';
+import { assoc, compose, not, propEq } from 'ramda';
+import { noop, updateListItem } from '../../../utils/fp';
 import {
-  Episode,
-  EpisodeShowFragment,
   useListUpNextLazyQuery,
   useUpsertEpisodeMutation,
 } from '../../../generated/graphql';
 import { UserContext } from '../../user/contexts/UserContext';
 import { UserState } from '../../user/constants';
-
-export type EpisodeType = Omit<Episode, 'show'> & {
-  show: EpisodeShowFragment;
-  loading?: boolean;
-};
+import type { EpisodeType } from './types';
 
 interface ContextType {
   episodes: EpisodeType[];
@@ -55,11 +49,15 @@ const UpNextProvider = ({ children }: Props) => {
 
       const episode = data?.upsertEpisode;
 
-      setEpisodes((episodes) =>
-        replaceListItem(propEq('id', episodeId), episode, episodes).filter(
-          Boolean,
-        ),
-      );
+      if (!episode) {
+        setEpisodes((episodes) =>
+          episodes.filter(compose(not, propEq('id', episodeId))),
+        );
+      } else {
+        setEpisodes((episodes) =>
+          episodes.map((item) => (item.id === episodeId ? episode : item)),
+        );
+      }
     },
     [upsertEpisode],
   );

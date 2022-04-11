@@ -1,24 +1,22 @@
 import { Box, Tooltip } from '@mui/material';
-import { useCallback, useState } from 'react';
-import { not } from 'rambda';
+import React from 'react';
 import TallCard from '../../../components/base/TallCard';
 import EllipsisButton from '../../../../../components/EllipsisButton';
-import type { EpisodeType } from '../../../../home/contexts/UpNextContext';
-import UpsertEpisodeAction from './UpsertEpisodeAction';
+import { ActionProps } from '../types';
+import type { EpisodeType } from '../../../../home/contexts/types';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
 interface Props {
   episode: EpisodeType;
+  actions: React.JSXElementConstructor<ActionProps>[];
 }
 
-const TallEpisodeCard = ({ episode }: Props) => {
-  const [isWatched, setIsWatched] = useState(false);
-  const toggleIsWatched = useCallback(() => setIsWatched(not), []);
-  const title = `${episode.seasonNumber}x${episode.number}  - ${episode.name}`;
-
+const TallEpisodeCard = ({ episode, actions }: Props) => {
   if (episode.loading) {
     return <TallEpisodeCardPlaceholder />;
   }
+
+  const title = `${episode.seasonNumber}x${episode.number}  - ${episode.name}`;
 
   return (
     <TallCard tallImage={episode.show.tallImage}>
@@ -26,11 +24,9 @@ const TallEpisodeCard = ({ episode }: Props) => {
         <Tooltip title={title}>
           <EllipsisButton size="small">{title}</EllipsisButton>
         </Tooltip>
-        <UpsertEpisodeAction
-          isWatched={isWatched}
-          episodeId={episode.id}
-          toggleIsWatched={toggleIsWatched}
-        />
+        {actions.map((Action) => (
+          <Action key={episode.id} episode={episode} />
+        ))}
       </Box>
     </TallCard>
   );
