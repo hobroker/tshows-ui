@@ -11,12 +11,7 @@ const GenresOnboarding = () => {
   const canRender = genres.length;
 
   return (
-    <Stack
-      direction="row"
-      flexWrap="wrap"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Stack direction="row" flexWrap="wrap" alignItems="center">
       {canRender ? (
         genres.map(({ name, externalId }) => {
           const isSelected = selectedGenres.includes(externalId);
