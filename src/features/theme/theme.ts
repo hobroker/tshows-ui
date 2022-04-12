@@ -1,4 +1,4 @@
-import { blue, red } from '@mui/material/colors';
+import { blue, grey, red } from '@mui/material/colors';
 import { createTheme } from '@mui/material';
 import type { PaletteMode } from '@mui/material';
 import { LinkProps } from '@mui/material/Link/Link.d';
@@ -17,6 +17,10 @@ const theme = ({ mode = 'light' }: Props = {}) =>
       },
       secondary: {
         main: red[500],
+      },
+      background: {
+        default: mode === 'light' ? grey[50] : grey[900],
+        paper: mode === 'light' ? grey[50] : grey[900],
       },
     },
     components: {
