@@ -10,6 +10,7 @@ import {
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import useYupValidationResolver from '../hooks/useYupValidationResolver';
+import { RoutePath } from '../../router/constants';
 
 type LoginFormInput = {
   email: string;
@@ -80,7 +81,7 @@ const LoginForm = () => {
           sx={{ color: (theme) => theme.palette.text.secondary }}
         >
           Don't have an account{' '}
-          <Link color="primary" href="/join">
+          <Link color="primary" href={RoutePath.Register}>
             Create an account
           </Link>
         </Typography>

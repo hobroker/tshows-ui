@@ -74,8 +74,8 @@ const UserMenu = ({ children, avatar }: Props) => {
           return React.cloneElement(child, {
             disableRipple: true,
             onClick: async () => {
-              await child.props?.onClick?.();
               close();
+              await child.props?.onClick?.();
             },
           });
         })}
