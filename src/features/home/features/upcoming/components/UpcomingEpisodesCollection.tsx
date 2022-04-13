@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { DateTime } from 'luxon';
-import TallCardCollection from '../../../../shows/components/base/TallCardCollection';
+import TallCardCollection from '../../../../shows/components/card/TallCardCollection';
 import TallEpisodeCardPlaceholder from '../../../../shows/features/episode/components/TallEpisodeCardPlaceholder';
 import TallEpisodeCard from '../../../../shows/features/episode/components/TallEpisodeCard';
 import { EpisodeType } from '../../../../shows/features/episode/types';

@@ -1,6 +1,6 @@
 import { PartialShow, Status } from '../../../generated/graphql';
 import useWatchlistActions from '../hooks/useWatchlistActions';
-import TallCard from './base/TallCard';
+import TallCard from './card/TallCard';
 import WatchlistOverlayAction from './WatchlistOverlayAction';
 
 interface Props {

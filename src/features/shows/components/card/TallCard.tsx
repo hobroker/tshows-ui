@@ -1,4 +1,4 @@
-import { Box, Paper } from '@mui/material';
+import { Box, Link, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { PropsWithChildren, ReactNode } from 'react';
 import { makeTallSmallImage } from '../../utils/image';
@@ -34,6 +34,7 @@ interface Props {
   actions?: ReactNode;
   onClick?: () => void;
   topChildren?: ReactNode;
+  href?: string;
 }
 
 const TallCard = ({
@@ -42,13 +43,18 @@ const TallCard = ({
   onClick,
   children,
   topChildren,
-}: PropsWithChildren<Props>) => (
-  <StyledWrapper variant="elevation" onClick={onClick}>
-    {topChildren}
-    <StyledActions>{actions}</StyledActions>
-    <StyledImage src={makeTallSmallImage(tallImage || '')} />
-    {children}
-  </StyledWrapper>
-);
+  href,
+}: PropsWithChildren<Props>) => {
+  const image = <StyledImage src={makeTallSmallImage(tallImage || '')} />;
+
+  return (
+    <StyledWrapper variant="elevation" onClick={onClick}>
+      {topChildren}
+      <StyledActions>{actions}</StyledActions>
+      {href ? <Link href={href}>{image}</Link> : image}
+      {children}
+    </StyledWrapper>
+  );
+};
 
 export default TallCard;

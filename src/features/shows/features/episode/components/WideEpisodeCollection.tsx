@@ -1,5 +1,5 @@
 import React from 'react';
-import WideCardCollection from '../../../components/base/WideCardCollection';
+import WideCardCollection from '../../../components/card/WideCardCollection';
 import { ActionProps, EpisodeType } from '../types';
 import WideEpisodeCard from './WideEpisodeCard';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
