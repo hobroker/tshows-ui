@@ -19,10 +19,17 @@ const UpcomingEpisodesCollection = ({ episodes, loading }: Props) => (
   >
     {episodes.map((episode) => (
       <Box key={episode.externalId}>
-        <Typography variant="subtitle2" sx={{ textAlign: 'center' }}>
-          {DateTime.fromISO(episode.airDate).toFormat('ccc, MMM d')}
-        </Typography>
-        <TallEpisodeCard episode={episode} />
+        <TallEpisodeCard
+          episode={episode}
+          topChildren={
+            <Typography
+              variant="subtitle2"
+              sx={{ textAlign: 'center', fontWeight: 700 }}
+            >
+              {DateTime.fromISO(episode.airDate).toFormat('ccc, MMM d')}
+            </Typography>
+          }
+        />
       </Box>
     ))}
   </TallCardCollection>

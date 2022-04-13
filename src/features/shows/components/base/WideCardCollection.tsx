@@ -1,31 +1,53 @@
 import React, { PropsWithChildren } from 'react';
-import { CircularProgress } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-const StyledWrapper = styled('div')`
+interface WrapperProps {
+  scroll?: boolean;
+  className?: string;
+}
+
+const StyledWrapper = styled(({ scroll, ...props }: WrapperProps) => (
+  <div {...props} />
+))`
+  --min-width: 300px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   grid-gap: 1rem;
-  grid-auto-flow: dense;
+  overflow-x: scroll;
+  padding: ${({ theme }) => theme.spacing(1)};
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
+  margin-inline: -${({ theme }) => theme.spacing(0.75)};
+  grid-template-columns: ${({ scroll }) =>
+    scroll
+      ? 'repeat(auto-fit, var(--min-width))'
+      : 'repeat(auto-fit, minmax(var(--min-width), 1fr))'};
+  grid-auto-flow: ${({ scroll }) => (scroll ? 'column' : 'dense')};
 
-  ${({ theme }) => theme.breakpoints.up('md')} {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  ${({ theme }) => theme.breakpoints.up('lg')} {
-    grid-template-columns: repeat(5, 1fr);
+  & > * {
+    min-width: var(--min-width);
   }
 `;
 
-interface Props {
+interface Props extends WrapperProps {
   loading: boolean;
+  PlaceholderComponent: React.JSXElementConstructor<any>;
 }
 
 const WideCardCollection = ({
   children,
   loading,
-}: PropsWithChildren<Props>) => (
-  <StyledWrapper>{loading ? <CircularProgress /> : children}</StyledWrapper>
-);
+  PlaceholderComponent,
+  scroll = false,
+  className,
+}: PropsWithChildren<Props>) => {
+  const placeholders = Array.from(Array(6).keys());
+
+  return (
+    <StyledWrapper scroll={scroll} className={className}>
+      {loading
+        ? placeholders.map((idx) => <PlaceholderComponent key={idx} />)
+        : children}
+    </StyledWrapper>
+  );
+};
 
 export default WideCardCollection;
