@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/hobroker/tshows-ui/compare/v1.10.0...v1.11.0) (2022-04-13)
+
+
+### Features
+
+* handle anonymous users ([#26](https://github.com/hobroker/tshows-ui/issues/26)) ([a8c94f2](https://github.com/hobroker/tshows-ui/commit/a8c94f223a773beeade1f70b7c697a89eb39cfe4))
+
 # [1.10.0](https://github.com/hobroker/tshows-ui/compare/v1.9.1...v1.10.0) (2022-04-13)
 
 
