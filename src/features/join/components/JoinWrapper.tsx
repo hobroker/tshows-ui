@@ -4,6 +4,7 @@ import { styled } from '@mui/material/styles';
 import LogoIcon from '../../logo/components/LogoIcon';
 import SignInWithGoogleButton from '../features/google/components/SignInWithGoogleButton';
 import PageWrapper from '../../../components/PageWrapper';
+import useHandleLoggedInUsers from '../hooks/useHandleLoggedInUsers';
 
 const Wrapper = styled(Box)`
   display: flex;
@@ -22,29 +23,33 @@ interface Props {
   children: ReactNode;
 }
 
-const JoinWrapper = ({ title, children }: Props) => (
-  <PageWrapper sx={{ justifyContent: 'center' }}>
-    <Wrapper>
-      <Card elevation={8} sx={{ width: 600 }}>
-        <CardContent>
-          <Row marginBottom={3}>
-            <LogoIcon sx={{ width: 50 }} />
-          </Row>
-          <Row marginBottom={3}>
-            <Typography align="center" variant="h4">
-              {title}
-            </Typography>
-          </Row>
-          <Row marginBottom={3}>
-            <SignInWithGoogleButton />
-          </Row>
-          <Divider>OR</Divider>
-          <Row marginBottom={3} />
-          {children}
-        </CardContent>
-      </Card>
-    </Wrapper>
-  </PageWrapper>
-);
+const JoinWrapper = ({ title, children }: Props) => {
+  useHandleLoggedInUsers();
+
+  return (
+    <PageWrapper sx={{ justifyContent: 'center' }}>
+      <Wrapper>
+        <Card elevation={8} sx={{ width: 600 }}>
+          <CardContent>
+            <Row marginBottom={3}>
+              <LogoIcon sx={{ width: 50 }} />
+            </Row>
+            <Row marginBottom={3}>
+              <Typography align="center" variant="h4">
+                {title}
+              </Typography>
+            </Row>
+            <Row marginBottom={3}>
+              <SignInWithGoogleButton />
+            </Row>
+            <Divider>OR</Divider>
+            <Row marginBottom={3} />
+            {children}
+          </CardContent>
+        </Card>
+      </Wrapper>
+    </PageWrapper>
+  );
+};
 
 export default JoinWrapper;
