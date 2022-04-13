@@ -5,7 +5,6 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import MovieIcon from '@mui/icons-material/Movie';
 import { styled } from '@mui/material/styles';
 import PageWrapper from '../../../components/PageWrapper';
-import LogoText from '../../logo/components/LogoText';
 import GenresStep from './Steps/GenresStep';
 import ShowsStep from './Steps/ShowsStep';
 
@@ -19,12 +18,7 @@ const Title = styled(({ ...props }: TypographyProps) => (
 const OnboardingPage = () => (
   <PageWrapper sx={{ mt: 2 }}>
     <Box mb={2}>
-      <Title variant="h4">
-        <Box sx={{ display: 'flex' }}>
-          Welcome to
-          <LogoText sx={{ height: 43, py: 1, ml: 0.5 }} />
-        </Box>
-      </Title>
+      <Title variant="h4">Let's personalize your profile</Title>
     </Box>
     <Box mb={2}>
       <Title>
