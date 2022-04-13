@@ -1,5 +1,5 @@
 import { Box, Tooltip } from '@mui/material';
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import TallCard from '../../../components/base/TallCard';
 import EllipsisButton from '../../../../../components/EllipsisButton';
 import { ActionProps, EpisodeType } from '../types';
@@ -8,11 +8,13 @@ import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 interface Props {
   episode: EpisodeType;
   actions?: React.JSXElementConstructor<ActionProps>[];
+  topChildren?: ReactNode;
 }
 
 const TallEpisodeCard = ({
   episode,
   children,
+  topChildren,
   actions = [],
 }: PropsWithChildren<Props>) => {
   if (episode.loading) {
@@ -22,7 +24,7 @@ const TallEpisodeCard = ({
   const title = `${episode.seasonNumber}x${episode.number}  - ${episode.name}`;
 
   return (
-    <TallCard tallImage={episode.show.tallImage}>
+    <TallCard tallImage={episode.show.tallImage} topChildren={topChildren}>
       <Box sx={{ p: 0.5, display: 'flex' }}>
         <Tooltip title={title}>
           <EllipsisButton size="small">{title}</EllipsisButton>

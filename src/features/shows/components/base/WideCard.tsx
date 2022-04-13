@@ -4,23 +4,28 @@ import { PropsWithChildren, ReactNode } from 'react';
 import { makeWideSmallImage } from '../../utils/image';
 
 const StyledWrapper = styled(Paper)`
-  aspect-ratio: 3/2;
-  position: relative;
-  top: 0;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   cursor: pointer;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: ${({ theme }) => theme.shadows[3]};
+
+  &:hover {
+    box-shadow: ${({ theme }) => theme.shadows[6]};
+  }
 `;
 
 const StyledImage = styled('img')`
+  aspect-ratio: 3/2;
   width: 100%;
-  height: 100%;
   object-fit: cover;
 `;
 
 const StyledActions = styled(Box)`
   position: absolute;
   width: 100%;
+  padding: ${({ theme }) => theme.spacing(0.5)};
   text-align: right;
 `;
 
@@ -36,16 +41,7 @@ const WideCard = ({
   onClick,
   children,
 }: PropsWithChildren<Props>) => (
-  <StyledWrapper
-    variant="elevation"
-    elevation={4}
-    sx={{
-      ':hover': {
-        boxShadow: 10,
-      },
-    }}
-    onClick={onClick}
-  >
+  <StyledWrapper variant="elevation" onClick={onClick}>
     <StyledActions>{actions}</StyledActions>
     <StyledImage src={makeWideSmallImage(wideImage || '')} />
     {children}

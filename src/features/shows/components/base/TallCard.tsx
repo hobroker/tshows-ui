@@ -33,6 +33,7 @@ interface Props {
   tallImage?: string | null;
   actions?: ReactNode;
   onClick?: () => void;
+  topChildren?: ReactNode;
 }
 
 const TallCard = ({
@@ -40,8 +41,10 @@ const TallCard = ({
   actions,
   onClick,
   children,
+  topChildren,
 }: PropsWithChildren<Props>) => (
   <StyledWrapper variant="elevation" onClick={onClick}>
+    {topChildren}
     <StyledActions>{actions}</StyledActions>
     <StyledImage src={makeTallSmallImage(tallImage || '')} />
     {children}
