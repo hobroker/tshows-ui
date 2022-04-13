@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/hobroker/tshows-ui/compare/v1.9.1...v1.10.0) (2022-04-13)
+
+
+### Features
+
+* redesign onboarding page ([#25](https://github.com/hobroker/tshows-ui/issues/25)) ([18b86ec](https://github.com/hobroker/tshows-ui/commit/18b86ec996e9ed7af0018883ef589046222eca9e))
+
 ## [1.9.1](https://github.com/hobroker/tshows-ui/compare/v1.9.0...v1.9.1) (2022-04-11)
 
 
