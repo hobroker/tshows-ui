@@ -20,6 +20,22 @@ type Episode {
   wideImage: String
 }
 
+type FullShow {
+  description: String!
+  details: ShowDetails!
+  externalId: Int!
+  firstAirDate: DateTime!
+  genres: [Genre!]!
+  name: String!
+  status: Status!
+  tallImage: String!
+  wideImage: String!
+}
+
+input FullShowInput {
+  externalId: Int!
+}
+
 type Genre {
   externalId: Int!
   name: String!
@@ -41,6 +57,7 @@ type Mutation {
 type PartialShow {
   description: String!
   externalId: Int!
+  firstAirDate: DateTime!
   genres: [Genre!]!
   name: String!
   status: Status!
@@ -55,6 +72,7 @@ type Preference {
 type Query {
   allUsers: User!
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
+  fullShow(input: FullShowInput!): FullShow!
   getPreferences: Preference
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
@@ -68,6 +86,12 @@ type Season {
   name: String!
   number: Int!
   tallImage: String!
+}
+
+type ShowDetails {
+  episodeRuntime: Int!
+  isInProduction: Boolean!
+  seasons: [Season!]!
 }
 
 enum Status {

@@ -1,7 +1,7 @@
 import { Box, Link, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { PropsWithChildren, ReactNode } from 'react';
-import { makeTallSmallImage } from '../../utils/image';
+import { makeTallSmImage } from '../../utils/image';
 
 const StyledWrapper = styled(Paper)`
   cursor: pointer;
@@ -45,7 +45,7 @@ const TallCard = ({
   topChildren,
   href,
 }: PropsWithChildren<Props>) => {
-  const image = <StyledImage src={makeTallSmallImage(tallImage || '')} />;
+  const image = <StyledImage src={makeTallSmImage(tallImage || '')} />;
 
   return (
     <StyledWrapper variant="elevation" onClick={onClick}>

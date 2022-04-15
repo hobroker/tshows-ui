@@ -1,4 +1,4 @@
-import { blue, grey, red } from '@mui/material/colors';
+import { blue, grey, orange, red } from '@mui/material/colors';
 import { createTheme } from '@mui/material';
 import type { PaletteMode } from '@mui/material';
 import { LinkProps } from '@mui/material/Link/Link.d';
@@ -38,6 +38,16 @@ const theme = ({ mode = 'light' }: Props = {}) =>
         styleOverrides: {
           filled: {
             border: '1px solid transparent',
+          },
+        },
+      },
+      MuiRating: {
+        styleOverrides: {
+          iconEmpty: {
+            color: 'white',
+          },
+          iconFilled: {
+            color: orange[500],
           },
         },
       },

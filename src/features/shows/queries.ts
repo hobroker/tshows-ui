@@ -19,6 +19,34 @@ export const QUERY_GET_PARTIAL_WATCHLIST = gql`
   }
 `;
 
+export const QUERY_FULL_SHOW = gql`
+  query FullShow($externalId: Int!) {
+    fullShow(input: { externalId: $externalId }) {
+      externalId
+      name
+      description
+      wideImage
+      tallImage
+      firstAirDate
+      status
+      genres {
+        externalId
+        name
+      }
+      details {
+        episodeRuntime
+        isInProduction
+        seasons {
+          number
+          description
+          name
+          tallImage
+        }
+      }
+    }
+  }
+`;
+
 export const SHOW_FRAGMENT = gql`
   fragment ShowFragment on PartialShow {
     externalId
@@ -26,6 +54,7 @@ export const SHOW_FRAGMENT = gql`
     description
     wideImage
     tallImage
+    firstAirDate
     status
     genres {
       externalId

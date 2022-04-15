@@ -1,17 +1,24 @@
-import { useParams } from 'react-router-dom';
 import type { Params } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Container } from '@mui/material';
 import PageWrapper from '../../../components/PageWrapper';
-import { deslugifyShow } from '../utils/slug';
+import { deslugifyShow } from '../utils/slugify';
+import ShowPageProvider from '../contexts/ShowPageContext';
+import ShowContent from './ShowContent';
+import ShowHeroCard from './hero/ShowHeroCard';
 
 const ShowPage = () => {
   const { slug } = useParams<Params<keyof { slug: string }>>();
-  const id = deslugifyShow(slug);
-
-  console.log('id', id);
+  const externalId = deslugifyShow(slug);
 
   return (
-    <PageWrapper>
-      <h1>Show Page</h1>
+    <PageWrapper sx={{ px: { xs: 0 } }}>
+      <ShowPageProvider externalId={externalId}>
+        <Container>
+          <ShowHeroCard />
+          <ShowContent />
+        </Container>
+      </ShowPageProvider>
     </PageWrapper>
   );
 };

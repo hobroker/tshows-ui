@@ -4,7 +4,7 @@ import TallCard from '../../../components/card/TallCard';
 import EllipsisButton from '../../../../../components/EllipsisButton';
 import { ActionProps, EpisodeType } from '../types';
 import { DynamicRoute } from '../../../../router/constants';
-import { slugifyShow } from '../../../utils/slug';
+import { slugifyShow } from '../../../utils/slugify';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
 interface Props {

@@ -42,6 +42,23 @@ export type Episode = {
   wideImage?: Maybe<Scalars['String']>;
 };
 
+export type FullShow = {
+  __typename?: 'FullShow';
+  description: Scalars['String'];
+  details: ShowDetails;
+  externalId: Scalars['Int'];
+  firstAirDate: Scalars['DateTime'];
+  genres: Array<Genre>;
+  name: Scalars['String'];
+  status: Status;
+  tallImage: Scalars['String'];
+  wideImage: Scalars['String'];
+};
+
+export type FullShowInput = {
+  externalId: Scalars['Int'];
+};
+
 export type Genre = {
   __typename?: 'Genre';
   externalId: Scalars['Int'];
@@ -82,6 +99,7 @@ export type PartialShow = {
   __typename?: 'PartialShow';
   description: Scalars['String'];
   externalId: Scalars['Int'];
+  firstAirDate: Scalars['DateTime'];
   genres: Array<Genre>;
   name: Scalars['String'];
   status: Status;
@@ -98,6 +116,7 @@ export type Query = {
   __typename?: 'Query';
   allUsers: User;
   discoverShows: Array<PartialShow>;
+  fullShow: FullShow;
   getPreferences?: Maybe<Preference>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
@@ -110,12 +129,23 @@ export type QueryDiscoverShowsArgs = {
   input: DiscoverShowsInput;
 };
 
+export type QueryFullShowArgs = {
+  input: FullShowInput;
+};
+
 export type Season = {
   __typename?: 'Season';
   description?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   number: Scalars['Int'];
   tallImage: Scalars['String'];
+};
+
+export type ShowDetails = {
+  __typename?: 'ShowDetails';
+  episodeRuntime: Scalars['Int'];
+  isInProduction: Scalars['Boolean'];
+  seasons: Array<Season>;
 };
 
 export enum Status {
@@ -240,6 +270,7 @@ export type DiscoverShowsQuery = {
     description: string;
     wideImage: string;
     tallImage: string;
+    firstAirDate: any;
     status: Status;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   }>;
@@ -333,6 +364,37 @@ export type GetPartialWatchlistQuery = {
   }>;
 };
 
+export type FullShowQueryVariables = Exact<{
+  externalId: Scalars['Int'];
+}>;
+
+export type FullShowQuery = {
+  __typename?: 'Query';
+  fullShow: {
+    __typename?: 'FullShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage: string;
+    tallImage: string;
+    firstAirDate: any;
+    status: Status;
+    genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
+    details: {
+      __typename?: 'ShowDetails';
+      episodeRuntime: number;
+      isInProduction: boolean;
+      seasons: Array<{
+        __typename?: 'Season';
+        number: number;
+        description?: string | null;
+        name: string;
+        tallImage: string;
+      }>;
+    };
+  };
+};
+
 export type ShowFragmentFragment = {
   __typename?: 'PartialShow';
   externalId: number;
@@ -340,6 +402,7 @@ export type ShowFragmentFragment = {
   description: string;
   wideImage: string;
   tallImage: string;
+  firstAirDate: any;
   status: Status;
   genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
@@ -401,6 +464,7 @@ export const ShowFragmentFragmentDoc = gql`
     description
     wideImage
     tallImage
+    firstAirDate
     status
     genres {
       externalId
@@ -975,6 +1039,81 @@ export type GetPartialWatchlistLazyQueryHookResult = ReturnType<
 export type GetPartialWatchlistQueryResult = Apollo.QueryResult<
   GetPartialWatchlistQuery,
   GetPartialWatchlistQueryVariables
+>;
+export const FullShowDocument = gql`
+  query FullShow($externalId: Int!) {
+    fullShow(input: { externalId: $externalId }) {
+      externalId
+      name
+      description
+      wideImage
+      tallImage
+      firstAirDate
+      status
+      genres {
+        externalId
+        name
+      }
+      details {
+        episodeRuntime
+        isInProduction
+        seasons {
+          number
+          description
+          name
+          tallImage
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useFullShowQuery__
+ *
+ * To run a query within a React component, call `useFullShowQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFullShowQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFullShowQuery({
+ *   variables: {
+ *      externalId: // value for 'externalId'
+ *   },
+ * });
+ */
+export function useFullShowQuery(
+  baseOptions: Apollo.QueryHookOptions<FullShowQuery, FullShowQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<FullShowQuery, FullShowQueryVariables>(
+    FullShowDocument,
+    options,
+  );
+}
+export function useFullShowLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FullShowQuery,
+    FullShowQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<FullShowQuery, FullShowQueryVariables>(
+    FullShowDocument,
+    options,
+  );
+}
+export type FullShowQueryHookResult = ReturnType<typeof useFullShowQuery>;
+export type FullShowLazyQueryHookResult = ReturnType<
+  typeof useFullShowLazyQuery
+>;
+export type FullShowQueryResult = Apollo.QueryResult<
+  FullShowQuery,
+  FullShowQueryVariables
 >;
 export const MeDocument = gql`
   query Me {

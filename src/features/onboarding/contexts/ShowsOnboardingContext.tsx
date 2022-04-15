@@ -11,7 +11,7 @@ import { noop } from '../../../utils/fp';
 import { PreferencesContext } from '../../preferences/contexts/PreferencesContext';
 import { DEFAULT_GENRE_RECOMMENDATION } from '../constants';
 
-interface ShowPreferenceContextType {
+interface ContextType {
   shows: PartialShow[];
   loading: boolean;
   updateShow: (showId: number, data: Partial<PartialShow>) => void;
@@ -21,7 +21,7 @@ interface Props {
   children: ReactNode;
 }
 
-const ShowsOnboardingContext = createContext<ShowPreferenceContextType>({
+const ShowsOnboardingContext = createContext<ContextType>({
   shows: [],
   loading: true,
   updateShow: noop,
