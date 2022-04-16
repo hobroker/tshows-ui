@@ -6,12 +6,8 @@ import { ShowPageContext } from '../../contexts/ShowPageContext';
 const Wrapper = styled(Box)`
   display: flex;
   align-items: center;
-
-  > * {
-    &:not(:last-child) {
-      margin-right: ${({ theme }) => theme.spacing(1)};
-    }
-  }
+  gap: ${({ theme }) => theme.spacing(1)};
+  flex-wrap: wrap;
 `;
 
 const GenresList = () => {

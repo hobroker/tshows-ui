@@ -1,6 +1,5 @@
 import type { Params } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Container } from '@mui/material';
 import PageWrapper from '../../../components/PageWrapper';
 import { deslugifyShow } from '../utils/slugify';
 import ShowPageProvider from '../contexts/ShowPageContext';
@@ -12,12 +11,10 @@ const ShowPage = () => {
   const externalId = deslugifyShow(slug);
 
   return (
-    <PageWrapper sx={{ px: { xs: 0 } }}>
+    <PageWrapper sx={{ px: { xs: 0 } }} maxWidth={false}>
       <ShowPageProvider externalId={externalId}>
-        <Container>
-          <ShowHeroCard />
-          <ShowContent />
-        </Container>
+        <ShowHeroCard />
+        <ShowContent />
       </ShowPageProvider>
     </PageWrapper>
   );
