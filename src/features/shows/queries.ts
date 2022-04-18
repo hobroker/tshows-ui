@@ -28,6 +28,7 @@ export const QUERY_FULL_SHOW = gql`
       wideImage
       tallImage
       firstAirDate
+      originCountry
       status
       genres {
         externalId
@@ -48,13 +49,14 @@ export const QUERY_FULL_SHOW = gql`
 `;
 
 export const SHOW_FRAGMENT = gql`
-  fragment ShowFragment on PartialShow {
+  fragment PartialShow on PartialShow {
     externalId
     name
     description
     wideImage
     tallImage
     firstAirDate
+    originCountry
     status
     genres {
       externalId

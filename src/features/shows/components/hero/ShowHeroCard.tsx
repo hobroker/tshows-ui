@@ -6,6 +6,7 @@ import { ShowPageContext } from '../../contexts/ShowPageContext';
 import GenresList from './GenresList';
 import ShowTitle from './ShowTitle';
 import ShowSubtitle from './ShowSubtitle';
+import WatchlistActionButton from './WatchlistActionButton';
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -28,16 +29,16 @@ const Content = styled(Container)`
   position: relative;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 2fr;
   gap: ${({ theme }) => theme.spacing(3)};
   align-items: center;
 
-  ${({ theme }) => theme.breakpoints.up('md')} {
-    grid-template-columns: 1fr 3fr;
+  ${({ theme }) => theme.breakpoints.up('sm')} {
+    grid-template-columns: minmax(270px, 1fr) 3fr;
   }
 `;
 
 const TallImage = styled('img')`
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   width: 100%;
 `;
 
@@ -56,11 +57,12 @@ const ShowHeroCard = () => {
       }}
     >
       <Content>
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <TallImage
             src={makeTallMdImage(show?.tallImage || '')}
             alt={show?.name}
           />
+          <WatchlistActionButton />
         </Box>
         <Box
           sx={{

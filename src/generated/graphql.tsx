@@ -50,6 +50,7 @@ export type FullShow = {
   firstAirDate: Scalars['DateTime'];
   genres: Array<Genre>;
   name: Scalars['String'];
+  originCountry: Scalars['String'];
   status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
@@ -102,6 +103,7 @@ export type PartialShow = {
   firstAirDate: Scalars['DateTime'];
   genres: Array<Genre>;
   name: Scalars['String'];
+  originCountry: Scalars['String'];
   status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
@@ -146,6 +148,7 @@ export type ShowDetails = {
   episodeRuntime: Scalars['Int'];
   isInProduction: Scalars['Boolean'];
   seasons: Array<Season>;
+  tagline?: Maybe<Scalars['String']>;
 };
 
 export enum Status {
@@ -271,6 +274,7 @@ export type DiscoverShowsQuery = {
     wideImage: string;
     tallImage: string;
     firstAirDate: any;
+    originCountry: string;
     status: Status;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   }>;
@@ -378,6 +382,7 @@ export type FullShowQuery = {
     wideImage: string;
     tallImage: string;
     firstAirDate: any;
+    originCountry: string;
     status: Status;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
     details: {
@@ -395,7 +400,7 @@ export type FullShowQuery = {
   };
 };
 
-export type ShowFragmentFragment = {
+export type PartialShowFragment = {
   __typename?: 'PartialShow';
   externalId: number;
   name: string;
@@ -403,6 +408,7 @@ export type ShowFragmentFragment = {
   wideImage: string;
   tallImage: string;
   firstAirDate: any;
+  originCountry: string;
   status: Status;
   genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
@@ -457,14 +463,15 @@ export const EpisodeFragmentDoc = gql`
     }
   }
 `;
-export const ShowFragmentFragmentDoc = gql`
-  fragment ShowFragment on PartialShow {
+export const PartialShowFragmentDoc = gql`
+  fragment PartialShow on PartialShow {
     externalId
     name
     description
     wideImage
     tallImage
     firstAirDate
+    originCountry
     status
     genres {
       externalId
@@ -703,10 +710,10 @@ export type JoinWithGoogleMutationOptions = Apollo.BaseMutationOptions<
 export const DiscoverShowsDocument = gql`
   query DiscoverShows($genreIds: [Int!]!) {
     discoverShows(input: { genreIds: $genreIds }) {
-      ...ShowFragment
+      ...PartialShow
     }
   }
-  ${ShowFragmentFragmentDoc}
+  ${PartialShowFragmentDoc}
 `;
 
 /**
@@ -1049,6 +1056,7 @@ export const FullShowDocument = gql`
       wideImage
       tallImage
       firstAirDate
+      originCountry
       status
       genres {
         externalId

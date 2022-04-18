@@ -27,6 +27,7 @@ type FullShow {
   firstAirDate: DateTime!
   genres: [Genre!]!
   name: String!
+  originCountry: String!
   status: Status!
   tallImage: String!
   wideImage: String!
@@ -60,6 +61,7 @@ type PartialShow {
   firstAirDate: DateTime!
   genres: [Genre!]!
   name: String!
+  originCountry: String!
   status: Status!
   tallImage: String!
   wideImage: String!
@@ -92,6 +94,7 @@ type ShowDetails {
   episodeRuntime: Int!
   isInProduction: Boolean!
   seasons: [Season!]!
+  tagline: String
 }
 
 enum Status {

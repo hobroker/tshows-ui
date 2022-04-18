@@ -16,15 +16,16 @@ const Wrapper = styled(Box)`
 
 const ShowSubtitle = () => {
   const { show } = useContext(ShowPageContext);
-  const episodeRuntime = show?.details?.episodeRuntime;
   const items = [
     {
       icon: <CalendarMonthIcon color="primary" />,
-      text: DateTime.fromISO(show?.firstAirDate).toFormat('d MMM yyyy'),
+      text:
+        DateTime.fromISO(show?.firstAirDate).toFormat('d MMM yyyy') +
+        (show?.originCountry ? ` (${show?.originCountry})` : ''),
     },
     {
       icon: <AccessTimeIcon color="primary" />,
-      text: `${episodeRuntime} min`,
+      text: `${show?.details?.episodeRuntime} min`,
     },
   ];
 
@@ -33,7 +34,7 @@ const ShowSubtitle = () => {
       {items.map(({ icon, text }) => (
         <Wrapper sx={{ mr: 1 }} key={text}>
           {icon}
-          <Typography variant="subtitle1" color="white">
+          <Typography variant="button" color="white">
             {text}
           </Typography>
         </Wrapper>
