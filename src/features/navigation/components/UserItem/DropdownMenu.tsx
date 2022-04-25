@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import type { MenuProps } from '@mui/material';
 import { Menu, MenuItem } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';

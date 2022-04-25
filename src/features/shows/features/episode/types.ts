@@ -1,9 +1,14 @@
-import { EpisodeFragment } from '../../../../generated/graphql';
+import {
+  Episode,
+  EpisodeWithShowFragment,
+} from '../../../../generated/graphql';
 
-export type EpisodeType = EpisodeFragment & {
+export type EpisodeWithShowType = EpisodeWithShowFragment & {
   loading?: boolean;
 };
 
-export interface ActionProps {
-  episode: EpisodeType;
+export type EpisodeWithoutShow = Omit<Episode, 'show'>;
+
+export interface EpisodeActionProps {
+  episode: EpisodeWithShowType;
 }

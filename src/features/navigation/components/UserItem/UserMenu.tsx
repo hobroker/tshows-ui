@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Avatar, Button } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useMenu from '../../hooks/useMenu';

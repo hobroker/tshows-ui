@@ -1,8 +1,8 @@
-import * as React from 'react';
+import { useState, MouseEvent } from 'react';
 
 const useMenu = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const onOpen = (event: React.MouseEvent<HTMLElement>) =>
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const onOpen = (event: MouseEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget);
   const onClose = () => setAnchorEl(null);
 

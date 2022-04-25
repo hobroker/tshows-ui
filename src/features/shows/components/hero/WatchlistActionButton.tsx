@@ -73,9 +73,7 @@ const WatchlistActionButton = () => {
     const showId = show.externalId;
     const toStatus = ShowStatusToggleMap[status];
 
-    update({
-      status: toStatus,
-    });
+    update({ status: toStatus });
     upsertWatchlistItem({ showId, status: toStatus });
   };
 

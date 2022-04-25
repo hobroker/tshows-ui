@@ -43,6 +43,11 @@ type Genre {
   name: String!
 }
 
+input GetSeasonEpisodesInput {
+  seasonNumber: Int!
+  showId: Int!
+}
+
 input JoinWithGoogleInput {
   token: String!
 }
@@ -78,6 +83,7 @@ type Query {
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
   fullShow(input: FullShowInput!): FullShow!
   getPreferences: Preference
+  getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
   listUpNext: [Episode!]!

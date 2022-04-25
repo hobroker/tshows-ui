@@ -1,22 +1,30 @@
-import * as React from 'react';
-import { useContext } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { AccordionSummary } from '@mui/material';
 import { ShowPageContext } from '../../contexts/ShowPageContext';
-import SeasonAccordionSummary from './SeasonAccordionSummary';
+import SeasonSummary from './SeasonSummary';
+import SeasonDetails from './SeasonDetails';
 
 const SeasonsAccordion = () => {
-  const [expanded, setExpanded] = React.useState<number>();
-  const { show } = useContext(ShowPageContext);
+  const [expanded, setExpanded] = useState<number>();
+  const { show, episodesMap, fetchSeason } = useContext(ShowPageContext);
   const seasons = show?.details?.seasons;
+  const fetchEpisodes = (seasonNumber: number) => {
+    fetchSeason(seasonNumber);
+  };
 
   if (!seasons) {
     return null;
   }
 
   const handleChange =
-    (panel: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (panel: number) => (event: SyntheticEvent, isExpanded: boolean) => {
+      if (isExpanded) {
+        fetchEpisodes(panel);
+      }
+
       setExpanded(isExpanded ? panel : undefined);
     };
 
@@ -28,12 +36,11 @@ const SeasonsAccordion = () => {
           expanded={expanded === season.number}
           onChange={handleChange(season.number)}
         >
-          <SeasonAccordionSummary season={season} />
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <SeasonSummary season={season} />
+          </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-              feugiat. Aliquam eget maximus est, id dignissim quam.
-            </Typography>
+            <SeasonDetails episodes={episodesMap[season.number] || []} />
           </AccordionDetails>
         </Accordion>
       ))}

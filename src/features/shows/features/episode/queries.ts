@@ -3,13 +3,13 @@ import { gql } from '@apollo/client';
 export const MUTATION_UPSERT_EPISODE = gql`
   mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {
     upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
-      ...Episode
+      ...EpisodeWithShow
     }
   }
 `;
 
 export const EPISODE_FRAGMENT = gql`
-  fragment Episode on Episode {
+  fragment EpisodeWithShow on Episode {
     id
     externalId
     number
@@ -24,6 +24,22 @@ export const EPISODE_FRAGMENT = gql`
       name
       wideImage
       tallImage
+    }
+  }
+`;
+
+export const QUERY_GET_SEASON_EPISODES = gql`
+  query GetSeasonEpisodes($showId: Int!, $seasonNumber: Int!) {
+    getSeasonEpisodes(input: { showId: $showId, seasonNumber: $seasonNumber }) {
+      id
+      externalId
+      number
+      seasonNumber
+      isWatched
+      name
+      description
+      wideImage
+      airDate
     }
   }
 `;

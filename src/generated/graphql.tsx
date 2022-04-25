@@ -67,6 +67,11 @@ export type Genre = {
   name: Scalars['String'];
 };
 
+export type GetSeasonEpisodesInput = {
+  seasonNumber: Scalars['Int'];
+  showId: Scalars['Int'];
+};
+
 export type JoinWithGoogleInput = {
   token: Scalars['String'];
 };
@@ -122,6 +127,7 @@ export type Query = {
   discoverShows: Array<PartialShow>;
   fullShow: FullShow;
   getPreferences?: Maybe<Preference>;
+  getSeasonEpisodes: Array<Episode>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
   listUpNext: Array<Episode>;
@@ -135,6 +141,10 @@ export type QueryDiscoverShowsArgs = {
 
 export type QueryFullShowArgs = {
   input: FullShowInput;
+};
+
+export type QueryGetSeasonEpisodesArgs = {
+  input: GetSeasonEpisodesInput;
 };
 
 export type Season = {
@@ -332,7 +342,7 @@ export type UpsertEpisodeMutation = {
   } | null;
 };
 
-export type EpisodeFragment = {
+export type EpisodeWithShowFragment = {
   __typename?: 'Episode';
   id: number;
   externalId: number;
@@ -350,6 +360,27 @@ export type EpisodeFragment = {
     wideImage: string;
     tallImage: string;
   };
+};
+
+export type GetSeasonEpisodesQueryVariables = Exact<{
+  showId: Scalars['Int'];
+  seasonNumber: Scalars['Int'];
+}>;
+
+export type GetSeasonEpisodesQuery = {
+  __typename?: 'Query';
+  getSeasonEpisodes: Array<{
+    __typename?: 'Episode';
+    id: number;
+    externalId: number;
+    number: number;
+    seasonNumber: number;
+    isWatched: boolean;
+    name: string;
+    description?: string | null;
+    wideImage?: string | null;
+    airDate?: any | null;
+  }>;
 };
 
 export type UpsertWatchlistItemMutationVariables = Exact<{
@@ -453,8 +484,8 @@ export type LogoutMutation = {
   logout: { __typename: 'Void' };
 };
 
-export const EpisodeFragmentDoc = gql`
-  fragment Episode on Episode {
+export const EpisodeWithShowFragmentDoc = gql`
+  fragment EpisodeWithShow on Episode {
     id
     externalId
     number
@@ -550,10 +581,10 @@ export type ListGenresQueryResult = Apollo.QueryResult<
 export const ListUpcomingDocument = gql`
   query ListUpcoming {
     listUpcoming {
-      ...Episode
+      ...EpisodeWithShow
     }
   }
-  ${EpisodeFragmentDoc}
+  ${EpisodeWithShowFragmentDoc}
 `;
 
 /**
@@ -610,10 +641,10 @@ export type ListUpcomingQueryResult = Apollo.QueryResult<
 export const ListUpNextDocument = gql`
   query ListUpNext {
     listUpNext {
-      ...Episode
+      ...EpisodeWithShow
     }
   }
-  ${EpisodeFragmentDoc}
+  ${EpisodeWithShowFragmentDoc}
 `;
 
 /**
@@ -893,10 +924,10 @@ export type GetPreferencesQueryResult = Apollo.QueryResult<
 export const UpsertEpisodeDocument = gql`
   mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {
     upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
-      ...Episode
+      ...EpisodeWithShow
     }
   }
-  ${EpisodeFragmentDoc}
+  ${EpisodeWithShowFragmentDoc}
 `;
 export type UpsertEpisodeMutationFn = Apollo.MutationFunction<
   UpsertEpisodeMutation,
@@ -942,6 +973,75 @@ export type UpsertEpisodeMutationResult =
 export type UpsertEpisodeMutationOptions = Apollo.BaseMutationOptions<
   UpsertEpisodeMutation,
   UpsertEpisodeMutationVariables
+>;
+export const GetSeasonEpisodesDocument = gql`
+  query GetSeasonEpisodes($showId: Int!, $seasonNumber: Int!) {
+    getSeasonEpisodes(input: { showId: $showId, seasonNumber: $seasonNumber }) {
+      id
+      externalId
+      number
+      seasonNumber
+      isWatched
+      name
+      description
+      wideImage
+      airDate
+    }
+  }
+`;
+
+/**
+ * __useGetSeasonEpisodesQuery__
+ *
+ * To run a query within a React component, call `useGetSeasonEpisodesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSeasonEpisodesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSeasonEpisodesQuery({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *      seasonNumber: // value for 'seasonNumber'
+ *   },
+ * });
+ */
+export function useGetSeasonEpisodesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSeasonEpisodesQuery,
+    GetSeasonEpisodesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<
+    GetSeasonEpisodesQuery,
+    GetSeasonEpisodesQueryVariables
+  >(GetSeasonEpisodesDocument, options);
+}
+export function useGetSeasonEpisodesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSeasonEpisodesQuery,
+    GetSeasonEpisodesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    GetSeasonEpisodesQuery,
+    GetSeasonEpisodesQueryVariables
+  >(GetSeasonEpisodesDocument, options);
+}
+export type GetSeasonEpisodesQueryHookResult = ReturnType<
+  typeof useGetSeasonEpisodesQuery
+>;
+export type GetSeasonEpisodesLazyQueryHookResult = ReturnType<
+  typeof useGetSeasonEpisodesLazyQuery
+>;
+export type GetSeasonEpisodesQueryResult = Apollo.QueryResult<
+  GetSeasonEpisodesQuery,
+  GetSeasonEpisodesQueryVariables
 >;
 export const UpsertWatchlistItemDocument = gql`
   mutation UpsertWatchlistItem($showId: Int!, $status: Status!) {

@@ -2,12 +2,12 @@ import { Box, Tooltip } from '@mui/material';
 import React, { PropsWithChildren } from 'react';
 import WideCard from '../../../components/card/WideCard';
 import EllipsisButton from '../../../../../components/EllipsisButton';
-import { ActionProps, EpisodeType } from '../types';
+import { EpisodeActionProps, EpisodeWithShowType } from '../types';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
 interface Props {
-  episode: EpisodeType;
-  actions?: React.JSXElementConstructor<ActionProps>[];
+  episode: EpisodeWithShowType;
+  actions?: React.JSXElementConstructor<EpisodeActionProps>[];
 }
 
 const WideEpisodeCard = ({

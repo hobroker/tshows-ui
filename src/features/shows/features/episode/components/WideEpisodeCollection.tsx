@@ -1,13 +1,13 @@
 import React from 'react';
 import WideCardCollection from '../../../components/card/WideCardCollection';
-import { ActionProps, EpisodeType } from '../types';
+import { EpisodeActionProps, EpisodeWithShowType } from '../types';
 import WideEpisodeCard from './WideEpisodeCard';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
 interface Props {
   loading: boolean;
-  episodes: Array<EpisodeType>;
-  actions?: React.JSXElementConstructor<ActionProps>[];
+  episodes: Array<EpisodeWithShowType>;
+  actions?: React.JSXElementConstructor<EpisodeActionProps>[];
 }
 
 const WideEpisodeCollection = ({ episodes, loading, actions = [] }: Props) => (

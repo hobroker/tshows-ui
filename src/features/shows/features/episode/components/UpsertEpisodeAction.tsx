@@ -3,9 +3,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ActionButton from '../../../components/card/ActionButton';
 import { UpNextContext } from '../../../../home/features/upnext/contexts/UpNextContext';
-import { ActionProps } from '../types';
+import { EpisodeActionProps } from '../types';
 
-const UpsertEpisodeAction = ({ episode }: ActionProps) => {
+const UpsertEpisodeAction = ({ episode }: EpisodeActionProps) => {
   const { watchEpisode } = useContext(UpNextContext);
   const onWatchEpisode = useCallback(() => {
     watchEpisode(episode.id);

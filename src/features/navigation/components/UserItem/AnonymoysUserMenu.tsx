@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { StaticRoute } from '../../../router/constants';
