@@ -51,6 +51,7 @@ export type FullShow = {
   genres: Array<Genre>;
   name: Scalars['String'];
   originCountry: Scalars['String'];
+  rating: Scalars['Int'];
   status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
@@ -104,6 +105,7 @@ export type PartialShow = {
   genres: Array<Genre>;
   name: Scalars['String'];
   originCountry: Scalars['String'];
+  rating: Scalars['Int'];
   status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
@@ -137,7 +139,9 @@ export type QueryFullShowArgs = {
 
 export type Season = {
   __typename?: 'Season';
+  airDate: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
+  episodeCount: Scalars['String'];
   name: Scalars['String'];
   number: Scalars['Int'];
   tallImage: Scalars['String'];
@@ -276,6 +280,7 @@ export type DiscoverShowsQuery = {
     firstAirDate: any;
     originCountry: string;
     status: Status;
+    rating: number;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   }>;
 };
@@ -384,6 +389,7 @@ export type FullShowQuery = {
     firstAirDate: any;
     originCountry: string;
     status: Status;
+    rating: number;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
     details: {
       __typename?: 'ShowDetails';
@@ -395,6 +401,8 @@ export type FullShowQuery = {
         description?: string | null;
         name: string;
         tallImage: string;
+        episodeCount: string;
+        airDate: any;
       }>;
     };
   };
@@ -410,6 +418,7 @@ export type PartialShowFragment = {
   firstAirDate: any;
   originCountry: string;
   status: Status;
+  rating: number;
   genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
 
@@ -473,6 +482,7 @@ export const PartialShowFragmentDoc = gql`
     firstAirDate
     originCountry
     status
+    rating
     genres {
       externalId
       name
@@ -1058,6 +1068,7 @@ export const FullShowDocument = gql`
       firstAirDate
       originCountry
       status
+      rating
       genres {
         externalId
         name
@@ -1070,6 +1081,8 @@ export const FullShowDocument = gql`
           description
           name
           tallImage
+          episodeCount
+          airDate
         }
       }
     }

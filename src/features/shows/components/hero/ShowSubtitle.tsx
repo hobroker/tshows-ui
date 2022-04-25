@@ -2,12 +2,17 @@ import React, { useContext } from 'react';
 import { Box, Typography } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import StarIcon from '@mui/icons-material/Star';
 import { DateTime } from 'luxon';
 import { styled } from '@mui/material/styles';
 import { ShowPageContext } from '../../contexts/ShowPageContext';
-import ShowRating from './ShowRating';
 
 const Wrapper = styled(Box)`
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(1)};
+`;
+
+const Item = styled(Box)`
   display: grid;
   grid-template-columns: repeat(2, auto);
   gap: ${({ theme }) => theme.spacing(0.5)};
@@ -17,6 +22,10 @@ const Wrapper = styled(Box)`
 const ShowSubtitle = () => {
   const { show } = useContext(ShowPageContext);
   const items = [
+    {
+      icon: <StarIcon color="primary" />,
+      text: `${show?.rating}`,
+    },
     {
       icon: <CalendarMonthIcon color="primary" />,
       text:
@@ -30,17 +39,16 @@ const ShowSubtitle = () => {
   ];
 
   return (
-    <Box sx={{ display: 'flex', gap: 1 }}>
+    <Wrapper>
       {items.map(({ icon, text }) => (
-        <Wrapper sx={{ mr: 1 }} key={text}>
+        <Item sx={{ mr: 1 }} key={text}>
           {icon}
           <Typography variant="button" color="white">
             {text}
           </Typography>
-        </Wrapper>
+        </Item>
       ))}
-      <ShowRating />
-    </Box>
+    </Wrapper>
   );
 };
 

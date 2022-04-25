@@ -7,6 +7,7 @@ import GenresList from './GenresList';
 import ShowTitle from './ShowTitle';
 import ShowSubtitle from './ShowSubtitle';
 import WatchlistActionButton from './WatchlistActionButton';
+import ShowRating from './ShowRating';
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -75,6 +76,7 @@ const ShowHeroCard = () => {
         >
           <ShowTitle />
           <ShowSubtitle />
+          <ShowRating />
           <GenresList />
           <Typography variant="body1" color="white">
             {show?.description}

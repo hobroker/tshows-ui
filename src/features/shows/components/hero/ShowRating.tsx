@@ -6,6 +6,9 @@ const ShowRating = () => {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Typography variant="button" color="white" sx={{ mr: 1 }}>
+        Your Rating
+      </Typography>
       <Rating
         value={value}
         onChange={(event, newValue) => setValue(newValue)}

@@ -1,20 +1,10 @@
-import { Box } from '@mui/material';
-import { useContext } from 'react';
-import { ShowPageContext } from '../contexts/ShowPageContext';
+import { Container } from '@mui/material';
+import SeasonsSection from './seasons/SeasonsSection';
 
-const ShowContent = () => {
-  const { show } = useContext(ShowPageContext);
-
-  return (
-    <Box>
-      <h1>{show?.name}</h1>
-      <p>{show?.description}</p>
-      <p>{show?.description}</p>
-      <p>{show?.description}</p>
-      <p>{show?.description}</p>
-      <p>{show?.description}</p>
-    </Box>
-  );
-};
+const ShowContent = () => (
+  <Container>
+    <SeasonsSection />
+  </Container>
+);
 
 export default ShowContent;

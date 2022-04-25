@@ -28,6 +28,7 @@ type FullShow {
   genres: [Genre!]!
   name: String!
   originCountry: String!
+  rating: Int!
   status: Status!
   tallImage: String!
   wideImage: String!
@@ -62,6 +63,7 @@ type PartialShow {
   genres: [Genre!]!
   name: String!
   originCountry: String!
+  rating: Int!
   status: Status!
   tallImage: String!
   wideImage: String!
@@ -84,7 +86,9 @@ type Query {
 }
 
 type Season {
+  airDate: DateTime!
   description: String
+  episodeCount: String!
   name: String!
   number: Int!
   tallImage: String!
