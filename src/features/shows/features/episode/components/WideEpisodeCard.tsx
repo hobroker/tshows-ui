@@ -28,7 +28,11 @@ const WideEpisodeCard = ({
           <EllipsisButton size="small">{title}</EllipsisButton>
         </Tooltip>
         {actions.map((Action) => (
-          <Action key={episode.id} episode={episode} />
+          <Action
+            key={episode.id}
+            isWatched={episode.isWatched}
+            episodeId={episode.id}
+          />
         ))}
       </Box>
       {children}

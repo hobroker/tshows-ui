@@ -10,5 +10,6 @@ export type EpisodeWithShowType = EpisodeWithShowFragment & {
 export type EpisodeWithoutShow = Omit<Episode, 'show'>;
 
 export interface EpisodeActionProps {
-  episode: EpisodeWithShowType;
+  isWatched: boolean;
+  episodeId: number;
 }

@@ -40,7 +40,10 @@ const SeasonsAccordion = () => {
             <SeasonSummary season={season} />
           </AccordionSummary>
           <AccordionDetails>
-            <SeasonDetails episodes={episodesMap[season.number] || []} />
+            <SeasonDetails
+              seasonNumber={season.number}
+              episodes={episodesMap[season.number]}
+            />
           </AccordionDetails>
         </Accordion>
       ))}

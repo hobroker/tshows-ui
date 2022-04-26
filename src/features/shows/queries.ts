@@ -68,3 +68,11 @@ export const SHOW_FRAGMENT = gql`
     }
   }
 `;
+
+export const MUTATION_UPSERT_SEASON_EPISODE = gql`
+  mutation UpsertSeasonEpisode($episodeId: Int!, $isWatched: Boolean = true) {
+    upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
+      __typename
+    }
+  }
+`;

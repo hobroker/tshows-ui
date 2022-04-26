@@ -9,6 +9,7 @@ import {
   FullShow,
   useFullShowQuery,
   useGetSeasonEpisodesLazyQuery,
+  useUpsertSeasonEpisodeMutation,
 } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
 import { EpisodeWithoutShow } from '../features/episode/types';
@@ -19,6 +20,11 @@ interface ContextType {
   loading: boolean;
   update: (data: Partial<FullShow>) => void;
   fetchSeason: (seasonNumber: number) => void;
+  watchEpisode: (
+    seasonNumber: number,
+    episodeId: number,
+    isWatched: boolean,
+  ) => void;
 }
 
 interface Props {
@@ -32,6 +38,7 @@ const ShowPageContext = createContext<ContextType>({
   loading: true,
   update: noop,
   fetchSeason: noop,
+  watchEpisode: noop,
 });
 
 const ShowPageProvider = ({ children, externalId }: Props) => {
@@ -41,6 +48,7 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
   const [episodesMap, setEpisodesMap] = useState<
     Record<number, EpisodeWithoutShow[]>
   >({});
+  const [upsertEpisode] = useUpsertSeasonEpisodeMutation();
 
   const update = useCallback(
     (data: Partial<FullShow>) => {
@@ -75,6 +83,20 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
     [episodesMap, externalId, fetchSeasonEpisodes],
   );
 
+  const watchEpisode = useCallback(
+    async (seasonNumber: number, episodeId: number, isWatched: boolean) => {
+      setEpisodesMap((episodesMap) => ({
+        ...episodesMap,
+        [seasonNumber]: episodesMap[seasonNumber].map((episode) =>
+          episode.id !== episodeId ? episode : { ...episode, isWatched },
+        ),
+      }));
+
+      await upsertEpisode({ variables: { episodeId, isWatched } });
+    },
+    [upsertEpisode],
+  );
+
   useEffect(() => {
     if (data?.fullShow) {
       setShow(data.fullShow);
@@ -89,6 +111,7 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
         update,
         episodesMap,
         fetchSeason,
+        watchEpisode,
       }}
     >
       {children}

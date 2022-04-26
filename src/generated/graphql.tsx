@@ -453,6 +453,16 @@ export type PartialShowFragment = {
   genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
 
+export type UpsertSeasonEpisodeMutationVariables = Exact<{
+  episodeId: Scalars['Int'];
+  isWatched?: InputMaybe<Scalars['Boolean']>;
+}>;
+
+export type UpsertSeasonEpisodeMutation = {
+  __typename?: 'Mutation';
+  upsertEpisode?: { __typename: 'Episode' } | null;
+};
+
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
@@ -1235,6 +1245,58 @@ export type FullShowLazyQueryHookResult = ReturnType<
 export type FullShowQueryResult = Apollo.QueryResult<
   FullShowQuery,
   FullShowQueryVariables
+>;
+export const UpsertSeasonEpisodeDocument = gql`
+  mutation UpsertSeasonEpisode($episodeId: Int!, $isWatched: Boolean = true) {
+    upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
+      __typename
+    }
+  }
+`;
+export type UpsertSeasonEpisodeMutationFn = Apollo.MutationFunction<
+  UpsertSeasonEpisodeMutation,
+  UpsertSeasonEpisodeMutationVariables
+>;
+
+/**
+ * __useUpsertSeasonEpisodeMutation__
+ *
+ * To run a mutation, you first call `useUpsertSeasonEpisodeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertSeasonEpisodeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertSeasonEpisodeMutation, { data, loading, error }] = useUpsertSeasonEpisodeMutation({
+ *   variables: {
+ *      episodeId: // value for 'episodeId'
+ *      isWatched: // value for 'isWatched'
+ *   },
+ * });
+ */
+export function useUpsertSeasonEpisodeMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpsertSeasonEpisodeMutation,
+    UpsertSeasonEpisodeMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    UpsertSeasonEpisodeMutation,
+    UpsertSeasonEpisodeMutationVariables
+  >(UpsertSeasonEpisodeDocument, options);
+}
+export type UpsertSeasonEpisodeMutationHookResult = ReturnType<
+  typeof useUpsertSeasonEpisodeMutation
+>;
+export type UpsertSeasonEpisodeMutationResult =
+  Apollo.MutationResult<UpsertSeasonEpisodeMutation>;
+export type UpsertSeasonEpisodeMutationOptions = Apollo.BaseMutationOptions<
+  UpsertSeasonEpisodeMutation,
+  UpsertSeasonEpisodeMutationVariables
 >;
 export const MeDocument = gql`
   query Me {
