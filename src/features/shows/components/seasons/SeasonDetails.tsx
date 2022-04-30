@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   CircularProgress,
   List,
   ListItem,
@@ -27,7 +28,9 @@ interface Props {
 
 const SeasonDetails = ({ seasonNumber, episodes }: Props) =>
   !episodes ? (
-    <CircularProgress color="inherit" size={48} thickness={4} />
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <CircularProgress color="inherit" size={48} thickness={4} />
+    </Box>
   ) : (
     <List sx={{ width: '100%', py: 0 }}>
       {episodes.map(
@@ -48,7 +51,7 @@ const SeasonDetails = ({ seasonNumber, episodes }: Props) =>
               }
               sx={{ my: 0, pr: 2 }}
             />
-            <ListItemSecondaryAction>
+            <ListItemSecondaryAction sx={{ right: 0 }}>
               <EpisodeWatchActionButton
                 episodeId={id}
                 isWatched={isWatched}

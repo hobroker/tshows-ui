@@ -39,7 +39,7 @@ const SeasonsAccordion = () => {
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <SeasonSummary season={season} />
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails sx={{ py: 0 }}>
             <SeasonDetails
               seasonNumber={season.number}
               episodes={episodesMap[season.number]}
