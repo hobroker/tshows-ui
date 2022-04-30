@@ -1,9 +1,8 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Status,
   useUpsertWatchlistItemMutation,
 } from '../../../generated/graphql';
-import { ShowsOnboardingContext } from '../../onboarding/contexts/ShowsOnboardingContext';
 
 interface UpsertWatchlistItemArgs {
   showId: number;
@@ -12,22 +11,23 @@ interface UpsertWatchlistItemArgs {
 
 const useWatchlistActions = () => {
   const [upsertWatchlistItemMutation] = useUpsertWatchlistItemMutation();
-  const { updateShow } = useContext(ShowsOnboardingContext);
+  const [loading, setLoading] = useState(false);
 
   const upsertWatchlistItem = useCallback(
-    ({ showId, status }: UpsertWatchlistItemArgs) => {
-      upsertWatchlistItemMutation({
+    async ({ showId, status }: UpsertWatchlistItemArgs) => {
+      setLoading(true);
+      await upsertWatchlistItemMutation({
         variables: {
           showId,
           status,
         },
       });
-      updateShow(showId, { status });
+      setLoading(false);
     },
-    [updateShow, upsertWatchlistItemMutation],
+    [upsertWatchlistItemMutation],
   );
 
-  return { upsertWatchlistItem };
+  return { upsertWatchlistItem, loading };
 };
 
 export default useWatchlistActions;

@@ -19,17 +19,60 @@ export const QUERY_GET_PARTIAL_WATCHLIST = gql`
   }
 `;
 
+export const QUERY_FULL_SHOW = gql`
+  query FullShow($externalId: Int!) {
+    fullShow(input: { externalId: $externalId }) {
+      externalId
+      name
+      description
+      wideImage
+      tallImage
+      firstAirDate
+      originCountry
+      status
+      rating
+      genres {
+        externalId
+        name
+      }
+      details {
+        episodeRuntime
+        isInProduction
+        seasons {
+          number
+          description
+          name
+          tallImage
+          episodeCount
+          airDate
+        }
+      }
+    }
+  }
+`;
+
 export const SHOW_FRAGMENT = gql`
-  fragment ShowFragment on PartialShow {
+  fragment PartialShow on PartialShow {
     externalId
     name
     description
     wideImage
     tallImage
+    firstAirDate
+    originCountry
     status
+    rating
     genres {
       externalId
       name
+    }
+  }
+`;
+
+export const MUTATION_UPSERT_SEASON_EPISODE = gql`
+  mutation UpsertSeasonEpisode($episodeId: Int!, $isWatched: Boolean = true) {
+    upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
+      __typename
     }
   }
 `;

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { AppBar, Box, Button, Toolbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import NavigationProvider from '../contexts/NavigationContext';

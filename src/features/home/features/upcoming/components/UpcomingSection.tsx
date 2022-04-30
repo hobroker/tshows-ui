@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import Section from '../../../components/Section';
+import Section from '../../../../../components/Section';
 import { UpcomingContext } from '../contexts/UpcomingContext';
 import UpcomingEpisodesCollection from './UpcomingEpisodesCollection';
 

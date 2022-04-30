@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from '../../../user/contexts/UserContext';
 import { UserState } from '../../../user/constants';
 import AnonymoysUserMenu from './AnonymoysUserMenu';

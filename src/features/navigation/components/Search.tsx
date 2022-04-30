@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, OutlinedInput } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -25,7 +24,7 @@ const StyledInputBase = styled(OutlinedInput)(({ theme }) => ({
 
 const Search = () => {
   const [search, setSearch] = useState('');
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+  const onChange = (event: ChangeEvent<HTMLInputElement>) =>
     setSearch(event.target.value);
 
   return (

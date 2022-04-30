@@ -14,10 +14,10 @@ import {
 } from '../../../../../generated/graphql';
 import { UserContext } from '../../../../user/contexts/UserContext';
 import { UserState } from '../../../../user/constants';
-import { EpisodeType } from '../../../../shows/features/episode/types';
+import { EpisodeWithShowType } from '../../../../shows/features/episode/types';
 
 interface ContextType {
-  episodes: EpisodeType[];
+  episodes: EpisodeWithShowType[];
   watchEpisode: (episodeId: number) => void;
   loading: boolean;
 }
@@ -39,7 +39,7 @@ const UpNextProvider = ({ children }: Props) => {
   const { userState } = useContext(UserContext);
   const [fetchUpNextEpisodes, { loading }] = useListUpNextLazyQuery();
   const [upsertEpisode] = useUpsertEpisodeMutation();
-  const [episodes, setEpisodes] = useState<EpisodeType[]>([]);
+  const [episodes, setEpisodes] = useState<EpisodeWithShowType[]>([]);
 
   const watchEpisode = useCallback(
     async (episodeId: number) => {

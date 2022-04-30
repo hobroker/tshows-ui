@@ -1,25 +1,28 @@
-import { useCallback, useContext } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import ActionButton from '../../../components/base/ActionButton';
-import { UpNextContext } from '../../../../home/features/upnext/contexts/UpNextContext';
-import { ActionProps } from '../types';
+import ActionButton from '../../../components/card/ActionButton';
 
-const UpsertEpisodeAction = ({ episode }: ActionProps) => {
-  const { watchEpisode } = useContext(UpNextContext);
-  const onWatchEpisode = useCallback(() => {
-    watchEpisode(episode.id);
-  }, [episode, watchEpisode]);
+interface Props {
+  isWatched: boolean;
+  onClick: () => void;
+  size?: 'small' | 'large';
+}
 
-  return (
-    <ActionButton
-      size="small"
-      tooltip="Mark as watched"
-      onClick={onWatchEpisode}
-    >
-      {episode.isWatched ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
-    </ActionButton>
-  );
-};
+const UpsertEpisodeAction = ({ isWatched, onClick, size = 'small' }: Props) => (
+  <ActionButton
+    size={size}
+    tooltip={isWatched ? 'Mark as unwatched' : 'Mark as watched'}
+    onClick={onClick}
+    sx={{
+      fontSize: { small: '1.5rem', large: '2rem' }[size],
+    }}
+  >
+    {isWatched ? (
+      <CheckCircleIcon sx={{ fontSize: 'inherit' }} />
+    ) : (
+      <CheckCircleOutlineIcon sx={{ fontSize: 'inherit' }} />
+    )}
+  </ActionButton>
+);
 
 export default UpsertEpisodeAction;

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import useYupValidationResolver from '../hooks/useYupValidationResolver';
 import FormRow from '../../forms/components/FormRow';
-import { RoutePath } from '../../router/constants';
+import { StaticRoute } from '../../router/constants';
 
 type LoginFormInput = {
   name: string;
@@ -80,7 +80,7 @@ const RegisterForm = () => {
           sx={{ color: (theme) => theme.palette.text.secondary }}
         >
           Already have an account?{' '}
-          <Link color="primary" href={RoutePath.Login}>
+          <Link color="primary" href={StaticRoute.Login}>
             Log in
           </Link>
         </Typography>

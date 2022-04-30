@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { MenuItem, Divider } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { UserContext } from '../../../user/contexts/UserContext';
