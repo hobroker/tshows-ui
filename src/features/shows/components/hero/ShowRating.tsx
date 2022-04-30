@@ -1,8 +1,17 @@
-import { Rating, Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Box, Rating, Typography } from '@mui/material';
+import useRating from '../../../review/hooks/useRating';
 
-const ShowRating = () => {
-  const [value, setValue] = useState<number | null>(2);
+interface Props {
+  showId: number;
+}
+
+const ShowRating = ({ showId }: Props) => {
+  const { rating, updateRating } = useRating(showId);
+  const onUpdate = (value: number | null) => {
+    if (!value) return;
+
+    updateRating(value);
+  };
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -10,18 +19,20 @@ const ShowRating = () => {
         Your Rating
       </Typography>
       <Rating
-        value={value}
-        onChange={(event, newValue) => setValue(newValue)}
+        value={rating}
+        onChange={(event, newValue) => onUpdate(newValue)}
       />
-      <Typography
-        variant="h6"
-        color={({ components }) =>
-          components?.MuiRating?.styleOverrides?.iconFilled as string
-        }
-        sx={{ ml: 1, fontWeight: 'bold' }}
-      >
-        {value}/5
-      </Typography>
+      {rating && (
+        <Typography
+          variant="h6"
+          color={({ components }) =>
+            components?.MuiRating?.styleOverrides?.iconFilled as string
+          }
+          sx={{ ml: 1, fontWeight: 'bold' }}
+        >
+          {rating}/5
+        </Typography>
+      )}
     </Box>
   );
 };

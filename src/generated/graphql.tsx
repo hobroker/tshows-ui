@@ -51,7 +51,6 @@ export type FullShow = {
   genres: Array<Genre>;
   name: Scalars['String'];
   originCountry: Scalars['String'];
-  rating: Scalars['Int'];
   status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
@@ -65,6 +64,10 @@ export type Genre = {
   __typename?: 'Genre';
   externalId: Scalars['Int'];
   name: Scalars['String'];
+};
+
+export type GetRatingInput = {
+  showId: Scalars['Int'];
 };
 
 export type GetSeasonEpisodesInput = {
@@ -82,7 +85,9 @@ export type Mutation = {
   logout: Void;
   refresh: User;
   toggleGenrePreference: Void;
+  updateRating: Void;
   upsertEpisode?: Maybe<Episode>;
+  upsertReview: Void;
   upsertWatchlistItem: Watchlist;
 };
 
@@ -94,8 +99,16 @@ export type MutationToggleGenrePreferenceArgs = {
   input: ToggleGenrePreferenceInput;
 };
 
+export type MutationUpdateRatingArgs = {
+  input: UpdateRatingInput;
+};
+
 export type MutationUpsertEpisodeArgs = {
   input: UpsertEpisodeInput;
+};
+
+export type MutationUpsertReviewArgs = {
+  input: UpsertReviewInput;
 };
 
 export type MutationUpsertWatchlistItemArgs = {
@@ -110,7 +123,6 @@ export type PartialShow = {
   genres: Array<Genre>;
   name: Scalars['String'];
   originCountry: Scalars['String'];
-  rating: Scalars['Int'];
   status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
@@ -127,6 +139,7 @@ export type Query = {
   discoverShows: Array<PartialShow>;
   fullShow: FullShow;
   getPreferences?: Maybe<Preference>;
+  getRating: Review;
   getSeasonEpisodes: Array<Episode>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
@@ -143,8 +156,19 @@ export type QueryFullShowArgs = {
   input: FullShowInput;
 };
 
+export type QueryGetRatingArgs = {
+  input: GetRatingInput;
+};
+
 export type QueryGetSeasonEpisodesArgs = {
   input: GetSeasonEpisodesInput;
+};
+
+export type Review = {
+  __typename?: 'Review';
+  content: Scalars['String'];
+  rating: Scalars['Int'];
+  title: Scalars['String'];
 };
 
 export type Season = {
@@ -175,9 +199,20 @@ export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
 };
 
+export type UpdateRatingInput = {
+  rating: Scalars['Int'];
+  showId: Scalars['Int'];
+};
+
 export type UpsertEpisodeInput = {
   episodeId: Scalars['Int'];
   isWatched: Scalars['Boolean'];
+};
+
+export type UpsertReviewInput = {
+  content: Scalars['String'];
+  showId: Scalars['Int'];
+  title: Scalars['String'];
 };
 
 export type UpsertWatchlistInput = {
@@ -290,7 +325,6 @@ export type DiscoverShowsQuery = {
     firstAirDate: any;
     originCountry: string;
     status: Status;
-    rating: number;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   }>;
 };
@@ -312,6 +346,25 @@ export type GetPreferencesQuery = {
     __typename?: 'Preference';
     genres: Array<{ __typename?: 'Genre'; externalId: number }>;
   } | null;
+};
+
+export type GetRatingQueryVariables = Exact<{
+  showId: Scalars['Int'];
+}>;
+
+export type GetRatingQuery = {
+  __typename?: 'Query';
+  getRating: { __typename?: 'Review'; rating: number };
+};
+
+export type UpdateRatingMutationVariables = Exact<{
+  showId: Scalars['Int'];
+  rating: Scalars['Int'];
+}>;
+
+export type UpdateRatingMutation = {
+  __typename?: 'Mutation';
+  updateRating: { __typename: 'Void' };
 };
 
 export type UpsertEpisodeMutationVariables = Exact<{
@@ -420,7 +473,6 @@ export type FullShowQuery = {
     firstAirDate: any;
     originCountry: string;
     status: Status;
-    rating: number;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
     details: {
       __typename?: 'ShowDetails';
@@ -449,7 +501,6 @@ export type PartialShowFragment = {
   firstAirDate: any;
   originCountry: string;
   status: Status;
-  rating: number;
   genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
 
@@ -523,7 +574,6 @@ export const PartialShowFragmentDoc = gql`
     firstAirDate
     originCountry
     status
-    rating
     genres {
       externalId
       name
@@ -931,6 +981,113 @@ export type GetPreferencesQueryResult = Apollo.QueryResult<
   GetPreferencesQuery,
   GetPreferencesQueryVariables
 >;
+export const GetRatingDocument = gql`
+  query GetRating($showId: Int!) {
+    getRating(input: { showId: $showId }) {
+      rating
+    }
+  }
+`;
+
+/**
+ * __useGetRatingQuery__
+ *
+ * To run a query within a React component, call `useGetRatingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRatingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRatingQuery({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *   },
+ * });
+ */
+export function useGetRatingQuery(
+  baseOptions: Apollo.QueryHookOptions<GetRatingQuery, GetRatingQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetRatingQuery, GetRatingQueryVariables>(
+    GetRatingDocument,
+    options,
+  );
+}
+export function useGetRatingLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRatingQuery,
+    GetRatingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<GetRatingQuery, GetRatingQueryVariables>(
+    GetRatingDocument,
+    options,
+  );
+}
+export type GetRatingQueryHookResult = ReturnType<typeof useGetRatingQuery>;
+export type GetRatingLazyQueryHookResult = ReturnType<
+  typeof useGetRatingLazyQuery
+>;
+export type GetRatingQueryResult = Apollo.QueryResult<
+  GetRatingQuery,
+  GetRatingQueryVariables
+>;
+export const UpdateRatingDocument = gql`
+  mutation UpdateRating($showId: Int!, $rating: Int!) {
+    updateRating(input: { showId: $showId, rating: $rating }) {
+      __typename
+    }
+  }
+`;
+export type UpdateRatingMutationFn = Apollo.MutationFunction<
+  UpdateRatingMutation,
+  UpdateRatingMutationVariables
+>;
+
+/**
+ * __useUpdateRatingMutation__
+ *
+ * To run a mutation, you first call `useUpdateRatingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateRatingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateRatingMutation, { data, loading, error }] = useUpdateRatingMutation({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *      rating: // value for 'rating'
+ *   },
+ * });
+ */
+export function useUpdateRatingMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateRatingMutation,
+    UpdateRatingMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    UpdateRatingMutation,
+    UpdateRatingMutationVariables
+  >(UpdateRatingDocument, options);
+}
+export type UpdateRatingMutationHookResult = ReturnType<
+  typeof useUpdateRatingMutation
+>;
+export type UpdateRatingMutationResult =
+  Apollo.MutationResult<UpdateRatingMutation>;
+export type UpdateRatingMutationOptions = Apollo.BaseMutationOptions<
+  UpdateRatingMutation,
+  UpdateRatingMutationVariables
+>;
 export const UpsertEpisodeDocument = gql`
   mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {
     upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
@@ -1178,7 +1335,6 @@ export const FullShowDocument = gql`
       firstAirDate
       originCountry
       status
-      rating
       genres {
         externalId
         name

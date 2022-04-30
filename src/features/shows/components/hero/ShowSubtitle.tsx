@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Box, Typography } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import StarIcon from '@mui/icons-material/Star';
 import { DateTime } from 'luxon';
 import { styled } from '@mui/material/styles';
 import { ShowPageContext } from '../../contexts/ShowPageContext';
@@ -22,10 +21,6 @@ const Item = styled(Box)`
 const ShowSubtitle = () => {
   const { show } = useContext(ShowPageContext);
   const items = [
-    {
-      icon: <StarIcon color="primary" />,
-      text: `${show?.rating}`,
-    },
     {
       icon: <CalendarMonthIcon color="primary" />,
       text:

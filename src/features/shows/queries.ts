@@ -30,7 +30,6 @@ export const QUERY_FULL_SHOW = gql`
       firstAirDate
       originCountry
       status
-      rating
       genres {
         externalId
         name
@@ -61,7 +60,6 @@ export const SHOW_FRAGMENT = gql`
     firstAirDate
     originCountry
     status
-    rating
     genres {
       externalId
       name
