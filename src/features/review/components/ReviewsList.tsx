@@ -22,6 +22,10 @@ const ReviewsList = ({ toggleIsFormOpen }: Props) => {
   const { reviews } = useContext(ReviewContext);
   const { user } = useContext(UserContext);
 
+  if (!reviews.length) {
+    return null;
+  }
+
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {reviews.map((review, idx) => {

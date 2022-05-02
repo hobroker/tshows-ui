@@ -2,22 +2,24 @@ import {
   createContext,
   ReactNode,
   useCallback,
+  useContext,
   useEffect,
   useState,
 } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
+  EpisodeWithoutShowFragment,
   FullShow,
   useFullShowQuery,
   useGetSeasonEpisodesLazyQuery,
   useUpsertSeasonEpisodeMutation,
 } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
-import { EpisodeWithoutShow } from '../features/episode/types';
+import { BackdropContext } from '../../../contexts/BackdropContext';
 
 interface ContextType {
   show: FullShow;
-  episodesMap: Record<number, EpisodeWithoutShow[]>;
-  loading: boolean;
+  episodesMap: Record<number, EpisodeWithoutShowFragment[]>;
   update: (data: Partial<FullShow>) => void;
   fetchSeason: (seasonNumber: number) => void;
   watchEpisode: (
@@ -35,18 +37,20 @@ interface Props {
 const ShowPageContext = createContext<ContextType>({
   show: {} as FullShow,
   episodesMap: {},
-  loading: true,
   update: noop,
   fetchSeason: noop,
   watchEpisode: noop,
 });
 
 const ShowPageProvider = ({ children, externalId }: Props) => {
-  const { data, loading } = useFullShowQuery({ variables: { externalId } });
+  const { data, loading } = useFullShowQuery({
+    variables: { externalId },
+    fetchPolicy: 'network-only',
+  });
   const [fetchSeasonEpisodes] = useGetSeasonEpisodesLazyQuery();
   const [show, setShow] = useState<FullShow>();
   const [episodesMap, setEpisodesMap] = useState<
-    Record<number, EpisodeWithoutShow[]>
+    Record<number, EpisodeWithoutShowFragment[]>
   >({});
   const [upsertEpisode] = useUpsertSeasonEpisodeMutation();
 
@@ -103,7 +107,19 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
     }
   }, [data]);
 
-  if (!show) {
+  const { toggleBackdrop } = useContext(BackdropContext);
+
+  useEffect(() => {
+    toggleBackdrop(!show || loading);
+  }, [toggleBackdrop, show, loading]);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setShow(undefined);
+  }, [pathname]);
+
+  if (!show || loading) {
     return null;
   }
 
@@ -111,7 +127,6 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
     <ShowPageContext.Provider
       value={{
         show,
-        loading,
         update,
         episodesMap,
         fetchSeason,

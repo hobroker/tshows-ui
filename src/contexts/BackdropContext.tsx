@@ -5,7 +5,7 @@ import { noop } from '../utils/fp';
 
 interface ShowPreferenceContextType {
   isBackdropOpen: boolean;
-  toggleBackdrop: () => void;
+  toggleBackdrop: (value?: boolean) => void;
 }
 
 interface Props {
@@ -20,7 +20,13 @@ const BackdropContext = createContext<ShowPreferenceContextType>({
 const BackdropProvider = ({ children }: Props) => {
   const [isBackdropOpen, setIsBackdropOpen] = useState(false);
 
-  const toggleBackdrop = useCallback(() => setIsBackdropOpen(not), []);
+  const toggleBackdrop = useCallback((value?: boolean) => {
+    if (value === undefined) {
+      setIsBackdropOpen(not);
+    } else {
+      setIsBackdropOpen(value);
+    }
+  }, []);
 
   return (
     <BackdropContext.Provider

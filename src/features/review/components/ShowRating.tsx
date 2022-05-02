@@ -28,7 +28,7 @@ const ShowRating = () => {
         value={rating}
         onChange={(event, newValue) => onUpdate(newValue)}
       />
-      {rating && (
+      {rating !== 0 ? (
         <Typography
           variant="h6"
           color={({ components }) =>
@@ -38,6 +38,8 @@ const ShowRating = () => {
         >
           {rating}/5
         </Typography>
+      ) : (
+        ''
       )}
     </Box>
   );

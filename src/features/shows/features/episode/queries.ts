@@ -8,7 +8,7 @@ export const MUTATION_UPSERT_EPISODE = gql`
   }
 `;
 
-export const EPISODE_FRAGMENT = gql`
+export const EPISODE_WITH_SHOW_FRAGMENT = gql`
   fragment EpisodeWithShow on Episode {
     id
     externalId
@@ -31,15 +31,21 @@ export const EPISODE_FRAGMENT = gql`
 export const QUERY_GET_SEASON_EPISODES = gql`
   query GetSeasonEpisodes($showId: Int!, $seasonNumber: Int!) {
     getSeasonEpisodes(input: { showId: $showId, seasonNumber: $seasonNumber }) {
-      id
-      externalId
-      number
-      seasonNumber
-      isWatched
-      name
-      description
-      wideImage
-      airDate
+      ...EpisodeWithoutShow
     }
+  }
+`;
+
+export const EPISODE_WITHOUT_SHOW_FRAGMENT = gql`
+  fragment EpisodeWithoutShow on Episode {
+    id
+    externalId
+    number
+    seasonNumber
+    isWatched
+    name
+    description
+    wideImage
+    airDate
   }
 `;
