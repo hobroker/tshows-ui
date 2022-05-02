@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Box,
-  CircularProgress,
   List,
   ListItem,
   ListItemAvatar,
@@ -13,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import { DateTime } from 'luxon';
 import { EpisodeWithoutShow } from '../../features/episode/types';
 import { makeWideSmImage } from '../../utils/image';
+import IndefiniteLoading from '../../../../components/IndefiniteLoading';
 import EpisodeWatchActionButton from './EpisodeWatchActionButton';
 
 const StyledImage = styled('img')`
@@ -28,9 +27,7 @@ interface Props {
 
 const SeasonDetails = ({ seasonNumber, episodes }: Props) =>
   !episodes ? (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-      <CircularProgress color="inherit" size={48} thickness={4} />
-    </Box>
+    <IndefiniteLoading />
   ) : (
     <List sx={{ width: '100%', py: 0 }}>
       {episodes.map(

@@ -46,6 +46,10 @@ input GetRatingInput {
   showId: Int!
 }
 
+input GetReviewInput {
+  showId: Int!
+}
+
 input GetSeasonEpisodesInput {
   seasonNumber: Int!
   showId: Int!
@@ -62,7 +66,7 @@ type Mutation {
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
   updateRating(input: UpdateRatingInput!): Void!
   upsertEpisode(input: UpsertEpisodeInput!): Episode
-  upsertReview(input: UpsertReviewInput!): Void!
+  upsertReview(input: UpsertReviewInput!): Review!
   upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
 }
 
@@ -86,6 +90,8 @@ type Query {
   allUsers: User!
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
   fullShow(input: FullShowInput!): FullShow!
+  getMyReview(input: GetReviewInput!): Review
+  getOtherReviews(input: GetReviewInput!): [Review!]!
   getPreferences: Preference
   getRating(input: GetRatingInput!): Review!
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
@@ -98,8 +104,10 @@ type Query {
 
 type Review {
   content: String!
+  id: Int!
   rating: Int!
   title: String!
+  user: User!
 }
 
 type Season {
@@ -139,9 +147,10 @@ input UpsertEpisodeInput {
 }
 
 input UpsertReviewInput {
-  content: String!
+  content: String
+  rating: Int
   showId: Int!
-  title: String!
+  title: String
 }
 
 input UpsertWatchlistInput {

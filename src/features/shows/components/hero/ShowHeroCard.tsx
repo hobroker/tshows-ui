@@ -7,7 +7,6 @@ import GenresList from './GenresList';
 import ShowTitle from './ShowTitle';
 import ShowSubtitle from './ShowSubtitle';
 import WatchlistActionButton from './WatchlistActionButton';
-import ShowRating from './ShowRating';
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -46,10 +45,6 @@ const TallImage = styled('img')`
 const ShowHeroCard = () => {
   const { show } = useContext(ShowPageContext);
 
-  if (!show) {
-    return null;
-  }
-
   return (
     <Wrapper
       sx={{
@@ -80,7 +75,6 @@ const ShowHeroCard = () => {
         >
           <ShowTitle />
           <ShowSubtitle />
-          <ShowRating showId={show.externalId} />
           <GenresList />
           <Typography variant="body1" color="white">
             {show.description}

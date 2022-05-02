@@ -67,9 +67,6 @@ const WatchlistActionButton = () => {
   }
 
   const onClick = () => {
-    if (!show) {
-      return;
-    }
     const showId = show.externalId;
     const toStatus = ShowStatusToggleMap[status];
 

@@ -12,7 +12,7 @@ const Wrapper = styled(Box)`
 
 const GenresList = () => {
   const { show } = useContext(ShowPageContext);
-  const genres = show?.genres ?? [];
+  const { genres } = show;
 
   return (
     <Wrapper>

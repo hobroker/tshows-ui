@@ -24,12 +24,12 @@ const ShowSubtitle = () => {
     {
       icon: <CalendarMonthIcon color="primary" />,
       text:
-        DateTime.fromISO(show?.firstAirDate).toFormat('d MMM yyyy') +
-        (show?.originCountry ? ` (${show?.originCountry})` : ''),
+        DateTime.fromISO(show.firstAirDate).toFormat('d MMM yyyy') +
+        (show.originCountry ? ` (${show.originCountry})` : ''),
     },
     {
       icon: <AccessTimeIcon color="primary" />,
-      text: `${show?.details?.episodeRuntime} min`,
+      text: `${show.details.episodeRuntime} min`,
     },
   ];
 
