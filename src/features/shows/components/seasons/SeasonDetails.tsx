@@ -9,9 +9,9 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { DateTime } from 'luxon';
-import { EpisodeWithoutShow } from '../../features/episode/types';
 import { makeWideSmImage } from '../../utils/image';
 import IndefiniteLoading from '../../../../components/IndefiniteLoading';
+import { EpisodeWithoutShowFragment } from '../../../../generated/graphql';
 import EpisodeWatchActionButton from './EpisodeWatchActionButton';
 
 const StyledImage = styled('img')`
@@ -22,7 +22,7 @@ const StyledImage = styled('img')`
 
 interface Props {
   seasonNumber: number;
-  episodes?: EpisodeWithoutShow[];
+  episodes?: EpisodeWithoutShowFragment[];
 }
 
 const SeasonDetails = ({ seasonNumber, episodes }: Props) =>

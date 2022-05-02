@@ -6,17 +6,17 @@ import {
   useState,
 } from 'react';
 import {
+  EpisodeWithoutShowFragment,
   FullShow,
   useFullShowQuery,
   useGetSeasonEpisodesLazyQuery,
   useUpsertSeasonEpisodeMutation,
 } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
-import { EpisodeWithoutShow } from '../features/episode/types';
 
 interface ContextType {
   show: FullShow;
-  episodesMap: Record<number, EpisodeWithoutShow[]>;
+  episodesMap: Record<number, EpisodeWithoutShowFragment[]>;
   loading: boolean;
   update: (data: Partial<FullShow>) => void;
   fetchSeason: (seasonNumber: number) => void;
@@ -46,7 +46,7 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
   const [fetchSeasonEpisodes] = useGetSeasonEpisodesLazyQuery();
   const [show, setShow] = useState<FullShow>();
   const [episodesMap, setEpisodesMap] = useState<
-    Record<number, EpisodeWithoutShow[]>
+    Record<number, EpisodeWithoutShowFragment[]>
   >({});
   const [upsertEpisode] = useUpsertSeasonEpisodeMutation();
 

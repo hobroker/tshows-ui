@@ -505,6 +505,19 @@ export type GetSeasonEpisodesQuery = {
   }>;
 };
 
+export type EpisodeWithoutShowFragment = {
+  __typename?: 'Episode';
+  id: number;
+  externalId: number;
+  number: number;
+  seasonNumber: number;
+  isWatched: boolean;
+  name: string;
+  description?: string | null;
+  wideImage?: string | null;
+  airDate?: any | null;
+};
+
 export type UpsertWatchlistItemMutationVariables = Exact<{
   showId: Scalars['Int'];
   status: Status;
@@ -644,6 +657,19 @@ export const EpisodeWithShowFragmentDoc = gql`
       wideImage
       tallImage
     }
+  }
+`;
+export const EpisodeWithoutShowFragmentDoc = gql`
+  fragment EpisodeWithoutShow on Episode {
+    id
+    externalId
+    number
+    seasonNumber
+    isWatched
+    name
+    description
+    wideImage
+    airDate
   }
 `;
 export const PartialShowFragmentDoc = gql`
@@ -1303,17 +1329,10 @@ export type UpsertEpisodeMutationOptions = Apollo.BaseMutationOptions<
 export const GetSeasonEpisodesDocument = gql`
   query GetSeasonEpisodes($showId: Int!, $seasonNumber: Int!) {
     getSeasonEpisodes(input: { showId: $showId, seasonNumber: $seasonNumber }) {
-      id
-      externalId
-      number
-      seasonNumber
-      isWatched
-      name
-      description
-      wideImage
-      airDate
+      ...EpisodeWithoutShow
     }
   }
+  ${EpisodeWithoutShowFragmentDoc}
 `;
 
 /**
