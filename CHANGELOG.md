@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/hobroker/tshows-ui/compare/v1.14.0...v1.14.1) (2022-05-02)
+
+
+### Bug Fixes
+
+* hide logged in actions for anon ([#32](https://github.com/hobroker/tshows-ui/issues/32)) ([7d1f985](https://github.com/hobroker/tshows-ui/commit/7d1f985fdd03831fdd7824800a588122508aea81))
+
 # [1.14.0](https://github.com/hobroker/tshows-ui/compare/v1.13.0...v1.14.0) (2022-05-02)
 
 
