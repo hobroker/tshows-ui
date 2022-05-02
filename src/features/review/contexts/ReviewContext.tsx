@@ -8,7 +8,7 @@ import {
 } from 'react';
 import {
   ReviewFragment,
-  useGetRatingLazyQuery,
+  useGetRatingQuery,
   useGetReviewsQuery,
   useUpsertReviewMutation,
 } from '../../../generated/graphql';
@@ -46,13 +46,19 @@ const ReviewProvider = ({ children }: Props) => {
   const { show } = useContext(ShowPageContext);
   const showId = show.externalId;
   const [upsertReviewMutation] = useUpsertReviewMutation();
-  const { data, refetch } = useGetReviewsQuery({
+  const { data, refetch: refetchReviews } = useGetReviewsQuery({
     variables: { showId },
     notifyOnNetworkStatusChange: true,
   });
   const [loading, setLoading] = useState(true);
   const [ownReview, setOwnReview] = useState<ReviewFragment>();
   const [otherReviews, setOtherReviews] = useState<ReviewFragment[]>([]);
+
+  const [rating, setRating] = useState(0);
+  const { data: ratingData, refetch: refetchRating } = useGetRatingQuery({
+    variables: { showId },
+  });
+
   const upsertReview = useCallback(
     (value: UpsertReviewProps, avoidRefetch?: boolean) => {
       if (!avoidRefetch) {
@@ -62,8 +68,10 @@ const ReviewProvider = ({ children }: Props) => {
         variables: { showId, ...value },
       }).then(() => {
         if (!avoidRefetch) {
-          return refetch().then(() => setLoading(false));
+          return refetchReviews().then(() => setLoading(false));
         }
+
+        refetchRating();
         setOwnReview((review) => {
           if (!review) return review;
 
@@ -71,7 +79,7 @@ const ReviewProvider = ({ children }: Props) => {
         });
       });
     },
-    [refetch, showId, upsertReviewMutation],
+    [refetchRating, refetchReviews, showId, upsertReviewMutation],
   );
 
   useEffect(() => {
@@ -86,15 +94,11 @@ const ReviewProvider = ({ children }: Props) => {
     setOtherReviews(data.getOtherReviews);
   }, [data]);
 
-  const [rating, setRating] = useState(0);
-  const [fetchRating] = useGetRatingLazyQuery({ variables: { showId } });
-
   useEffect(() => {
-    fetchRating().then(({ data }) => {
-      if (!data) return;
-      setRating(data.getRating.rating);
-    });
-  }, [fetchRating]);
+    if (!ratingData) return;
+
+    setRating(ratingData.getRating.rating);
+  }, [ratingData]);
 
   const reviews = ownReview ? [ownReview, ...otherReviews] : [...otherReviews];
 

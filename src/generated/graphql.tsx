@@ -142,6 +142,7 @@ export type Query = {
   getPreferences?: Maybe<Preference>;
   getRating: Review;
   getSeasonEpisodes: Array<Episode>;
+  getSimilarShows: Array<PartialShow>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
   listUpNext: Array<Episode>;
@@ -173,6 +174,10 @@ export type QueryGetSeasonEpisodesArgs = {
   input: GetSeasonEpisodesInput;
 };
 
+export type QueryGetSimilarShowsArgs = {
+  input: SimilarShowsInput;
+};
+
 export type Review = {
   __typename?: 'Review';
   content: Scalars['String'];
@@ -198,6 +203,10 @@ export type ShowDetails = {
   isInProduction: Scalars['Boolean'];
   seasons: Array<Season>;
   tagline?: Maybe<Scalars['String']>;
+};
+
+export type SimilarShowsInput = {
+  externalId: Scalars['Int'];
 };
 
 export enum Status {
@@ -518,6 +527,27 @@ export type EpisodeWithoutShowFragment = {
   airDate?: any | null;
 };
 
+export type GetSimilarShowsQueryVariables = Exact<{
+  externalId: Scalars['Int'];
+}>;
+
+export type GetSimilarShowsQuery = {
+  __typename?: 'Query';
+  getSimilarShows: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    tallImage: string;
+  }>;
+};
+
+export type SimilarShowFragment = {
+  __typename?: 'PartialShow';
+  externalId: number;
+  name: string;
+  tallImage: string;
+};
+
 export type UpsertWatchlistItemMutationVariables = Exact<{
   showId: Scalars['Int'];
   status: Status;
@@ -670,6 +700,13 @@ export const EpisodeWithoutShowFragmentDoc = gql`
     description
     wideImage
     airDate
+  }
+`;
+export const SimilarShowFragmentDoc = gql`
+  fragment SimilarShow on PartialShow {
+    externalId
+    name
+    tallImage
   }
 `;
 export const PartialShowFragmentDoc = gql`
@@ -1387,6 +1424,67 @@ export type GetSeasonEpisodesLazyQueryHookResult = ReturnType<
 export type GetSeasonEpisodesQueryResult = Apollo.QueryResult<
   GetSeasonEpisodesQuery,
   GetSeasonEpisodesQueryVariables
+>;
+export const GetSimilarShowsDocument = gql`
+  query GetSimilarShows($externalId: Int!) {
+    getSimilarShows(input: { externalId: $externalId }) {
+      ...SimilarShow
+    }
+  }
+  ${SimilarShowFragmentDoc}
+`;
+
+/**
+ * __useGetSimilarShowsQuery__
+ *
+ * To run a query within a React component, call `useGetSimilarShowsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSimilarShowsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSimilarShowsQuery({
+ *   variables: {
+ *      externalId: // value for 'externalId'
+ *   },
+ * });
+ */
+export function useGetSimilarShowsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetSimilarShowsQuery,
+    GetSimilarShowsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetSimilarShowsQuery, GetSimilarShowsQueryVariables>(
+    GetSimilarShowsDocument,
+    options,
+  );
+}
+export function useGetSimilarShowsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetSimilarShowsQuery,
+    GetSimilarShowsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    GetSimilarShowsQuery,
+    GetSimilarShowsQueryVariables
+  >(GetSimilarShowsDocument, options);
+}
+export type GetSimilarShowsQueryHookResult = ReturnType<
+  typeof useGetSimilarShowsQuery
+>;
+export type GetSimilarShowsLazyQueryHookResult = ReturnType<
+  typeof useGetSimilarShowsLazyQuery
+>;
+export type GetSimilarShowsQueryResult = Apollo.QueryResult<
+  GetSimilarShowsQuery,
+  GetSimilarShowsQueryVariables
 >;
 export const UpsertWatchlistItemDocument = gql`
   mutation UpsertWatchlistItem($showId: Int!, $status: Status!) {

@@ -94,6 +94,7 @@ type Query {
   getPreferences: Preference
   getRating(input: GetRatingInput!): Review!
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
+  getSimilarShows(input: SimilarShowsInput!): [PartialShow!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
   listUpNext: [Episode!]!
@@ -123,6 +124,10 @@ type ShowDetails {
   isInProduction: Boolean!
   seasons: [Season!]!
   tagline: String
+}
+
+input SimilarShowsInput {
+  externalId: Int!
 }
 
 enum Status {

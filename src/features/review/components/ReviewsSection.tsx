@@ -16,6 +16,8 @@ const ReviewsSection = () => {
   useEffect(() => {
     if (ownReview) {
       setIsFormOpen(false);
+    } else {
+      setIsFormOpen(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ownReview?.id]);
@@ -25,13 +27,17 @@ const ReviewsSection = () => {
       <Section
         title="Reviews"
         afterTitle={
-          <RatingInfo
-            variant="h5"
-            value={rating}
-            sx={{
-              ml: 'auto',
-            }}
-          />
+          rating !== 0 ? (
+            <RatingInfo
+              variant="h5"
+              value={rating}
+              sx={{
+                ml: 'auto',
+              }}
+            />
+          ) : (
+            ''
+          )
         }
         sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
       >
