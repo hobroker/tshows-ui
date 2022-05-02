@@ -33,14 +33,6 @@ export const REVIEW_WITH_USER_FRAGMENT = gql`
   }
 `;
 
-export const MUTATION_UPDATE_RATING = gql`
-  mutation UpdateRating($showId: Int!, $rating: Int!) {
-    updateRating(input: { showId: $showId, rating: $rating }) {
-      __typename
-    }
-  }
-`;
-
 export const MUTATION_UPSERT_REVIEW = gql`
   mutation UpsertReview(
     $showId: Int!

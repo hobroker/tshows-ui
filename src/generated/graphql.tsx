@@ -89,7 +89,6 @@ export type Mutation = {
   logout: Void;
   refresh: User;
   toggleGenrePreference: Void;
-  updateRating: Void;
   upsertEpisode?: Maybe<Episode>;
   upsertReview: Review;
   upsertWatchlistItem: Watchlist;
@@ -101,10 +100,6 @@ export type MutationJoinWithGoogleArgs = {
 
 export type MutationToggleGenrePreferenceArgs = {
   input: ToggleGenrePreferenceInput;
-};
-
-export type MutationUpdateRatingArgs = {
-  input: UpdateRatingInput;
 };
 
 export type MutationUpsertEpisodeArgs = {
@@ -213,11 +208,6 @@ export enum Status {
 
 export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
-};
-
-export type UpdateRatingInput = {
-  rating: Scalars['Int'];
-  showId: Scalars['Int'];
 };
 
 export type UpsertEpisodeInput = {
@@ -420,16 +410,6 @@ export type ReviewFragment = {
     avatar?: string | null;
     name: string;
   };
-};
-
-export type UpdateRatingMutationVariables = Exact<{
-  showId: Scalars['Int'];
-  rating: Scalars['Int'];
-}>;
-
-export type UpdateRatingMutation = {
-  __typename?: 'Mutation';
-  updateRating: { __typename: 'Void' };
 };
 
 export type UpsertReviewMutationVariables = Exact<{
@@ -1199,58 +1179,6 @@ export type GetReviewsLazyQueryHookResult = ReturnType<
 export type GetReviewsQueryResult = Apollo.QueryResult<
   GetReviewsQuery,
   GetReviewsQueryVariables
->;
-export const UpdateRatingDocument = gql`
-  mutation UpdateRating($showId: Int!, $rating: Int!) {
-    updateRating(input: { showId: $showId, rating: $rating }) {
-      __typename
-    }
-  }
-`;
-export type UpdateRatingMutationFn = Apollo.MutationFunction<
-  UpdateRatingMutation,
-  UpdateRatingMutationVariables
->;
-
-/**
- * __useUpdateRatingMutation__
- *
- * To run a mutation, you first call `useUpdateRatingMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateRatingMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateRatingMutation, { data, loading, error }] = useUpdateRatingMutation({
- *   variables: {
- *      showId: // value for 'showId'
- *      rating: // value for 'rating'
- *   },
- * });
- */
-export function useUpdateRatingMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    UpdateRatingMutation,
-    UpdateRatingMutationVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useMutation<
-    UpdateRatingMutation,
-    UpdateRatingMutationVariables
-  >(UpdateRatingDocument, options);
-}
-export type UpdateRatingMutationHookResult = ReturnType<
-  typeof useUpdateRatingMutation
->;
-export type UpdateRatingMutationResult =
-  Apollo.MutationResult<UpdateRatingMutation>;
-export type UpdateRatingMutationOptions = Apollo.BaseMutationOptions<
-  UpdateRatingMutation,
-  UpdateRatingMutationVariables
 >;
 export const UpsertReviewDocument = gql`
   mutation UpsertReview(

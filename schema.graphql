@@ -64,7 +64,6 @@ type Mutation {
   logout: Void!
   refresh: User!
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
-  updateRating(input: UpdateRatingInput!): Void!
   upsertEpisode(input: UpsertEpisodeInput!): Episode
   upsertReview(input: UpsertReviewInput!): Review!
   upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
@@ -134,11 +133,6 @@ enum Status {
 
 input ToggleGenrePreferenceInput {
   genreId: Int!
-}
-
-input UpdateRatingInput {
-  rating: Int!
-  showId: Int!
 }
 
 input UpsertEpisodeInput {
