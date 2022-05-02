@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/hobroker/tshows-ui/compare/v1.12.0...v1.13.0) (2022-05-02)
+
+
+### Features
+
+* add show reviews ([#29](https://github.com/hobroker/tshows-ui/issues/29)) ([f587e42](https://github.com/hobroker/tshows-ui/commit/f587e421c40e16c2a4b0164e78708301c50bfbbf))
+
 # [1.12.0](https://github.com/hobroker/tshows-ui/compare/v1.11.0...v1.12.0) (2022-04-30)
 
 
