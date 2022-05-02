@@ -3,6 +3,7 @@ import { alpha, styled } from '@mui/material/styles';
 import React, { useContext } from 'react';
 import { makeTallMdImage, makeWideLgImage } from '../../utils/image';
 import { ShowPageContext } from '../../contexts/ShowPageContext';
+import WhenLoggedIn from '../../../user/components/WhenLoggedIn';
 import GenresList from './GenresList';
 import ShowTitle from './ShowTitle';
 import ShowSubtitle from './ShowSubtitle';
@@ -62,7 +63,9 @@ const ShowHeroCard = () => {
             src={makeTallMdImage(show.tallImage || '')}
             alt={show.name}
           />
-          <WatchlistActionButton />
+          <WhenLoggedIn>
+            <WatchlistActionButton />
+          </WhenLoggedIn>
         </Box>
         <Box
           sx={{

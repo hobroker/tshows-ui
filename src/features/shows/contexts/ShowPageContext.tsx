@@ -47,7 +47,9 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
     variables: { externalId },
     fetchPolicy: 'network-only',
   });
-  const [fetchSeasonEpisodes] = useGetSeasonEpisodesLazyQuery();
+  const [fetchSeasonEpisodes] = useGetSeasonEpisodesLazyQuery({
+    fetchPolicy: 'network-only',
+  });
   const [show, setShow] = useState<FullShow>();
   const [episodesMap, setEpisodesMap] = useState<
     Record<number, EpisodeWithoutShowFragment[]>
@@ -116,6 +118,7 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    setEpisodesMap({});
     setShow(undefined);
   }, [pathname]);
 

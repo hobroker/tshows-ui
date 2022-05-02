@@ -12,6 +12,7 @@ import { DateTime } from 'luxon';
 import { makeWideSmImage } from '../../utils/image';
 import IndefiniteLoading from '../../../../components/IndefiniteLoading';
 import { EpisodeWithoutShowFragment } from '../../../../generated/graphql';
+import WhenLoggedIn from '../../../user/components/WhenLoggedIn';
 import EpisodeWatchActionButton from './EpisodeWatchActionButton';
 
 const StyledImage = styled('img')`
@@ -48,13 +49,15 @@ const SeasonDetails = ({ seasonNumber, episodes }: Props) =>
               }
               sx={{ my: 0, pr: 2 }}
             />
-            <ListItemSecondaryAction sx={{ right: 0 }}>
-              <EpisodeWatchActionButton
-                episodeId={id}
-                isWatched={isWatched}
-                seasonNumber={seasonNumber}
-              />
-            </ListItemSecondaryAction>
+            <WhenLoggedIn>
+              <ListItemSecondaryAction sx={{ right: 0 }}>
+                <EpisodeWatchActionButton
+                  episodeId={id}
+                  isWatched={isWatched}
+                  seasonNumber={seasonNumber}
+                />
+              </ListItemSecondaryAction>
+            </WhenLoggedIn>
           </ListItem>
         ),
       )}
