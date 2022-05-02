@@ -13,6 +13,7 @@ import { ShowStatusToggleMap } from '../../constants';
 
 const StyledButton = styled(LoadingButton)`
   font-weight: bold;
+  white-space: nowrap;
 
   &.MuiButton-outlined {
     padding: 6px;
