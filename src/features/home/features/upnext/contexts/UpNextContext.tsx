@@ -37,7 +37,9 @@ const beforeEpisodeUpdate = (episodeId: number) =>
 
 const UpNextProvider = ({ children }: Props) => {
   const { userState } = useContext(UserContext);
-  const [fetchUpNextEpisodes, { loading }] = useListUpNextLazyQuery();
+  const [fetchUpNextEpisodes, { loading }] = useListUpNextLazyQuery({
+    fetchPolicy: 'network-only',
+  });
   const [upsertEpisode] = useUpsertEpisodeMutation();
   const [episodes, setEpisodes] = useState<EpisodeWithShowType[]>([]);
 

@@ -25,7 +25,9 @@ const UpcomingContext = createContext<ContextType>({
 });
 const UpcomingProvider = ({ children }: Props) => {
   const { userState } = useContext(UserContext);
-  const [fetchUpcomingEpisodes, { loading }] = useListUpcomingLazyQuery();
+  const [fetchUpcomingEpisodes, { loading }] = useListUpcomingLazyQuery({
+    fetchPolicy: 'network-only',
+  });
   const [episodes, setEpisodes] = useState<EpisodeWithShowType[]>([]);
 
   useEffect(() => {
