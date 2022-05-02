@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/hobroker/tshows-ui/compare/v1.13.0...v1.14.0) (2022-05-02)
+
+
+### Features
+
+* add similar shows section to show page ([#31](https://github.com/hobroker/tshows-ui/issues/31)) ([aabb716](https://github.com/hobroker/tshows-ui/commit/aabb716d7e1a829870ee7b1fea7077e0923af85f))
+
 # [1.13.0](https://github.com/hobroker/tshows-ui/compare/v1.12.0...v1.13.0) (2022-05-02)
 
 
