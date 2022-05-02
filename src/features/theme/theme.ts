@@ -1,4 +1,4 @@
-import { blue, grey, yellow, red } from '@mui/material/colors';
+import { blue, grey, yellow, red, lightBlue } from '@mui/material/colors';
 import { createTheme } from '@mui/material';
 import type { PaletteMode } from '@mui/material';
 import { LinkProps } from '@mui/material/Link/Link.d';
@@ -14,6 +14,7 @@ const theme = ({ mode = 'light' }: Props = {}) =>
       mode: mode,
       primary: {
         main: blue[500],
+        '50': lightBlue[50],
       },
       secondary: {
         main: red[500],
@@ -43,11 +44,8 @@ const theme = ({ mode = 'light' }: Props = {}) =>
       },
       MuiRating: {
         styleOverrides: {
-          iconEmpty: {
-            color: 'white',
-          },
           iconFilled: {
-            color: yellow[500],
+            color: yellow[800],
           },
         },
       },

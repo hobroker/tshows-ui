@@ -15,7 +15,7 @@ import { noop } from '../../../utils/fp';
 import { EpisodeWithoutShow } from '../features/episode/types';
 
 interface ContextType {
-  show?: FullShow;
+  show: FullShow;
   episodesMap: Record<number, EpisodeWithoutShow[]>;
   loading: boolean;
   update: (data: Partial<FullShow>) => void;
@@ -33,7 +33,7 @@ interface Props {
 }
 
 const ShowPageContext = createContext<ContextType>({
-  show: undefined,
+  show: {} as FullShow,
   episodesMap: {},
   loading: true,
   update: noop,
@@ -102,6 +102,10 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
       setShow(data.fullShow);
     }
   }, [data]);
+
+  if (!show) {
+    return null;
+  }
 
   return (
     <ShowPageContext.Provider

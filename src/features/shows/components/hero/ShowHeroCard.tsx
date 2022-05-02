@@ -7,7 +7,6 @@ import GenresList from './GenresList';
 import ShowTitle from './ShowTitle';
 import ShowSubtitle from './ShowSubtitle';
 import WatchlistActionButton from './WatchlistActionButton';
-import ShowRating from './ShowRating';
 
 const Wrapper = styled('div')`
   width: 100%;
@@ -49,7 +48,7 @@ const ShowHeroCard = () => {
   return (
     <Wrapper
       sx={{
-        backgroundImage: `url(${makeWideLgImage(show?.wideImage || '')})`,
+        backgroundImage: `url(${makeWideLgImage(show.wideImage || '')})`,
         paddingBlock: {
           sm: 4,
           md: 6,
@@ -60,8 +59,8 @@ const ShowHeroCard = () => {
       <Content>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
           <TallImage
-            src={makeTallMdImage(show?.tallImage || '')}
-            alt={show?.name}
+            src={makeTallMdImage(show.tallImage || '')}
+            alt={show.name}
           />
           <WatchlistActionButton />
         </Box>
@@ -76,10 +75,9 @@ const ShowHeroCard = () => {
         >
           <ShowTitle />
           <ShowSubtitle />
-          <ShowRating />
           <GenresList />
           <Typography variant="body1" color="white">
-            {show?.description}
+            {show.description}
           </Typography>
         </Box>
       </Content>

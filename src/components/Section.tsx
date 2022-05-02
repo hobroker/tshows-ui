@@ -1,6 +1,7 @@
 import { PropsWithChildren, ReactNode } from 'react';
 import { Box, Divider, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { Sx } from '../utils/types';
 
 const StyledWrapper = styled(Box)`
   width: 100%;
@@ -10,17 +11,21 @@ const StyledWrapper = styled(Box)`
 interface Props {
   title: ReactNode;
   icon?: ReactNode;
+  afterTitle?: ReactNode;
   divider?: boolean;
+  sx?: Sx;
 }
 
 const Section = ({
   title,
   icon,
+  afterTitle,
   divider,
   children,
+  sx,
 }: PropsWithChildren<Props>) => (
-  <StyledWrapper>
-    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+  <StyledWrapper sx={sx}>
+    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
       {icon && (
         <Box
           sx={{
@@ -33,6 +38,7 @@ const Section = ({
         </Box>
       )}
       <Typography variant="h5">{title}</Typography>
+      {afterTitle}
     </Box>
     {divider && <Divider sx={{ my: 1 }} />}
     {children}

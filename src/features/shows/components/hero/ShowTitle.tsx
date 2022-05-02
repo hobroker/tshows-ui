@@ -8,7 +8,7 @@ const ShowTitle = () => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
       <Typography variant="h2" color="white" sx={{ fontWeight: 'bold' }}>
-        {show?.name}
+        {show.name}
       </Typography>
     </Box>
   );

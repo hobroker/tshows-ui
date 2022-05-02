@@ -51,7 +51,6 @@ export type FullShow = {
   genres: Array<Genre>;
   name: Scalars['String'];
   originCountry: Scalars['String'];
-  rating: Scalars['Int'];
   status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
@@ -65,6 +64,14 @@ export type Genre = {
   __typename?: 'Genre';
   externalId: Scalars['Int'];
   name: Scalars['String'];
+};
+
+export type GetRatingInput = {
+  showId: Scalars['Int'];
+};
+
+export type GetReviewInput = {
+  showId: Scalars['Int'];
 };
 
 export type GetSeasonEpisodesInput = {
@@ -83,6 +90,7 @@ export type Mutation = {
   refresh: User;
   toggleGenrePreference: Void;
   upsertEpisode?: Maybe<Episode>;
+  upsertReview: Review;
   upsertWatchlistItem: Watchlist;
 };
 
@@ -98,6 +106,10 @@ export type MutationUpsertEpisodeArgs = {
   input: UpsertEpisodeInput;
 };
 
+export type MutationUpsertReviewArgs = {
+  input: UpsertReviewInput;
+};
+
 export type MutationUpsertWatchlistItemArgs = {
   input: UpsertWatchlistInput;
 };
@@ -110,7 +122,6 @@ export type PartialShow = {
   genres: Array<Genre>;
   name: Scalars['String'];
   originCountry: Scalars['String'];
-  rating: Scalars['Int'];
   status: Status;
   tallImage: Scalars['String'];
   wideImage: Scalars['String'];
@@ -126,7 +137,10 @@ export type Query = {
   allUsers: User;
   discoverShows: Array<PartialShow>;
   fullShow: FullShow;
+  getMyReview?: Maybe<Review>;
+  getOtherReviews: Array<Review>;
   getPreferences?: Maybe<Preference>;
+  getRating: Review;
   getSeasonEpisodes: Array<Episode>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
@@ -143,8 +157,29 @@ export type QueryFullShowArgs = {
   input: FullShowInput;
 };
 
+export type QueryGetMyReviewArgs = {
+  input: GetReviewInput;
+};
+
+export type QueryGetOtherReviewsArgs = {
+  input: GetReviewInput;
+};
+
+export type QueryGetRatingArgs = {
+  input: GetRatingInput;
+};
+
 export type QueryGetSeasonEpisodesArgs = {
   input: GetSeasonEpisodesInput;
+};
+
+export type Review = {
+  __typename?: 'Review';
+  content: Scalars['String'];
+  id: Scalars['Int'];
+  rating: Scalars['Int'];
+  title: Scalars['String'];
+  user: User;
 };
 
 export type Season = {
@@ -178,6 +213,13 @@ export type ToggleGenrePreferenceInput = {
 export type UpsertEpisodeInput = {
   episodeId: Scalars['Int'];
   isWatched: Scalars['Boolean'];
+};
+
+export type UpsertReviewInput = {
+  content?: InputMaybe<Scalars['String']>;
+  rating?: InputMaybe<Scalars['Int']>;
+  showId: Scalars['Int'];
+  title?: InputMaybe<Scalars['String']>;
 };
 
 export type UpsertWatchlistInput = {
@@ -290,7 +332,6 @@ export type DiscoverShowsQuery = {
     firstAirDate: any;
     originCountry: string;
     status: Status;
-    rating: number;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   }>;
 };
@@ -312,6 +353,87 @@ export type GetPreferencesQuery = {
     __typename?: 'Preference';
     genres: Array<{ __typename?: 'Genre'; externalId: number }>;
   } | null;
+};
+
+export type GetRatingQueryVariables = Exact<{
+  showId: Scalars['Int'];
+}>;
+
+export type GetRatingQuery = {
+  __typename?: 'Query';
+  getRating: { __typename?: 'Review'; rating: number };
+};
+
+export type GetReviewsQueryVariables = Exact<{
+  showId: Scalars['Int'];
+}>;
+
+export type GetReviewsQuery = {
+  __typename?: 'Query';
+  getOtherReviews: Array<{
+    __typename?: 'Review';
+    id: number;
+    rating: number;
+    title: string;
+    content: string;
+    user: {
+      __typename?: 'User';
+      id: number;
+      avatar?: string | null;
+      name: string;
+    };
+  }>;
+  getMyReview?: {
+    __typename?: 'Review';
+    id: number;
+    rating: number;
+    title: string;
+    content: string;
+    user: {
+      __typename?: 'User';
+      id: number;
+      avatar?: string | null;
+      name: string;
+    };
+  } | null;
+};
+
+export type ReviewFragment = {
+  __typename?: 'Review';
+  id: number;
+  rating: number;
+  title: string;
+  content: string;
+  user: {
+    __typename?: 'User';
+    id: number;
+    avatar?: string | null;
+    name: string;
+  };
+};
+
+export type UpsertReviewMutationVariables = Exact<{
+  showId: Scalars['Int'];
+  title?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']>;
+  rating?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type UpsertReviewMutation = {
+  __typename?: 'Mutation';
+  upsertReview: {
+    __typename?: 'Review';
+    id: number;
+    rating: number;
+    title: string;
+    content: string;
+    user: {
+      __typename?: 'User';
+      id: number;
+      avatar?: string | null;
+      name: string;
+    };
+  };
 };
 
 export type UpsertEpisodeMutationVariables = Exact<{
@@ -420,7 +542,6 @@ export type FullShowQuery = {
     firstAirDate: any;
     originCountry: string;
     status: Status;
-    rating: number;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
     details: {
       __typename?: 'ShowDetails';
@@ -449,7 +570,6 @@ export type PartialShowFragment = {
   firstAirDate: any;
   originCountry: string;
   status: Status;
-  rating: number;
   genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
 
@@ -494,6 +614,19 @@ export type LogoutMutation = {
   logout: { __typename: 'Void' };
 };
 
+export const ReviewFragmentDoc = gql`
+  fragment Review on Review {
+    id
+    rating
+    title
+    content
+    user {
+      id
+      avatar
+      name
+    }
+  }
+`;
 export const EpisodeWithShowFragmentDoc = gql`
   fragment EpisodeWithShow on Episode {
     id
@@ -523,7 +656,6 @@ export const PartialShowFragmentDoc = gql`
     firstAirDate
     originCountry
     status
-    rating
     genres {
       externalId
       name
@@ -931,6 +1063,190 @@ export type GetPreferencesQueryResult = Apollo.QueryResult<
   GetPreferencesQuery,
   GetPreferencesQueryVariables
 >;
+export const GetRatingDocument = gql`
+  query GetRating($showId: Int!) {
+    getRating(input: { showId: $showId }) {
+      rating
+    }
+  }
+`;
+
+/**
+ * __useGetRatingQuery__
+ *
+ * To run a query within a React component, call `useGetRatingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRatingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRatingQuery({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *   },
+ * });
+ */
+export function useGetRatingQuery(
+  baseOptions: Apollo.QueryHookOptions<GetRatingQuery, GetRatingQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetRatingQuery, GetRatingQueryVariables>(
+    GetRatingDocument,
+    options,
+  );
+}
+export function useGetRatingLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetRatingQuery,
+    GetRatingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<GetRatingQuery, GetRatingQueryVariables>(
+    GetRatingDocument,
+    options,
+  );
+}
+export type GetRatingQueryHookResult = ReturnType<typeof useGetRatingQuery>;
+export type GetRatingLazyQueryHookResult = ReturnType<
+  typeof useGetRatingLazyQuery
+>;
+export type GetRatingQueryResult = Apollo.QueryResult<
+  GetRatingQuery,
+  GetRatingQueryVariables
+>;
+export const GetReviewsDocument = gql`
+  query GetReviews($showId: Int!) {
+    getOtherReviews(input: { showId: $showId }) {
+      ...Review
+    }
+    getMyReview(input: { showId: $showId }) {
+      ...Review
+    }
+  }
+  ${ReviewFragmentDoc}
+`;
+
+/**
+ * __useGetReviewsQuery__
+ *
+ * To run a query within a React component, call `useGetReviewsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReviewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReviewsQuery({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *   },
+ * });
+ */
+export function useGetReviewsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    GetReviewsQuery,
+    GetReviewsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetReviewsQuery, GetReviewsQueryVariables>(
+    GetReviewsDocument,
+    options,
+  );
+}
+export function useGetReviewsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetReviewsQuery,
+    GetReviewsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<GetReviewsQuery, GetReviewsQueryVariables>(
+    GetReviewsDocument,
+    options,
+  );
+}
+export type GetReviewsQueryHookResult = ReturnType<typeof useGetReviewsQuery>;
+export type GetReviewsLazyQueryHookResult = ReturnType<
+  typeof useGetReviewsLazyQuery
+>;
+export type GetReviewsQueryResult = Apollo.QueryResult<
+  GetReviewsQuery,
+  GetReviewsQueryVariables
+>;
+export const UpsertReviewDocument = gql`
+  mutation UpsertReview(
+    $showId: Int!
+    $title: String
+    $content: String
+    $rating: Int
+  ) {
+    upsertReview(
+      input: {
+        showId: $showId
+        title: $title
+        content: $content
+        rating: $rating
+      }
+    ) {
+      ...Review
+    }
+  }
+  ${ReviewFragmentDoc}
+`;
+export type UpsertReviewMutationFn = Apollo.MutationFunction<
+  UpsertReviewMutation,
+  UpsertReviewMutationVariables
+>;
+
+/**
+ * __useUpsertReviewMutation__
+ *
+ * To run a mutation, you first call `useUpsertReviewMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpsertReviewMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [upsertReviewMutation, { data, loading, error }] = useUpsertReviewMutation({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *      title: // value for 'title'
+ *      content: // value for 'content'
+ *      rating: // value for 'rating'
+ *   },
+ * });
+ */
+export function useUpsertReviewMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpsertReviewMutation,
+    UpsertReviewMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    UpsertReviewMutation,
+    UpsertReviewMutationVariables
+  >(UpsertReviewDocument, options);
+}
+export type UpsertReviewMutationHookResult = ReturnType<
+  typeof useUpsertReviewMutation
+>;
+export type UpsertReviewMutationResult =
+  Apollo.MutationResult<UpsertReviewMutation>;
+export type UpsertReviewMutationOptions = Apollo.BaseMutationOptions<
+  UpsertReviewMutation,
+  UpsertReviewMutationVariables
+>;
 export const UpsertEpisodeDocument = gql`
   mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {
     upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
@@ -1178,7 +1494,6 @@ export const FullShowDocument = gql`
       firstAirDate
       originCountry
       status
-      rating
       genres {
         externalId
         name

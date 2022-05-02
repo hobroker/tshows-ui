@@ -10,14 +10,10 @@ import SeasonDetails from './SeasonDetails';
 const SeasonsAccordion = () => {
   const [expanded, setExpanded] = useState<number>();
   const { show, episodesMap, fetchSeason } = useContext(ShowPageContext);
-  const seasons = show?.details?.seasons;
+  const { seasons } = show.details;
   const fetchEpisodes = (seasonNumber: number) => {
     fetchSeason(seasonNumber);
   };
-
-  if (!seasons) {
-    return null;
-  }
 
   const handleChange =
     (panel: number) => (event: SyntheticEvent, isExpanded: boolean) => {

@@ -28,7 +28,6 @@ type FullShow {
   genres: [Genre!]!
   name: String!
   originCountry: String!
-  rating: Int!
   status: Status!
   tallImage: String!
   wideImage: String!
@@ -41,6 +40,14 @@ input FullShowInput {
 type Genre {
   externalId: Int!
   name: String!
+}
+
+input GetRatingInput {
+  showId: Int!
+}
+
+input GetReviewInput {
+  showId: Int!
 }
 
 input GetSeasonEpisodesInput {
@@ -58,6 +65,7 @@ type Mutation {
   refresh: User!
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
   upsertEpisode(input: UpsertEpisodeInput!): Episode
+  upsertReview(input: UpsertReviewInput!): Review!
   upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
 }
 
@@ -68,7 +76,6 @@ type PartialShow {
   genres: [Genre!]!
   name: String!
   originCountry: String!
-  rating: Int!
   status: Status!
   tallImage: String!
   wideImage: String!
@@ -82,13 +89,24 @@ type Query {
   allUsers: User!
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
   fullShow(input: FullShowInput!): FullShow!
+  getMyReview(input: GetReviewInput!): Review
+  getOtherReviews(input: GetReviewInput!): [Review!]!
   getPreferences: Preference
+  getRating(input: GetRatingInput!): Review!
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
   listUpNext: [Episode!]!
   listUpcoming: [Episode!]!
   me: User!
+}
+
+type Review {
+  content: String!
+  id: Int!
+  rating: Int!
+  title: String!
+  user: User!
 }
 
 type Season {
@@ -120,6 +138,13 @@ input ToggleGenrePreferenceInput {
 input UpsertEpisodeInput {
   episodeId: Int!
   isWatched: Boolean!
+}
+
+input UpsertReviewInput {
+  content: String
+  rating: Int
+  showId: Int!
+  title: String
 }
 
 input UpsertWatchlistInput {
