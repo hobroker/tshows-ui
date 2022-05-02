@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   EpisodeWithoutShowFragment,
   FullShow,
@@ -111,6 +112,12 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
   useEffect(() => {
     toggleBackdrop(!show || loading);
   }, [toggleBackdrop, show, loading]);
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setShow(undefined);
+  }, [pathname]);
 
   if (!show || loading) {
     return null;
