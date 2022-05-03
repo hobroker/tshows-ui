@@ -1,21 +1,30 @@
+import pluralize from './pluralize';
+
 const minutesToDuration = (minutes: number) => {
-  if (minutes < 60) {
-    return `${minutes} minutes`;
+  let value = minutes;
+
+  if (value < 60) {
+    return `${value} ${pluralize(value, 'minute')}`;
   }
 
-  if (minutes < 60 * 24) {
-    return `${Math.floor(minutes / 60)} hour(s)`;
+  value = Math.floor(value / 60);
+  if (value < 24) {
+    return `${value} ${pluralize(value, 'hour')}`;
   }
 
-  if (minutes < 60 * 24 * 7) {
-    return `${Math.floor(minutes / 60 / 24)} day(s)`;
+  value = Math.floor(value / 24);
+  if (value < 7) {
+    return `${value} ${pluralize(value, 'day')}`;
   }
 
-  if (minutes < 60 * 24 * 30) {
-    return `${Math.floor(minutes / 60 / 24 / 7)} week(s)`;
+  value = Math.floor(value / 7);
+  if (value < 30) {
+    return `${value} ${pluralize(value, 'week')}`;
   }
 
-  return `${Math.floor(minutes / 60 / 24 / 7 / 30)} month(s)`;
+  value = Math.floor(value / 30);
+
+  return `${value} ${pluralize(value, 'month')}`;
 };
 
 export default minutesToDuration;

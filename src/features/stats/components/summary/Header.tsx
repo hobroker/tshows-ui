@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { DateTime } from 'luxon';
-import UserAvatar from '../UserAvatar';
+import UserAvatar from '../../../user/components/UserAvatar';
 
 interface Props {
   avatar?: string | null;
