@@ -37,10 +37,13 @@ const StatsList = () => {
   const { statsItems } = useContext(StatsSummaryContext);
   const data = useMemo<Item[]>(
     () =>
-      statsItems.map(({ key, value }) => ({
-        key,
-        value: StatsSummaryItemKeyToText[key](value),
-      })),
+      statsItems
+        // TODO check if this filter is needed
+        // .filter(({ value }) => value !== 0)
+        .map(({ key, value }) => ({
+          key,
+          value: StatsSummaryItemKeyToText[key](value),
+        })),
     [statsItems],
   );
 
