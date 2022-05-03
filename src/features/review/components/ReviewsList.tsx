@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Divider,
   IconButton,
@@ -12,6 +11,7 @@ import React, { Fragment, useContext } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import { ReviewContext } from '../contexts/ReviewContext';
 import { UserContext } from '../../user/contexts/UserContext';
+import UserAvatar from '../../user/components/UserAvatar';
 import RatingInfo from './RatingInfo';
 
 interface Props {
@@ -44,7 +44,7 @@ const ReviewsList = ({ toggleIsFormOpen }: Props) => {
               }
             >
               <ListItemAvatar>
-                <Avatar src={review.user.avatar || undefined} />
+                <UserAvatar src={review.user.avatar} />
               </ListItemAvatar>
               <ListItemText
                 primary={

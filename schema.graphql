@@ -159,6 +159,7 @@ input UpsertWatchlistInput {
 
 type User {
   avatar: String
+  createdAt: DateTime!
   email: String!
   id: Int!
   name: String!

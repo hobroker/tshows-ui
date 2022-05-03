@@ -9,7 +9,7 @@ const StyledWrapper = styled(Box)`
 `;
 
 interface Props {
-  title: ReactNode;
+  title?: ReactNode;
   icon?: ReactNode;
   afterTitle?: ReactNode;
   divider?: boolean;
@@ -37,7 +37,7 @@ const Section = ({
           {icon}
         </Box>
       )}
-      <Typography variant="h5">{title}</Typography>
+      {title && <Typography variant="h5">{title}</Typography>}
       {afterTitle}
     </Box>
     {divider && <Divider sx={{ my: 1 }} />}

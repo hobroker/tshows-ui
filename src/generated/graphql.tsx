@@ -239,6 +239,7 @@ export type UpsertWatchlistInput = {
 export type User = {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -636,6 +637,7 @@ export type MeQuery = {
     email: string;
     name: string;
     avatar?: string | null;
+    createdAt: any;
   };
   getPreferences?: {
     __typename?: 'Preference';
@@ -1737,6 +1739,7 @@ export const MeDocument = gql`
       email
       name
       avatar
+      createdAt
     }
     getPreferences {
       genres {

@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
-import { Avatar, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import useMenu from '../../hooks/useMenu';
+import UserAvatar from '../../../user/components/UserAvatar';
 import DropdownMenu from './DropdownMenu';
 
 interface Props {
@@ -22,7 +23,7 @@ const UserMenu = ({ children, avatar }: Props) => {
           onClick={onOpen}
           endIcon={<KeyboardArrowDownIcon />}
         >
-          <Avatar
+          <UserAvatar
             src={avatar}
             sx={avatar ? { backgroundColor: 'white' } : {}}
           />
