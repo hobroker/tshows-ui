@@ -12,7 +12,7 @@ import useHandlePreferences from '../../../hooks/useHandlePreferences';
 
 interface UserContextType {
   userState: UserState;
-  user: Partial<User> | null;
+  user: User | null;
   logout: () => void;
   refreshUser: () => Promise<void>;
   setUserState: (value: UserState) => void;
@@ -33,7 +33,7 @@ const UserContext = createContext<UserContextType>({
 const UserProvider = ({ children }: Props) => {
   const [fetchUser] = useMeLazyQuery();
   const [logoutMutation] = useLogoutMutation();
-  const [user, setUser] = useState<UserContextType['user']>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [userState, setUserState] = useState<UserState>(UserState.Idle);
   const handlePreferences = useHandlePreferences();
   const logout = useCallback(() => {

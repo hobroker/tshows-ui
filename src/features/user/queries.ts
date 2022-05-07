@@ -7,6 +7,7 @@ export const QUERY_ME = gql`
       email
       name
       avatar
+      createdAt
     }
     getPreferences {
       genres {

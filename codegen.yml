@@ -1,6 +1,6 @@
 overwrite: true
 schema: 'http://localhost:3001/graphql'
-documents: './src/**/*.{ts,tsx}'
+documents: './src/**/queries.{ts,tsx}'
 generates:
   ./src/generated/graphql.tsx:
     hooks:

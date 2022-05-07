@@ -95,6 +95,7 @@ type Query {
   getRating(input: GetRatingInput!): Review!
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
   getSimilarShows(input: SimilarShowsInput!): [PartialShow!]!
+  getStatsSummary: [StatsSummaryItem!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
   listUpNext: [Episode!]!
@@ -130,6 +131,17 @@ input SimilarShowsInput {
   externalId: Int!
 }
 
+type StatsSummaryItem {
+  key: StatsSummaryItemKey!
+  value: Int!
+}
+
+enum StatsSummaryItemKey {
+  SpentMinutes
+  WatchedEpisodesCount
+  WatchingTvShowsCount
+}
+
 enum Status {
   InWatchlist
   None
@@ -159,6 +171,7 @@ input UpsertWatchlistInput {
 
 type User {
   avatar: String
+  createdAt: DateTime!
   email: String!
   id: Int!
   name: String!

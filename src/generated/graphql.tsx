@@ -143,6 +143,7 @@ export type Query = {
   getRating: Review;
   getSeasonEpisodes: Array<Episode>;
   getSimilarShows: Array<PartialShow>;
+  getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
   listUpNext: Array<Episode>;
@@ -209,6 +210,18 @@ export type SimilarShowsInput = {
   externalId: Scalars['Int'];
 };
 
+export type StatsSummaryItem = {
+  __typename?: 'StatsSummaryItem';
+  key: StatsSummaryItemKey;
+  value: Scalars['Int'];
+};
+
+export enum StatsSummaryItemKey {
+  SpentMinutes = 'SpentMinutes',
+  WatchedEpisodesCount = 'WatchedEpisodesCount',
+  WatchingTvShowsCount = 'WatchingTvShowsCount',
+}
+
 export enum Status {
   InWatchlist = 'InWatchlist',
   None = 'None',
@@ -239,6 +252,7 @@ export type UpsertWatchlistInput = {
 export type User = {
   __typename?: 'User';
   avatar?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
   email: Scalars['String'];
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -626,6 +640,17 @@ export type UpsertSeasonEpisodeMutation = {
   upsertEpisode?: { __typename: 'Episode' } | null;
 };
 
+export type GetStatsSummaryQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetStatsSummaryQuery = {
+  __typename?: 'Query';
+  getStatsSummary: Array<{
+    __typename?: 'StatsSummaryItem';
+    key: StatsSummaryItemKey;
+    value: number;
+  }>;
+};
+
 export type MeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type MeQuery = {
@@ -636,6 +661,7 @@ export type MeQuery = {
     email: string;
     name: string;
     avatar?: string | null;
+    createdAt: any;
   };
   getPreferences?: {
     __typename?: 'Preference';
@@ -1730,6 +1756,66 @@ export type UpsertSeasonEpisodeMutationOptions = Apollo.BaseMutationOptions<
   UpsertSeasonEpisodeMutation,
   UpsertSeasonEpisodeMutationVariables
 >;
+export const GetStatsSummaryDocument = gql`
+  query GetStatsSummary {
+    getStatsSummary {
+      key
+      value
+    }
+  }
+`;
+
+/**
+ * __useGetStatsSummaryQuery__
+ *
+ * To run a query within a React component, call `useGetStatsSummaryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStatsSummaryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStatsSummaryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetStatsSummaryQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetStatsSummaryQuery,
+    GetStatsSummaryQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetStatsSummaryQuery, GetStatsSummaryQueryVariables>(
+    GetStatsSummaryDocument,
+    options,
+  );
+}
+export function useGetStatsSummaryLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetStatsSummaryQuery,
+    GetStatsSummaryQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    GetStatsSummaryQuery,
+    GetStatsSummaryQueryVariables
+  >(GetStatsSummaryDocument, options);
+}
+export type GetStatsSummaryQueryHookResult = ReturnType<
+  typeof useGetStatsSummaryQuery
+>;
+export type GetStatsSummaryLazyQueryHookResult = ReturnType<
+  typeof useGetStatsSummaryLazyQuery
+>;
+export type GetStatsSummaryQueryResult = Apollo.QueryResult<
+  GetStatsSummaryQuery,
+  GetStatsSummaryQueryVariables
+>;
 export const MeDocument = gql`
   query Me {
     me {
@@ -1737,6 +1823,7 @@ export const MeDocument = gql`
       email
       name
       avatar
+      createdAt
     }
     getPreferences {
       genres {

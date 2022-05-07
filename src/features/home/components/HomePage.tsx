@@ -5,6 +5,7 @@ import WhenLoggedIn from '../../user/components/WhenLoggedIn';
 import Upcoming from '../features/upcoming/components/Upcoming';
 import UpNext from '../features/upnext/components/UpNext';
 import WhenAnonymous from '../../user/components/WhenAnonymous';
+import StatsSummary from '../../stats/components/summary/StatsSummary';
 import LoginAlert from './LoginAlert';
 
 const HomePage = () => (
@@ -15,6 +16,7 @@ const HomePage = () => (
       </Box>
     </WhenAnonymous>
     <WhenLoggedIn>
+      <StatsSummary />
       <UpNext />
       <Divider />
       <Upcoming />
