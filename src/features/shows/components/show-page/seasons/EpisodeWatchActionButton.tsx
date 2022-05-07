@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
-import UpsertEpisodeAction from '../../features/episode/components/UpsertEpisodeAction';
-import { ShowPageContext } from '../../contexts/ShowPageContext';
+import UpsertEpisodeAction from '../../../features/episode/components/UpsertEpisodeAction';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
 
 interface Props {
   seasonNumber: number;

@@ -9,10 +9,10 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { DateTime } from 'luxon';
-import { makeWideSmImage } from '../../utils/image';
-import IndefiniteLoading from '../../../../components/IndefiniteLoading';
-import { EpisodeWithoutShowFragment } from '../../../../generated/graphql';
-import WhenLoggedIn from '../../../user/components/WhenLoggedIn';
+import { makeWideSmImage } from '../../../utils/image';
+import IndefiniteLoading from '../../../../../components/IndefiniteLoading';
+import { EpisodeWithoutShowFragment } from '../../../../../generated/graphql';
+import WhenLoggedIn from '../../../../user/components/WhenLoggedIn';
 import EpisodeWatchActionButton from './EpisodeWatchActionButton';
 
 const StyledImage = styled('img')`

@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useContext } from 'react';
-import { ShowPageContext } from '../../contexts/ShowPageContext';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
 
 const Wrapper = styled(Box)`
   display: flex;

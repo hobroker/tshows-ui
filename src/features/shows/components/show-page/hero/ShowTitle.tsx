@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useContext } from 'react';
-import { ShowPageContext } from '../../contexts/ShowPageContext';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
 
 const ShowTitle = () => {
   const { show } = useContext(ShowPageContext);

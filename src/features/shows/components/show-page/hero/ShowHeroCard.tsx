@@ -1,9 +1,9 @@
 import { Box, Container, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import React, { useContext } from 'react';
-import { makeTallMdImage, makeWideLgImage } from '../../utils/image';
-import { ShowPageContext } from '../../contexts/ShowPageContext';
-import WhenLoggedIn from '../../../user/components/WhenLoggedIn';
+import { makeTallMdImage, makeWideLgImage } from '../../../utils/image';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
+import WhenLoggedIn from '../../../../user/components/WhenLoggedIn';
 import GenresList from './GenresList';
 import ShowTitle from './ShowTitle';
 import ShowSubtitle from './ShowSubtitle';

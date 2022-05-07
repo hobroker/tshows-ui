@@ -3,6 +3,7 @@ import { AppBar, Box, Button, Toolbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import NavigationProvider from '../contexts/NavigationContext';
 import LogoText from '../../logo/components/LogoText';
+import { StaticRoute } from '../../router/constants';
 import ElevationScroll from './ElevationScroll';
 import Search from './Search';
 import NotificationsBadge from './NotificationsBadge';
@@ -24,6 +25,11 @@ const Navigation = () => (
           </Box>
           <Box sx={{ mr: 1, flexGrow: 1 }}>
             <Search />
+          </Box>
+          <Box sx={{ mr: 1 }}>
+            <Button onClick={() => {}} href={StaticRoute.MyShows}>
+              My Shows
+            </Button>
           </Box>
           <Box sx={{ display: 'flex' }}>
             <NotificationsBadge />

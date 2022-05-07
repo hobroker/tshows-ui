@@ -3,7 +3,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AccordionSummary } from '@mui/material';
-import { ShowPageContext } from '../../contexts/ShowPageContext';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
 import SeasonSummary from './SeasonSummary';
 import SeasonDetails from './SeasonDetails';
 

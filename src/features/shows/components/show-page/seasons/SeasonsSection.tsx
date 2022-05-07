@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { useContext } from 'react';
-import { ShowPageContext } from '../../contexts/ShowPageContext';
-import Section from '../../../../components/Section';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
+import Section from '../../../../../components/Section';
 import SeasonsAccordion from './SeasonsAccordion';
 
 const SeasonsSection = () => {

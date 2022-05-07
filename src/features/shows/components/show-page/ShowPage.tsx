@@ -1,8 +1,8 @@
 import type { Params } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import PageWrapper from '../../../components/PageWrapper';
-import { deslugifyShow } from '../utils/slugify';
-import ShowPageProvider from '../contexts/ShowPageContext';
+import PageWrapper from '../../../../components/PageWrapper';
+import { deslugifyShow } from '../../utils/slugify';
+import ShowPageProvider from '../../contexts/ShowPageContext';
 import ShowContent from './ShowContent';
 import ShowHeroCard from './hero/ShowHeroCard';
 
