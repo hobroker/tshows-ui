@@ -1,12 +1,12 @@
 import { useContext } from 'react';
-import { PartialShow, Status } from '../../../generated/graphql';
+import { PartialShowFragment, Status } from '../../../generated/graphql';
 import useWatchlistActions from '../hooks/useWatchlistActions';
 import { ShowsOnboardingContext } from '../../onboarding/contexts/ShowsOnboardingContext';
 import TallCard from './card/TallCard';
 import WatchlistOverlayAction from './WatchlistOverlayAction';
 
 interface Props {
-  show: PartialShow;
+  show: PartialShowFragment;
 }
 
 const TallShowCard = ({ show }: Props) => {

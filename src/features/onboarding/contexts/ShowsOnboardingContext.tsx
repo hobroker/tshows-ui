@@ -6,15 +6,18 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { PartialShow, useDiscoverShowsQuery } from '../../../generated/graphql';
+import {
+  PartialShowFragment,
+  useDiscoverShowsQuery,
+} from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
 import { PreferencesContext } from '../../preferences/contexts/PreferencesContext';
 import { DEFAULT_GENRE_RECOMMENDATION } from '../constants';
 
 interface ContextType {
-  shows: PartialShow[];
+  shows: PartialShowFragment[];
   loading: boolean;
-  updateShow: (showId: number, data: Partial<PartialShow>) => void;
+  updateShow: (showId: number, data: Partial<PartialShowFragment>) => void;
 }
 
 interface Props {
@@ -29,7 +32,7 @@ const ShowsOnboardingContext = createContext<ContextType>({
 
 const ShowsOnboardingProvider = ({ children }: Props) => {
   const { selectedGenres } = useContext(PreferencesContext);
-  const [shows, setShows] = useState<PartialShow[]>([]);
+  const [shows, setShows] = useState<PartialShowFragment[]>([]);
 
   const { data, loading } = useDiscoverShowsQuery({
     variables: {
@@ -46,7 +49,7 @@ const ShowsOnboardingProvider = ({ children }: Props) => {
   }, [data]);
 
   const updateShow = useCallback(
-    (showId: number, data: Partial<PartialShow>) => {
+    (showId: number, data: Partial<PartialShowFragment>) => {
       const updatedShows = shows.map((show) => {
         if (show.externalId === showId) {
           return { ...show, ...data };

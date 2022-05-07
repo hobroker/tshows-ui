@@ -5,7 +5,7 @@ import OnboardingPage from '../../onboarding/components/OnboardingPage';
 import LoginPage from '../../join/components/LoginPage';
 import RegisterPage from '../../join/components/RegisterPage';
 import ShowPage from '../../shows/components/show-page/ShowPage';
-import MyShowsPage from '../../shows/features/my-shows/MyShowsPage';
+import MyShowsPage from '../../shows/features/my-shows/components/MyShowsPage';
 import PrivateOutlet from './PrivateOutlet';
 
 const Router = () => (

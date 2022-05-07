@@ -90,6 +90,7 @@ type Query {
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
   fullShow(input: FullShowInput!): FullShow!
   getMyReview(input: GetReviewInput!): Review
+  getMyShows: [PartialShow!]!
   getOtherReviews(input: GetReviewInput!): [Review!]!
   getPreferences: Preference
   getRating(input: GetRatingInput!): Review!
