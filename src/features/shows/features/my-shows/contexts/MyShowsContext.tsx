@@ -1,18 +1,12 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import {
   PartialShowFragment,
   useGetMyShowsQuery,
 } from '../../../../../generated/graphql';
-import { BackdropContext } from '../../../../../contexts/BackdropContext';
 
 interface ContextType {
   shows: PartialShowFragment[];
+  loading: boolean;
 }
 
 interface Props {
@@ -21,10 +15,10 @@ interface Props {
 
 const MyShowsContext = createContext<ContextType>({
   shows: [],
+  loading: true,
 });
 
 const MyShowsProvider = ({ children }: Props) => {
-  const { toggleBackdrop } = useContext(BackdropContext);
   const [shows, setShows] = useState<PartialShowFragment[]>([]);
   const { data, loading } = useGetMyShowsQuery({
     fetchPolicy: 'network-only',
@@ -35,18 +29,11 @@ const MyShowsProvider = ({ children }: Props) => {
     setShows(data.getMyShows);
   }, [data]);
 
-  useEffect(() => {
-    toggleBackdrop(loading);
-  }, [toggleBackdrop, loading]);
-
-  if (loading) {
-    return null;
-  }
-
   return (
     <MyShowsContext.Provider
       value={{
         shows,
+        loading,
       }}
     >
       {children}

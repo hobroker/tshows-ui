@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { styled } from '@mui/material/styles';
+import { styled, css } from '@mui/material/styles';
 
 interface WrapperProps {
   scroll?: boolean;
@@ -12,15 +12,33 @@ const StyledWrapper = styled(({ scroll, ...props }: WrapperProps) => (
   --min-width: 150px;
   display: grid;
   grid-gap: 1rem;
-  overflow-x: scroll;
   padding: ${({ theme }) => theme.spacing(1)};
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   margin-inline: -${({ theme }) => theme.spacing(0.75)};
-  grid-template-columns: ${({ scroll }) =>
+
+  ${({ theme, scroll }) =>
     scroll
-      ? 'repeat(auto-fit, var(--min-width))'
-      : 'repeat(auto-fit, minmax(var(--min-width), 1fr))'};
-  grid-auto-flow: ${({ scroll }) => (scroll ? 'column' : 'dense')};
+      ? css`
+          overflow-x: scroll;
+          grid-template-columns: repeat(auto-fit, var(--min-width));
+          grid-auto-flow: column;
+        `
+      : css`
+          grid-template-columns: repeat(2, 1fr);
+          grid-auto-flow: dense;
+
+          ${theme.breakpoints.up('sm')} {
+            grid-template-columns: repeat(3, 1fr);
+          }
+
+          ${theme.breakpoints.up('md')} {
+            grid-template-columns: repeat(4, 1fr);
+          }
+
+          ${theme.breakpoints.up('lg')} {
+            grid-template-columns: repeat(6, 1fr);
+          }
+        `}
 
   & > * {
     min-width: var(--min-width);
