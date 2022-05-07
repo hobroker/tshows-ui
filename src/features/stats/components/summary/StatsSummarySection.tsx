@@ -4,6 +4,9 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import DarkTheme from '../../../theme/components/DarkTheme';
 import { User } from '../../../../generated/graphql';
 import { StatsSummaryContext } from '../../contexts/StatsSummaryContext';
+import IndefiniteLoading, {
+  IndefiniteLoadingSize,
+} from '../../../../components/IndefiniteLoading';
 import Header from './Header';
 import StatsList from './StatsList';
 
@@ -19,7 +22,9 @@ const StatsSummarySection = ({ user }: Props) => {
       <Paper sx={{ my: 2, p: 2 }}>
         <Stack sx={{ gap: 2 }}>
           <Header avatar={user.avatar} date={user.createdAt} name={user.name} />
-          {!loading && (
+          {loading ? (
+            <IndefiniteLoading size={IndefiniteLoadingSize.small} />
+          ) : (
             <Paper
               variant="outlined"
               sx={{ px: 2, py: 1, display: 'flex', gap: 2 }}

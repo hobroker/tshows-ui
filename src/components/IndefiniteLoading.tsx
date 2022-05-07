@@ -1,9 +1,18 @@
 import React from 'react';
 import { Box, CircularProgress } from '@mui/material';
 
-const IndefiniteLoading = () => (
+export enum IndefiniteLoadingSize {
+  small = 24,
+  large = 48,
+}
+
+interface Props {
+  size?: IndefiniteLoadingSize;
+}
+
+const IndefiniteLoading = ({ size = IndefiniteLoadingSize.large }: Props) => (
   <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-    <CircularProgress color="inherit" size={48} thickness={4} />
+    <CircularProgress color="inherit" size={size} thickness={4} />
   </Box>
 );
 
