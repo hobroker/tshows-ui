@@ -20,7 +20,7 @@ const RecommendationsSectionContext = createContext<ContextType>({
 
 const RecommendationsSectionProvider = ({ children }: Props) => {
   const { data, loading } = useListRecommendationsQuery({
-    notifyOnNetworkStatusChange: true,
+    nextFetchPolicy: 'network-only',
   });
   const [shows, setShows] = useState<ShowSummaryFragment[]>([]);
 
