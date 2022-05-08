@@ -99,6 +99,7 @@ type Query {
   getRating(input: GetRatingInput!): Review!
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
   getSimilarShows(input: SimilarShowsInput!): [PartialShow!]!
+  getStatsCalendar: [StatsCalendarItem!]!
   getStatsSummary: [StatsSummaryItem!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
@@ -140,6 +141,11 @@ type ShowDetails {
 
 input SimilarShowsInput {
   externalId: Int!
+}
+
+type StatsCalendarItem {
+  day: String!
+  value: Int!
 }
 
 type StatsSummaryItem {

@@ -8,3 +8,12 @@ export const QUERY_GET_STATS_SUMMARY = gql`
     }
   }
 `;
+
+export const QUERY_GET_STATS_CALENDAR = gql`
+  query GetStatsCalendar {
+    getStatsCalendar {
+      day
+      value
+    }
+  }
+`;

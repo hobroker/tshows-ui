@@ -147,6 +147,7 @@ export type Query = {
   getRating: Review;
   getSeasonEpisodes: Array<Episode>;
   getSimilarShows: Array<PartialShow>;
+  getStatsCalendar: Array<StatsCalendarItem>;
   getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
@@ -231,6 +232,12 @@ export type ShowDetails = {
 
 export type SimilarShowsInput = {
   externalId: Scalars['Int'];
+};
+
+export type StatsCalendarItem = {
+  __typename?: 'StatsCalendarItem';
+  day: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 export type StatsSummaryItem = {
@@ -747,6 +754,17 @@ export type GetStatsSummaryQuery = {
   getStatsSummary: Array<{
     __typename?: 'StatsSummaryItem';
     key: StatsSummaryItemKey;
+    value: number;
+  }>;
+};
+
+export type GetStatsCalendarQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetStatsCalendarQuery = {
+  __typename?: 'Query';
+  getStatsCalendar: Array<{
+    __typename?: 'StatsCalendarItem';
+    day: string;
     value: number;
   }>;
 };
@@ -2151,6 +2169,66 @@ export type GetStatsSummaryLazyQueryHookResult = ReturnType<
 export type GetStatsSummaryQueryResult = Apollo.QueryResult<
   GetStatsSummaryQuery,
   GetStatsSummaryQueryVariables
+>;
+export const GetStatsCalendarDocument = gql`
+  query GetStatsCalendar {
+    getStatsCalendar {
+      day
+      value
+    }
+  }
+`;
+
+/**
+ * __useGetStatsCalendarQuery__
+ *
+ * To run a query within a React component, call `useGetStatsCalendarQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStatsCalendarQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStatsCalendarQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetStatsCalendarQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetStatsCalendarQuery,
+    GetStatsCalendarQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetStatsCalendarQuery, GetStatsCalendarQueryVariables>(
+    GetStatsCalendarDocument,
+    options,
+  );
+}
+export function useGetStatsCalendarLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetStatsCalendarQuery,
+    GetStatsCalendarQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    GetStatsCalendarQuery,
+    GetStatsCalendarQueryVariables
+  >(GetStatsCalendarDocument, options);
+}
+export type GetStatsCalendarQueryHookResult = ReturnType<
+  typeof useGetStatsCalendarQuery
+>;
+export type GetStatsCalendarLazyQueryHookResult = ReturnType<
+  typeof useGetStatsCalendarLazyQuery
+>;
+export type GetStatsCalendarQueryResult = Apollo.QueryResult<
+  GetStatsCalendarQuery,
+  GetStatsCalendarQueryVariables
 >;
 export const MeDocument = gql`
   query Me {
