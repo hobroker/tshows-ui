@@ -1,10 +1,10 @@
-import RecommendationsProvider from '../../contexts/RecommendationsContext';
+import RecommendationsSectionProvider from '../../contexts/RecommendationsSectionContext';
 import RecommendationsSection from './RecommendationsSection';
 
 const Recommendations = () => (
-  <RecommendationsProvider>
+  <RecommendationsSectionProvider>
     <RecommendationsSection />
-  </RecommendationsProvider>
+  </RecommendationsSectionProvider>
 );
 
 export default Recommendations;

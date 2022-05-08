@@ -13,12 +13,12 @@ interface Props {
   children: ReactNode;
 }
 
-const RecommendationsContext = createContext<ContextType>({
+const RecommendationsSectionContext = createContext<ContextType>({
   shows: [],
   loading: false,
 });
 
-const RecommendationsProvider = ({ children }: Props) => {
+const RecommendationsSectionProvider = ({ children }: Props) => {
   const { data, loading } = useListRecommendationsQuery({
     notifyOnNetworkStatusChange: true,
   });
@@ -30,17 +30,17 @@ const RecommendationsProvider = ({ children }: Props) => {
   }, [data]);
 
   return (
-    <RecommendationsContext.Provider
+    <RecommendationsSectionContext.Provider
       value={{
         shows,
         loading,
       }}
     >
       {children}
-    </RecommendationsContext.Provider>
+    </RecommendationsSectionContext.Provider>
   );
 };
 
-export { RecommendationsContext };
+export { RecommendationsSectionContext };
 
-export default RecommendationsProvider;
+export default RecommendationsSectionProvider;

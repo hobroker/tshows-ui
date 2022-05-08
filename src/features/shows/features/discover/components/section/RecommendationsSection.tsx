@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import AutoFixNormalIcon from '@mui/icons-material/AutoFixNormal';
 import Section from '../../../../../../components/Section';
 import ShowsCollection from '../../../../components/ShowsCollection';
-import { RecommendationsContext } from '../../contexts/RecommendationsContext';
+import { RecommendationsSectionContext } from '../../contexts/RecommendationsSectionContext';
 
 const RecommendationsSection = () => {
-  const { shows, loading } = useContext(RecommendationsContext);
+  const { shows, loading } = useContext(RecommendationsSectionContext);
 
   return (
     <Section title="Recommendations" icon={<AutoFixNormalIcon />}>
