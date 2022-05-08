@@ -29,8 +29,8 @@ type FullShow {
   name: String!
   originCountry: String!
   status: Status!
-  tallImage: String!
-  wideImage: String!
+  tallImage: String
+  wideImage: String
 }
 
 input FullShowInput {
@@ -77,8 +77,8 @@ type PartialShow {
   name: String!
   originCountry: String!
   status: Status!
-  tallImage: String!
-  wideImage: String!
+  tallImage: String
+  wideImage: String
 }
 
 type Preference {
@@ -102,6 +102,7 @@ type Query {
   listUpNext: [Episode!]!
   listUpcoming: [Episode!]!
   me: User!
+  search(input: SearchInput!): [PartialShow!]!
 }
 
 type Review {
@@ -110,6 +111,10 @@ type Review {
   rating: Int!
   title: String!
   user: User!
+}
+
+input SearchInput {
+  query: String!
 }
 
 type Season {

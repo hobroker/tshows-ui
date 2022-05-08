@@ -24,4 +24,5 @@ const makeImageUrl = compose(concat, concat(IMAGE_URL), concat('/'));
 export const makeTallSmImage = makeImageUrl(TallImageSizes.w185);
 export const makeWideSmImage = makeImageUrl(WideImageSize.w300);
 export const makeTallMdImage = makeImageUrl(WideImageSize.w780);
+export const makeWideMdImage = makeImageUrl(WideImageSize.w780);
 export const makeWideLgImage = makeImageUrl(WideImageSize.original);

@@ -14,12 +14,12 @@ const SearchIconWrapper = styled(Box)`
 `;
 
 const SearchOverlay = styled(Paper)`
-  padding: ${({ theme }) => theme.spacing(2)};
-  max-height: 200px;
+  max-height: 300px;
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
+  overflow-y: scroll;
 `;
 
 const StyledInputBase = styled(OutlinedInput)`

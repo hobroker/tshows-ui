@@ -1,22 +1,47 @@
 import React, { useContext } from 'react';
-import { Box } from '@mui/material';
+import { Box, List, Typography } from '@mui/material';
 import { SearchContext } from '../contexts/SearchContext';
 import IndefiniteLoading, {
   IndefiniteLoadingSize,
 } from '../../../components/IndefiniteLoading';
+import ListItemSearchResult from './ListItemSearchResult';
 
 const SearchContent = () => {
-  const { loading, search } = useContext(SearchContext);
+  const { loading, query, results } = useContext(SearchContext);
 
   if (loading) {
-    return <IndefiniteLoading size={IndefiniteLoadingSize.Small} />;
+    return (
+      <Box sx={{ p: 2 }}>
+        <IndefiniteLoading size={IndefiniteLoadingSize.Small} />
+      </Box>
+    );
   }
 
-  if (search.length === 0) {
+  if (query.length === 0) {
     return null;
   }
 
-  return <Box>dsada</Box>;
+  if (results.length === 0) {
+    return (
+      <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
+        <Typography variant="subtitle1">No results found</Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <List sx={{ p: 0 }}>
+      {results.map(({ externalId, name, wideImage, description }) => (
+        <ListItemSearchResult
+          key={externalId}
+          externalId={externalId}
+          name={name}
+          wideImage={wideImage}
+          description={description}
+        />
+      ))}
+    </List>
+  );
 };
 
 export default SearchContent;

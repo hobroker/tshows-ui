@@ -2,15 +2,8 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import { DateTime } from 'luxon';
 import { Box, Divider } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { Season } from '../../../../../generated/graphql';
-import { makeTallSmImage } from '../../../utils/image';
-
-const StyledImage = styled('img')`
-  aspect-ratio: 2/3;
-  width: 80px;
-  object-fit: cover;
-`;
+import CustomImage from '../../CustomImage';
 
 interface Props {
   season: Season;
@@ -20,7 +13,7 @@ const SeasonSummary = ({
   season: { description, airDate, name, tallImage, episodeCount },
 }: Props) => (
   <Box sx={{ display: 'flex', gap: 1 }}>
-    <StyledImage src={makeTallSmImage(tallImage)} />
+    <CustomImage path={tallImage} sx={{ width: 80 }} />
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <Typography variant="body1">{name}</Typography>

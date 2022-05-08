@@ -1,11 +1,24 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { useLocation } from 'react-router-dom';
 import { noop } from '../../../utils/fp';
 import useDebounce from '../../../hooks/useDebounce';
+import {
+  SearchShowFragment,
+  useSearchLazyQuery,
+} from '../../../generated/graphql';
 
 interface ContextType {
-  search: string;
-  setSearch: (search: string) => void;
+  query: string;
+  setQuery: (search: string) => void;
+  results: SearchShowFragment[];
   loading: boolean;
+  reset: () => void;
 }
 
 interface Props {
@@ -13,25 +26,49 @@ interface Props {
 }
 
 const SearchContext = createContext<ContextType>({
-  search: '',
-  setSearch: noop,
+  query: '',
+  setQuery: noop,
+  results: [],
   loading: false,
+  reset: noop,
 });
 
 const SearchProvider = ({ children }: Props) => {
-  const [search, setSearch] = useState('');
-  const searchShows = useDebounce(() => {
-    //
-  });
+  const { pathname } = useLocation();
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<SearchShowFragment[]>([]);
+  const [searchShowsQuery, { data, loading }] = useSearchLazyQuery();
+  const debouncedQuery = useDebounce(query);
+  const reset = useCallback(() => {
+    setQuery('');
+    setResults([]);
+  }, []);
 
-  useEffect(() => searchShows, [searchShows]);
+  useEffect(reset, [reset, pathname]);
+
+  useEffect(() => {
+    if (!debouncedQuery.length) {
+      setResults([]);
+
+      return;
+    }
+
+    searchShowsQuery({ variables: { query: debouncedQuery } });
+  }, [debouncedQuery, searchShowsQuery]);
+
+  useEffect(() => {
+    if (!data) return;
+    setResults(data.search);
+  }, [data]);
 
   return (
     <SearchContext.Provider
       value={{
-        search,
-        setSearch,
-        loading: false,
+        query,
+        setQuery,
+        loading,
+        results,
+        reset,
       }}
     >
       {children}
