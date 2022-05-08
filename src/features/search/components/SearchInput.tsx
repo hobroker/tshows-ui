@@ -1,7 +1,14 @@
-import React, { ChangeEvent, PropsWithChildren, useCallback } from 'react';
+import React, {
+  ChangeEvent,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, OutlinedInput, Paper } from '@mui/material';
+import { Box, ClickAwayListener, OutlinedInput, Paper } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { useLocation } from 'react-router-dom';
 
 const SearchIconWrapper = styled(Box)`
   padding-inline: ${({ theme }) => theme.spacing(2)};
@@ -34,31 +41,43 @@ const StyledInputBase = styled(OutlinedInput)`
 
 interface Props {
   onSearch: (search: string) => void;
-  search: string;
+  value: string;
 }
 
 const SearchInput = ({
   onSearch,
-  search,
+  value,
   children,
 }: PropsWithChildren<Props>) => {
+  const { pathname } = useLocation();
   const onChange = useCallback(
     ({ target: { value } }: ChangeEvent<HTMLInputElement>) => onSearch(value),
     [onSearch],
   );
+  const [isFocused, setIsFocused] = useState(false);
+  const isOverlayOpen = !!value && isFocused;
+  const onFocus = useCallback(() => setIsFocused(true), []);
+  const onBlur = useCallback(() => setIsFocused(false), []);
+
+  useEffect(() => onSearch(''), [onSearch, pathname]);
 
   return (
-    <Box sx={{ position: 'relative' }}>
-      <SearchIconWrapper>
-        <SearchIcon color="primary" />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        value={search}
-        onChange={onChange}
-      />
-      {search && <SearchOverlay>{children}</SearchOverlay>}
-    </Box>
+    <ClickAwayListener onClickAway={onBlur}>
+      <Box sx={{ position: 'relative' }}>
+        <SearchIconWrapper>
+          <SearchIcon color="primary" />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          value={value}
+          onChange={onChange}
+          onFocus={onFocus}
+        />
+        <SearchOverlay sx={{ display: isOverlayOpen ? 'initial' : 'none' }}>
+          {children}
+        </SearchOverlay>
+      </Box>
+    </ClickAwayListener>
   );
 };
 

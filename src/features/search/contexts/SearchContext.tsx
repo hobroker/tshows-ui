@@ -5,9 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { useLocation } from 'react-router-dom';
 import { noop } from '../../../utils/fp';
-import useDebounce from '../../../hooks/useDebounce';
 import {
   SearchShowFragment,
   useSearchLazyQuery,
@@ -34,27 +32,23 @@ const SearchContext = createContext<ContextType>({
 });
 
 const SearchProvider = ({ children }: Props) => {
-  const { pathname } = useLocation();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchShowFragment[]>([]);
   const [searchShowsQuery, { data, loading }] = useSearchLazyQuery();
-  const debouncedQuery = useDebounce(query);
   const reset = useCallback(() => {
     setQuery('');
     setResults([]);
   }, []);
 
-  useEffect(reset, [reset, pathname]);
-
   useEffect(() => {
-    if (!debouncedQuery.length) {
+    if (!query.length) {
       setResults([]);
 
       return;
     }
 
-    searchShowsQuery({ variables: { query: debouncedQuery } });
-  }, [debouncedQuery, searchShowsQuery]);
+    searchShowsQuery({ variables: { query: query } });
+  }, [query, searchShowsQuery]);
 
   useEffect(() => {
     if (!data) return;

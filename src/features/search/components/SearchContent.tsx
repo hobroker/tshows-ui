@@ -30,7 +30,7 @@ const SearchContent = () => {
   }
 
   return (
-    <List sx={{ p: 0 }}>
+    <List>
       {results.map(({ externalId, name, wideImage, description }) => (
         <ListItemSearchResult
           key={externalId}
