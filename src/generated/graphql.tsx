@@ -131,6 +131,13 @@ export type PartialShow = {
   wideImage?: Maybe<Scalars['String']>;
 };
 
+export type PieItem = {
+  __typename?: 'PieItem';
+  id: Scalars['String'];
+  label: Scalars['String'];
+  value: Scalars['Int'];
+};
+
 export type Preference = {
   __typename?: 'Preference';
   genres: Array<Genre>;
@@ -147,6 +154,8 @@ export type Query = {
   getRating: Review;
   getSeasonEpisodes: Array<Episode>;
   getSimilarShows: Array<PartialShow>;
+  getStatsCalendar: Array<StatsCalendarItem>;
+  getStatsGenres: Array<PieItem>;
   getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
@@ -231,6 +240,12 @@ export type ShowDetails = {
 
 export type SimilarShowsInput = {
   externalId: Scalars['Int'];
+};
+
+export type StatsCalendarItem = {
+  __typename?: 'StatsCalendarItem';
+  day: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 export type StatsSummaryItem = {
@@ -748,6 +763,23 @@ export type GetStatsSummaryQuery = {
     __typename?: 'StatsSummaryItem';
     key: StatsSummaryItemKey;
     value: number;
+  }>;
+};
+
+export type GetStatsPageDataQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetStatsPageDataQuery = {
+  __typename?: 'Query';
+  getStatsCalendar: Array<{
+    __typename?: 'StatsCalendarItem';
+    day: string;
+    value: number;
+  }>;
+  getStatsGenres: Array<{
+    __typename?: 'PieItem';
+    id: string;
+    value: number;
+    label: string;
   }>;
 };
 
@@ -2151,6 +2183,71 @@ export type GetStatsSummaryLazyQueryHookResult = ReturnType<
 export type GetStatsSummaryQueryResult = Apollo.QueryResult<
   GetStatsSummaryQuery,
   GetStatsSummaryQueryVariables
+>;
+export const GetStatsPageDataDocument = gql`
+  query GetStatsPageData {
+    getStatsCalendar {
+      day
+      value
+    }
+    getStatsGenres {
+      id
+      value
+      label
+    }
+  }
+`;
+
+/**
+ * __useGetStatsPageDataQuery__
+ *
+ * To run a query within a React component, call `useGetStatsPageDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStatsPageDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStatsPageDataQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetStatsPageDataQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetStatsPageDataQuery,
+    GetStatsPageDataQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetStatsPageDataQuery, GetStatsPageDataQueryVariables>(
+    GetStatsPageDataDocument,
+    options,
+  );
+}
+export function useGetStatsPageDataLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetStatsPageDataQuery,
+    GetStatsPageDataQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    GetStatsPageDataQuery,
+    GetStatsPageDataQueryVariables
+  >(GetStatsPageDataDocument, options);
+}
+export type GetStatsPageDataQueryHookResult = ReturnType<
+  typeof useGetStatsPageDataQuery
+>;
+export type GetStatsPageDataLazyQueryHookResult = ReturnType<
+  typeof useGetStatsPageDataLazyQuery
+>;
+export type GetStatsPageDataQueryResult = Apollo.QueryResult<
+  GetStatsPageDataQuery,
+  GetStatsPageDataQueryVariables
 >;
 export const MeDocument = gql`
   query Me {

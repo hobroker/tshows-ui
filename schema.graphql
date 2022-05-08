@@ -85,6 +85,12 @@ type PartialShow {
   wideImage: String
 }
 
+type PieItem {
+  id: String!
+  label: String!
+  value: Int!
+}
+
 type Preference {
   genres: [Genre!]!
 }
@@ -99,6 +105,8 @@ type Query {
   getRating(input: GetRatingInput!): Review!
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
   getSimilarShows(input: SimilarShowsInput!): [PartialShow!]!
+  getStatsCalendar: [StatsCalendarItem!]!
+  getStatsGenres: [PieItem!]!
   getStatsSummary: [StatsSummaryItem!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
@@ -140,6 +148,11 @@ type ShowDetails {
 
 input SimilarShowsInput {
   externalId: Int!
+}
+
+type StatsCalendarItem {
+  day: String!
+  value: Int!
 }
 
 type StatsSummaryItem {
