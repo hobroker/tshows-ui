@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import { Box } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { TrendingContext } from '../../contexts/TrendingContext';
@@ -30,7 +30,7 @@ const TrendingContent = () => {
 
   return (
     <Box>
-      <Section title="Trending" icon={<TrendingUpIcon />}>
+      <Section title="Recommendations" icon={<TrendingUpIcon />}>
         <ShowsCollection
           shows={shows}
           loading={false}

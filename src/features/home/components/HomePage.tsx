@@ -1,13 +1,14 @@
 import React from 'react';
 import { Box, Divider } from '@mui/material';
 import PageWrapper from '../../../components/PageWrapper';
+import StatsSummaryProvider from '../../stats/contexts/StatsSummaryContext';
 import WhenLoggedIn from '../../user/components/WhenLoggedIn';
+import WhenAnonymous from '../../user/components/WhenAnonymous';
 import Upcoming from '../features/upcoming/components/Upcoming';
 import UpNext from '../features/upnext/components/UpNext';
-import WhenAnonymous from '../../user/components/WhenAnonymous';
 import StatsSummary from '../../stats/components/summary/StatsSummary';
-import StatsSummaryProvider from '../../stats/contexts/StatsSummaryContext';
 import Trending from '../../shows/features/trending/components/section/Trending';
+import Recommendations from '../../shows/features/discover/components/section/Recommendations';
 import LoginAlert from './LoginAlert';
 
 const HomePage = () => (
@@ -24,6 +25,10 @@ const HomePage = () => (
       </StatsSummaryProvider>
       <Divider />
       <Upcoming />
+      <Divider />
+      <WhenLoggedIn>
+        <Recommendations />
+      </WhenLoggedIn>
       <Divider />
       <Trending />
     </WhenLoggedIn>

@@ -8,7 +8,7 @@ const NotificationsBadge = () => {
   const notificationsCount = notifications.length;
 
   return (
-    <Box sx={{ marginRight: 1, marginTop: 0.5 }}>
+    <Box sx={{ marginTop: 0.5 }}>
       <IconButton size="large">
         <Badge badgeContent={notificationsCount} color="secondary">
           <NotificationsIcon color="primary" />
