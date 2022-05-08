@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ResponsivePie } from '@nivo/pie';
 import {
   amber,
@@ -18,8 +18,7 @@ import {
   teal,
   yellow,
 } from '@mui/material/colors';
-import { useGetStatsGenresQuery } from '../../../../generated/graphql';
-import IndefiniteLoading from '../../../../components/IndefiniteLoading';
+import { StatsContext } from '../../contexts/StatsContext';
 
 const colors = [
   amber[500],
@@ -41,16 +40,11 @@ const colors = [
 ];
 
 const StatsGenres = () => {
-  const { data, loading } = useGetStatsGenresQuery();
-  const items = data?.getStatsGenres || [];
-
-  if (loading) {
-    return <IndefiniteLoading />;
-  }
+  const { genres } = useContext(StatsContext);
 
   return (
     <ResponsivePie
-      data={items}
+      data={genres}
       margin={{ top: 20, bottom: 80 }}
       innerRadius={0.5}
       padAngle={0.7}

@@ -1,6 +1,13 @@
 import { createContext, ReactNode } from 'react';
+import {
+  PieItem,
+  StatsCalendarItem,
+  useGetStatsPageDataQuery,
+} from '../../../generated/graphql';
 
 interface ContextType {
+  calendar: StatsCalendarItem[];
+  genres: PieItem[];
   loading: boolean;
 }
 
@@ -9,15 +16,19 @@ interface Props {
 }
 
 const StatsContext = createContext<ContextType>({
+  calendar: [],
+  genres: [],
   loading: false,
 });
 
 const StatsProvider = ({ children }: Props) => {
-  const loading = true;
+  const { data, loading } = useGetStatsPageDataQuery();
 
   return (
     <StatsContext.Provider
       value={{
+        calendar: data?.getStatsCalendar || [],
+        genres: data?.getStatsGenres || [],
         loading,
       }}
     >

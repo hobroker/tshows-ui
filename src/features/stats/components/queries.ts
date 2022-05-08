@@ -9,17 +9,13 @@ export const QUERY_GET_STATS_SUMMARY = gql`
   }
 `;
 
-export const QUERY_GET_STATS_CALENDAR = gql`
-  query GetStatsCalendar {
+export const QUERY_GET_STATS_PAGE_DATA = gql`
+  query GetStatsPageData {
     getStatsCalendar {
       day
       value
     }
-  }
-`;
 
-export const QUERY_GET_STATS_GENRES = gql`
-  query GetStatsGenres {
     getStatsGenres {
       id
       value

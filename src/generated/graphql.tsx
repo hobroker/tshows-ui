@@ -766,21 +766,15 @@ export type GetStatsSummaryQuery = {
   }>;
 };
 
-export type GetStatsCalendarQueryVariables = Exact<{ [key: string]: never }>;
+export type GetStatsPageDataQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetStatsCalendarQuery = {
+export type GetStatsPageDataQuery = {
   __typename?: 'Query';
   getStatsCalendar: Array<{
     __typename?: 'StatsCalendarItem';
     day: string;
     value: number;
   }>;
-};
-
-export type GetStatsGenresQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetStatsGenresQuery = {
-  __typename?: 'Query';
   getStatsGenres: Array<{
     __typename?: 'PieItem';
     id: string;
@@ -2190,68 +2184,12 @@ export type GetStatsSummaryQueryResult = Apollo.QueryResult<
   GetStatsSummaryQuery,
   GetStatsSummaryQueryVariables
 >;
-export const GetStatsCalendarDocument = gql`
-  query GetStatsCalendar {
+export const GetStatsPageDataDocument = gql`
+  query GetStatsPageData {
     getStatsCalendar {
       day
       value
     }
-  }
-`;
-
-/**
- * __useGetStatsCalendarQuery__
- *
- * To run a query within a React component, call `useGetStatsCalendarQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetStatsCalendarQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetStatsCalendarQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetStatsCalendarQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetStatsCalendarQuery,
-    GetStatsCalendarQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useQuery<GetStatsCalendarQuery, GetStatsCalendarQueryVariables>(
-    GetStatsCalendarDocument,
-    options,
-  );
-}
-export function useGetStatsCalendarLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetStatsCalendarQuery,
-    GetStatsCalendarQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useLazyQuery<
-    GetStatsCalendarQuery,
-    GetStatsCalendarQueryVariables
-  >(GetStatsCalendarDocument, options);
-}
-export type GetStatsCalendarQueryHookResult = ReturnType<
-  typeof useGetStatsCalendarQuery
->;
-export type GetStatsCalendarLazyQueryHookResult = ReturnType<
-  typeof useGetStatsCalendarLazyQuery
->;
-export type GetStatsCalendarQueryResult = Apollo.QueryResult<
-  GetStatsCalendarQuery,
-  GetStatsCalendarQueryVariables
->;
-export const GetStatsGenresDocument = gql`
-  query GetStatsGenres {
     getStatsGenres {
       id
       value
@@ -2261,55 +2199,55 @@ export const GetStatsGenresDocument = gql`
 `;
 
 /**
- * __useGetStatsGenresQuery__
+ * __useGetStatsPageDataQuery__
  *
- * To run a query within a React component, call `useGetStatsGenresQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetStatsGenresQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetStatsPageDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStatsPageDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetStatsGenresQuery({
+ * const { data, loading, error } = useGetStatsPageDataQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetStatsGenresQuery(
+export function useGetStatsPageDataQuery(
   baseOptions?: Apollo.QueryHookOptions<
-    GetStatsGenresQuery,
-    GetStatsGenresQueryVariables
+    GetStatsPageDataQuery,
+    GetStatsPageDataQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
 
-  return Apollo.useQuery<GetStatsGenresQuery, GetStatsGenresQueryVariables>(
-    GetStatsGenresDocument,
+  return Apollo.useQuery<GetStatsPageDataQuery, GetStatsPageDataQueryVariables>(
+    GetStatsPageDataDocument,
     options,
   );
 }
-export function useGetStatsGenresLazyQuery(
+export function useGetStatsPageDataLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
-    GetStatsGenresQuery,
-    GetStatsGenresQueryVariables
+    GetStatsPageDataQuery,
+    GetStatsPageDataQueryVariables
   >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
 
-  return Apollo.useLazyQuery<GetStatsGenresQuery, GetStatsGenresQueryVariables>(
-    GetStatsGenresDocument,
-    options,
-  );
+  return Apollo.useLazyQuery<
+    GetStatsPageDataQuery,
+    GetStatsPageDataQueryVariables
+  >(GetStatsPageDataDocument, options);
 }
-export type GetStatsGenresQueryHookResult = ReturnType<
-  typeof useGetStatsGenresQuery
+export type GetStatsPageDataQueryHookResult = ReturnType<
+  typeof useGetStatsPageDataQuery
 >;
-export type GetStatsGenresLazyQueryHookResult = ReturnType<
-  typeof useGetStatsGenresLazyQuery
+export type GetStatsPageDataLazyQueryHookResult = ReturnType<
+  typeof useGetStatsPageDataLazyQuery
 >;
-export type GetStatsGenresQueryResult = Apollo.QueryResult<
-  GetStatsGenresQuery,
-  GetStatsGenresQueryVariables
+export type GetStatsPageDataQueryResult = Apollo.QueryResult<
+  GetStatsPageDataQuery,
+  GetStatsPageDataQueryVariables
 >;
 export const MeDocument = gql`
   query Me {
