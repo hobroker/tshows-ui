@@ -222,12 +222,12 @@ export type SearchInput = {
 
 export type Season = {
   __typename?: 'Season';
-  airDate: Scalars['DateTime'];
+  airDate?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   episodeCount: Scalars['String'];
   name: Scalars['String'];
   number: Scalars['Int'];
-  tallImage: Scalars['String'];
+  tallImage?: Maybe<Scalars['String']>;
 };
 
 export type ShowDetails = {
@@ -716,9 +716,9 @@ export type FullShowQuery = {
         number: number;
         description?: string | null;
         name: string;
-        tallImage: string;
+        tallImage?: string | null;
         episodeCount: string;
-        airDate: any;
+        airDate?: any | null;
       }>;
     };
   };
