@@ -10,13 +10,17 @@ const Bold = styled('span')`
   font-weight: bold;
 `;
 
+const Uppercase = styled('span')`
+  text-transform: uppercase;
+`;
+
 const StatsSummaryItemKeyToText = {
   [StatsSummaryItemKey.WatchingTvShowsCount]: (value: number) => (
     <>
       <Typography variant="h4">
         <Bold>{value}</Bold>
       </Typography>
-      {pluralize(value, 'TV Show')}
+      <Uppercase>{pluralize(value, 'TV Show')}</Uppercase>
     </>
   ),
   [StatsSummaryItemKey.WatchedEpisodesCount]: (value: number) => (
@@ -24,7 +28,7 @@ const StatsSummaryItemKeyToText = {
       <Typography variant="h4">
         <Bold>{value}</Bold>
       </Typography>
-      {pluralize(value, 'Episode')}
+      <Uppercase>{pluralize(value, 'Episode')}</Uppercase>
     </>
   ),
   [StatsSummaryItemKey.SpentMinutes]: (value: number) => (
@@ -32,7 +36,7 @@ const StatsSummaryItemKeyToText = {
       <Typography variant="h4">
         <Bold>{minutesToDuration(value)}</Bold>
       </Typography>
-      spent
+      <Uppercase>spent</Uppercase>
     </>
   ),
 };
@@ -46,13 +50,10 @@ const StatsSummaryPageList = () => {
   const { statsItems } = useContext(StatsSummaryContext);
   const data = useMemo<Item[]>(
     () =>
-      statsItems
-        // TODO check if this filter is needed
-        // .filter(({ value }) => value !== 0)
-        .map(({ key, value }) => ({
-          key,
-          value: StatsSummaryItemKeyToText[key](value),
-        })),
+      statsItems.map(({ key, value }) => ({
+        key,
+        value: StatsSummaryItemKeyToText[key](value),
+      })),
     [statsItems],
   );
 
