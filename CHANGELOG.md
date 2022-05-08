@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/hobroker/tshows-ui/compare/v1.15.0...v1.16.0) (2022-05-08)
+
+
+### Features
+
+* create MyShows page ([#34](https://github.com/hobroker/tshows-ui/issues/34)) ([ff153f3](https://github.com/hobroker/tshows-ui/commit/ff153f396efd0cf60f69d5171c572d78fd302959))
+
 # [1.15.0](https://github.com/hobroker/tshows-ui/compare/v1.14.1...v1.15.0) (2022-05-07)
 
 
