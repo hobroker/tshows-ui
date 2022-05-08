@@ -7,6 +7,7 @@ import { StatsSummaryContext } from '../../contexts/StatsSummaryContext';
 import IndefiniteLoading, {
   IndefiniteLoadingSize,
 } from '../../../../components/IndefiniteLoading';
+import { StaticRoute } from '../../../router/constants';
 import Header from './Header';
 import StatsList from './StatsList';
 
@@ -35,7 +36,7 @@ const StatsSummarySection = ({ user }: Props) => {
               <Divider orientation="vertical" flexItem />
               <Button
                 variant="text"
-                href="/"
+                href={StaticRoute.Statistics}
                 size="small"
                 endIcon={<ArrowForwardIosIcon />}
                 sx={{ ml: 'auto' }}

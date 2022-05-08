@@ -7,6 +7,7 @@ import RegisterPage from '../../join/components/RegisterPage';
 import ShowPage from '../../shows/components/show-page/ShowPage';
 import MyShowsPage from '../../shows/features/my-shows/components/MyShowsPage';
 import TrendingPage from '../../shows/features/trending/components/page/TrendingPage';
+import StatsPage from '../../stats/components/page/StatsPage';
 import PrivateOutlet from './PrivateOutlet';
 
 const Router = () => (
@@ -20,6 +21,9 @@ const Router = () => (
     </Route>
     <Route path={StaticRoute.MyShows} element={<PrivateOutlet />}>
       <Route path={StaticRoute.MyShows} element={<MyShowsPage />} />
+    </Route>
+    <Route path={StaticRoute.Statistics} element={<PrivateOutlet />}>
+      <Route path={StaticRoute.Statistics} element={<StatsPage />} />
     </Route>
     <Route path={__DynamicRoute.Show} element={<ShowPage />} />
   </Routes>
