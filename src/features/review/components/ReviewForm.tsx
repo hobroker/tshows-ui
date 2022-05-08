@@ -2,7 +2,6 @@ import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import React, { useContext } from 'react';
-import { pick } from 'ramda';
 import useYupValidationResolver from '../../join/hooks/useYupValidationResolver';
 import { ReviewContext } from '../contexts/ReviewContext';
 import ShowRating from './ShowRating';
@@ -23,7 +22,10 @@ interface Props {
 
 const ReviewForm = ({ toggleIsFormOpen }: Props) => {
   const { ownReview, upsertReview } = useContext(ReviewContext);
-  const defaultValues = ownReview && pick(['title', 'content'], ownReview);
+  const defaultValues = ownReview && {
+    title: ownReview.title || '',
+    content: ownReview.content || '',
+  };
   const resolver = useYupValidationResolver(validationSchema);
   const {
     register,

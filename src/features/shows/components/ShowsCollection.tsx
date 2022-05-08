@@ -1,16 +1,24 @@
 import React from 'react';
+import { Box } from '@mui/material';
 import { PartialShow } from '../../../generated/graphql';
 import TallCardPlaceholder from '../components/card/TallCardPlaceholder';
 import TallCardCollection from '../components/card/TallCardCollection';
 import TallShowCard from '../components/TallShowCard';
+import IndefiniteLoading from '../../../components/IndefiniteLoading';
 
 interface Props {
   shows: Pick<PartialShow, 'externalId' | 'tallImage' | 'name'>[];
   loading?: boolean;
+  loadingIndicator?: boolean;
   scroll: boolean;
 }
 
-const ShowsCollection = ({ shows, loading = false, scroll }: Props) => (
+const ShowsCollection = ({
+  shows,
+  loading = false,
+  loadingIndicator = false,
+  scroll,
+}: Props) => (
   <TallCardCollection
     loading={loading}
     PlaceholderComponent={TallCardPlaceholder}
@@ -24,6 +32,11 @@ const ShowsCollection = ({ shows, loading = false, scroll }: Props) => (
         name={name}
       />
     ))}
+    {loadingIndicator && (
+      <Box>
+        <IndefiniteLoading sx={{ height: '100%', alignItems: 'center' }} />
+      </Box>
+    )}
   </TallCardCollection>
 );
 

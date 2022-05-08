@@ -63,6 +63,16 @@ export const PARTIAL_SHOW_FRAGMENT = gql`
   }
 `;
 
+export const PARTIAL_SHOW_SUMMARY_FRAGMENT = gql`
+  fragment ShowSummary on PartialShow {
+    externalId
+    name
+    description
+    wideImage
+    tallImage
+  }
+`;
+
 export const MUTATION_UPSERT_SEASON_EPISODE = gql`
   mutation UpsertSeasonEpisode($episodeId: Int!, $isWatched: Boolean = true) {
     upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {

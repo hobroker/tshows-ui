@@ -6,11 +6,13 @@ import LoginPage from '../../join/components/LoginPage';
 import RegisterPage from '../../join/components/RegisterPage';
 import ShowPage from '../../shows/components/show-page/ShowPage';
 import MyShowsPage from '../../shows/features/my-shows/components/MyShowsPage';
+import TrendingPage from '../../shows/features/trending/components/page/TrendingPage';
 import PrivateOutlet from './PrivateOutlet';
 
 const Router = () => (
   <Routes>
     <Route path={StaticRoute.Home} element={<HomePage />} />
+    <Route path={StaticRoute.Trending} element={<TrendingPage />} />
     <Route path={StaticRoute.Login} element={<LoginPage />} />
     <Route path={StaticRoute.Register} element={<RegisterPage />} />
     <Route path={StaticRoute.Welcome} element={<PrivateOutlet />}>

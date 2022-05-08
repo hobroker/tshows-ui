@@ -134,7 +134,6 @@ export type Preference = {
 
 export type Query = {
   __typename?: 'Query';
-  allUsers: User;
   discoverShows: Array<PartialShow>;
   fullShow: FullShow;
   getMyReview?: Maybe<Review>;
@@ -147,6 +146,7 @@ export type Query = {
   getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
+  listTrending: Array<PartialShow>;
   listUpNext: Array<Episode>;
   listUpcoming: Array<Episode>;
   me: User;
@@ -181,16 +181,20 @@ export type QueryGetSimilarShowsArgs = {
   input: SimilarShowsInput;
 };
 
+export type QueryListTrendingArgs = {
+  input: TrendingInput;
+};
+
 export type QuerySearchArgs = {
   input: SearchInput;
 };
 
 export type Review = {
   __typename?: 'Review';
-  content: Scalars['String'];
+  content?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
-  rating: Scalars['Int'];
-  title: Scalars['String'];
+  rating?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
   user: User;
 };
 
@@ -241,6 +245,10 @@ export enum Status {
 
 export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
+};
+
+export type TrendingInput = {
+  page?: InputMaybe<Scalars['Int']>;
 };
 
 export type UpsertEpisodeInput = {
@@ -394,7 +402,7 @@ export type GetRatingQueryVariables = Exact<{
 
 export type GetRatingQuery = {
   __typename?: 'Query';
-  getRating: { __typename?: 'Review'; rating: number };
+  getRating: { __typename?: 'Review'; rating?: number | null };
 };
 
 export type GetReviewsQueryVariables = Exact<{
@@ -406,9 +414,9 @@ export type GetReviewsQuery = {
   getOtherReviews: Array<{
     __typename?: 'Review';
     id: number;
-    rating: number;
-    title: string;
-    content: string;
+    rating?: number | null;
+    title?: string | null;
+    content?: string | null;
     user: {
       __typename?: 'User';
       id: number;
@@ -419,9 +427,9 @@ export type GetReviewsQuery = {
   getMyReview?: {
     __typename?: 'Review';
     id: number;
-    rating: number;
-    title: string;
-    content: string;
+    rating?: number | null;
+    title?: string | null;
+    content?: string | null;
     user: {
       __typename?: 'User';
       id: number;
@@ -434,9 +442,9 @@ export type GetReviewsQuery = {
 export type ReviewFragment = {
   __typename?: 'Review';
   id: number;
-  rating: number;
-  title: string;
-  content: string;
+  rating?: number | null;
+  title?: string | null;
+  content?: string | null;
   user: {
     __typename?: 'User';
     id: number;
@@ -457,9 +465,9 @@ export type UpsertReviewMutation = {
   upsertReview: {
     __typename?: 'Review';
     id: number;
-    rating: number;
-    title: string;
-    content: string;
+    rating?: number | null;
+    title?: string | null;
+    content?: string | null;
     user: {
       __typename?: 'User';
       id: number;
@@ -481,15 +489,8 @@ export type SearchQuery = {
     name: string;
     description: string;
     wideImage?: string | null;
+    tallImage?: string | null;
   }>;
-};
-
-export type SearchShowFragment = {
-  __typename?: 'PartialShow';
-  externalId: number;
-  name: string;
-  description: string;
-  wideImage?: string | null;
 };
 
 export type UpsertEpisodeMutationVariables = Exact<{
@@ -612,6 +613,22 @@ export type SimilarShowFragment = {
   tallImage?: string | null;
 };
 
+export type ListTrendingQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type ListTrendingQuery = {
+  __typename?: 'Query';
+  listTrending: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage?: string | null;
+    tallImage?: string | null;
+  }>;
+};
+
 export type UpsertWatchlistItemMutationVariables = Exact<{
   showId: Scalars['Int'];
   status: Status;
@@ -677,6 +694,15 @@ export type PartialShowFragment = {
   firstAirDate: any;
   originCountry: string;
   status: Status;
+};
+
+export type ShowSummaryFragment = {
+  __typename?: 'PartialShow';
+  externalId: number;
+  name: string;
+  description: string;
+  wideImage?: string | null;
+  tallImage?: string | null;
 };
 
 export type UpsertSeasonEpisodeMutationVariables = Exact<{
@@ -745,14 +771,6 @@ export const ReviewFragmentDoc = gql`
     }
   }
 `;
-export const SearchShowFragmentDoc = gql`
-  fragment SearchShow on PartialShow {
-    externalId
-    name
-    description
-    wideImage
-  }
-`;
 export const EpisodeWithShowFragmentDoc = gql`
   fragment EpisodeWithShow on Episode {
     id
@@ -802,6 +820,15 @@ export const PartialShowFragmentDoc = gql`
     firstAirDate
     originCountry
     status
+  }
+`;
+export const ShowSummaryFragmentDoc = gql`
+  fragment ShowSummary on PartialShow {
+    externalId
+    name
+    description
+    wideImage
+    tallImage
   }
 `;
 export const ListGenresDocument = gql`
@@ -1392,10 +1419,10 @@ export type UpsertReviewMutationOptions = Apollo.BaseMutationOptions<
 export const SearchDocument = gql`
   query Search($query: String!) {
     search(input: { query: $query }) {
-      ...SearchShow
+      ...ShowSummary
     }
   }
-  ${SearchShowFragmentDoc}
+  ${ShowSummaryFragmentDoc}
 `;
 
 /**
@@ -1673,6 +1700,67 @@ export type GetSimilarShowsLazyQueryHookResult = ReturnType<
 export type GetSimilarShowsQueryResult = Apollo.QueryResult<
   GetSimilarShowsQuery,
   GetSimilarShowsQueryVariables
+>;
+export const ListTrendingDocument = gql`
+  query ListTrending($page: Int = 1) {
+    listTrending(input: { page: $page }) {
+      ...ShowSummary
+    }
+  }
+  ${ShowSummaryFragmentDoc}
+`;
+
+/**
+ * __useListTrendingQuery__
+ *
+ * To run a query within a React component, call `useListTrendingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListTrendingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListTrendingQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useListTrendingQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListTrendingQuery,
+    ListTrendingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<ListTrendingQuery, ListTrendingQueryVariables>(
+    ListTrendingDocument,
+    options,
+  );
+}
+export function useListTrendingLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListTrendingQuery,
+    ListTrendingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<ListTrendingQuery, ListTrendingQueryVariables>(
+    ListTrendingDocument,
+    options,
+  );
+}
+export type ListTrendingQueryHookResult = ReturnType<
+  typeof useListTrendingQuery
+>;
+export type ListTrendingLazyQueryHookResult = ReturnType<
+  typeof useListTrendingLazyQuery
+>;
+export type ListTrendingQueryResult = Apollo.QueryResult<
+  ListTrendingQuery,
+  ListTrendingQueryVariables
 >;
 export const UpsertWatchlistItemDocument = gql`
   mutation UpsertWatchlistItem($showId: Int!, $status: Status!) {
