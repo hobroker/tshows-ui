@@ -134,7 +134,6 @@ export type Preference = {
 
 export type Query = {
   __typename?: 'Query';
-  allUsers: User;
   discoverShows: Array<PartialShow>;
   fullShow: FullShow;
   getMyReview?: Maybe<Review>;
@@ -145,6 +144,7 @@ export type Query = {
   getSeasonEpisodes: Array<Episode>;
   getSimilarShows: Array<PartialShow>;
   getStatsSummary: Array<StatsSummaryItem>;
+  getTrending: Array<PartialShow>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
   listUpNext: Array<Episode>;
@@ -187,10 +187,10 @@ export type QuerySearchArgs = {
 
 export type Review = {
   __typename?: 'Review';
-  content: Scalars['String'];
+  content?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
-  rating: Scalars['Int'];
-  title: Scalars['String'];
+  rating?: Maybe<Scalars['Int']>;
+  title?: Maybe<Scalars['String']>;
   user: User;
 };
 
@@ -394,7 +394,7 @@ export type GetRatingQueryVariables = Exact<{
 
 export type GetRatingQuery = {
   __typename?: 'Query';
-  getRating: { __typename?: 'Review'; rating: number };
+  getRating: { __typename?: 'Review'; rating?: number | null };
 };
 
 export type GetReviewsQueryVariables = Exact<{
@@ -406,9 +406,9 @@ export type GetReviewsQuery = {
   getOtherReviews: Array<{
     __typename?: 'Review';
     id: number;
-    rating: number;
-    title: string;
-    content: string;
+    rating?: number | null;
+    title?: string | null;
+    content?: string | null;
     user: {
       __typename?: 'User';
       id: number;
@@ -419,9 +419,9 @@ export type GetReviewsQuery = {
   getMyReview?: {
     __typename?: 'Review';
     id: number;
-    rating: number;
-    title: string;
-    content: string;
+    rating?: number | null;
+    title?: string | null;
+    content?: string | null;
     user: {
       __typename?: 'User';
       id: number;
@@ -434,9 +434,9 @@ export type GetReviewsQuery = {
 export type ReviewFragment = {
   __typename?: 'Review';
   id: number;
-  rating: number;
-  title: string;
-  content: string;
+  rating?: number | null;
+  title?: string | null;
+  content?: string | null;
   user: {
     __typename?: 'User';
     id: number;
@@ -457,9 +457,9 @@ export type UpsertReviewMutation = {
   upsertReview: {
     __typename?: 'Review';
     id: number;
-    rating: number;
-    title: string;
-    content: string;
+    rating?: number | null;
+    title?: string | null;
+    content?: string | null;
     user: {
       __typename?: 'User';
       id: number;

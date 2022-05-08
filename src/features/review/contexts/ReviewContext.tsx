@@ -95,7 +95,7 @@ const ReviewProvider = ({ children }: Props) => {
   }, [data]);
 
   useEffect(() => {
-    if (!ratingData) return;
+    if (!ratingData || !ratingData.getRating.rating) return;
 
     setRating(ratingData.getRating.rating);
   }, [ratingData]);

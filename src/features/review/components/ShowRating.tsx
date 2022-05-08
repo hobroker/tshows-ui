@@ -16,7 +16,7 @@ const ShowRating = () => {
   );
 
   useEffect(() => {
-    if (!ownReview) return;
+    if (!ownReview || !ownReview.rating) return;
 
     setRating(ownReview.rating);
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -52,7 +52,9 @@ const ReviewsList = ({ toggleIsFormOpen }: Props) => {
                     component="span"
                     sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
                   >
-                    <RatingInfo value={review.rating} variant="body1" />
+                    {review.rating && (
+                      <RatingInfo value={review.rating} variant="body1" />
+                    )}
                     {review.title}
                   </Box>
                 }

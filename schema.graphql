@@ -86,7 +86,6 @@ type Preference {
 }
 
 type Query {
-  allUsers: User!
   discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
   fullShow(input: FullShowInput!): FullShow!
   getMyReview(input: GetReviewInput!): Review
@@ -97,6 +96,7 @@ type Query {
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
   getSimilarShows(input: SimilarShowsInput!): [PartialShow!]!
   getStatsSummary: [StatsSummaryItem!]!
+  getTrending: [PartialShow!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
   listUpNext: [Episode!]!
@@ -106,10 +106,10 @@ type Query {
 }
 
 type Review {
-  content: String!
+  content: String
   id: Int!
-  rating: Int!
-  title: String!
+  rating: Int
+  title: String
   user: User!
 }
 
