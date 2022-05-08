@@ -1,3 +1,10 @@
+# [1.20.0](https://github.com/hobroker/tshows-ui/compare/v1.19.0...v1.20.0) (2022-05-08)
+
+
+### Features
+
+* add StatsPage ([#38](https://github.com/hobroker/tshows-ui/issues/38)) ([c51818b](https://github.com/hobroker/tshows-ui/commit/c51818b85556b038d2075b5c423b87e343637eda))
+
 # [1.19.0](https://github.com/hobroker/tshows-ui/compare/v1.18.0...v1.19.0) (2022-05-08)
 
 
