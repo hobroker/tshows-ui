@@ -96,9 +96,9 @@ type Query {
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
   getSimilarShows(input: SimilarShowsInput!): [PartialShow!]!
   getStatsSummary: [StatsSummaryItem!]!
-  getTrending: [PartialShow!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
+  listTrending: [PartialShow!]!
   listUpNext: [Episode!]!
   listUpcoming: [Episode!]!
   me: User!

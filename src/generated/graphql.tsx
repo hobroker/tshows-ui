@@ -144,9 +144,9 @@ export type Query = {
   getSeasonEpisodes: Array<Episode>;
   getSimilarShows: Array<PartialShow>;
   getStatsSummary: Array<StatsSummaryItem>;
-  getTrending: Array<PartialShow>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
+  listTrending: Array<PartialShow>;
   listUpNext: Array<Episode>;
   listUpcoming: Array<Episode>;
   me: User;
@@ -289,6 +289,20 @@ export type ListGenresQuery = {
     externalId: number;
     name: string;
   }> | null;
+};
+
+export type ListTrendingQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListTrendingQuery = {
+  __typename?: 'Query';
+  listTrending: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage?: string | null;
+    tallImage?: string | null;
+  }>;
 };
 
 export type ListUpcomingQueryVariables = Exact<{ [key: string]: never }>;
@@ -481,15 +495,8 @@ export type SearchQuery = {
     name: string;
     description: string;
     wideImage?: string | null;
+    tallImage?: string | null;
   }>;
-};
-
-export type SearchShowFragment = {
-  __typename?: 'PartialShow';
-  externalId: number;
-  name: string;
-  description: string;
-  wideImage?: string | null;
 };
 
 export type UpsertEpisodeMutationVariables = Exact<{
@@ -679,6 +686,15 @@ export type PartialShowFragment = {
   status: Status;
 };
 
+export type ShowSummaryFragment = {
+  __typename?: 'PartialShow';
+  externalId: number;
+  name: string;
+  description: string;
+  wideImage?: string | null;
+  tallImage?: string | null;
+};
+
 export type UpsertSeasonEpisodeMutationVariables = Exact<{
   episodeId: Scalars['Int'];
   isWatched?: InputMaybe<Scalars['Boolean']>;
@@ -745,14 +761,6 @@ export const ReviewFragmentDoc = gql`
     }
   }
 `;
-export const SearchShowFragmentDoc = gql`
-  fragment SearchShow on PartialShow {
-    externalId
-    name
-    description
-    wideImage
-  }
-`;
 export const EpisodeWithShowFragmentDoc = gql`
   fragment EpisodeWithShow on Episode {
     id
@@ -802,6 +810,15 @@ export const PartialShowFragmentDoc = gql`
     firstAirDate
     originCountry
     status
+  }
+`;
+export const ShowSummaryFragmentDoc = gql`
+  fragment ShowSummary on PartialShow {
+    externalId
+    name
+    description
+    wideImage
+    tallImage
   }
 `;
 export const ListGenresDocument = gql`
@@ -861,6 +878,66 @@ export type ListGenresLazyQueryHookResult = ReturnType<
 export type ListGenresQueryResult = Apollo.QueryResult<
   ListGenresQuery,
   ListGenresQueryVariables
+>;
+export const ListTrendingDocument = gql`
+  query ListTrending {
+    listTrending {
+      ...ShowSummary
+    }
+  }
+  ${ShowSummaryFragmentDoc}
+`;
+
+/**
+ * __useListTrendingQuery__
+ *
+ * To run a query within a React component, call `useListTrendingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListTrendingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListTrendingQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListTrendingQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListTrendingQuery,
+    ListTrendingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<ListTrendingQuery, ListTrendingQueryVariables>(
+    ListTrendingDocument,
+    options,
+  );
+}
+export function useListTrendingLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListTrendingQuery,
+    ListTrendingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<ListTrendingQuery, ListTrendingQueryVariables>(
+    ListTrendingDocument,
+    options,
+  );
+}
+export type ListTrendingQueryHookResult = ReturnType<
+  typeof useListTrendingQuery
+>;
+export type ListTrendingLazyQueryHookResult = ReturnType<
+  typeof useListTrendingLazyQuery
+>;
+export type ListTrendingQueryResult = Apollo.QueryResult<
+  ListTrendingQuery,
+  ListTrendingQueryVariables
 >;
 export const ListUpcomingDocument = gql`
   query ListUpcoming {
@@ -1392,10 +1469,10 @@ export type UpsertReviewMutationOptions = Apollo.BaseMutationOptions<
 export const SearchDocument = gql`
   query Search($query: String!) {
     search(input: { query: $query }) {
-      ...SearchShow
+      ...ShowSummary
     }
   }
-  ${SearchShowFragmentDoc}
+  ${ShowSummaryFragmentDoc}
 `;
 
 /**

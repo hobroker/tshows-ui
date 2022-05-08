@@ -7,14 +7,14 @@ import {
 } from 'react';
 import { noop } from '../../../utils/fp';
 import {
-  SearchShowFragment,
+  ShowSummaryFragment,
   useSearchLazyQuery,
 } from '../../../generated/graphql';
 
 interface ContextType {
   query: string;
   setQuery: (search: string) => void;
-  results: SearchShowFragment[];
+  results: ShowSummaryFragment[];
   loading: boolean;
   reset: () => void;
 }
@@ -33,7 +33,7 @@ const SearchContext = createContext<ContextType>({
 
 const SearchProvider = ({ children }: Props) => {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchShowFragment[]>([]);
+  const [results, setResults] = useState<ShowSummaryFragment[]>([]);
   const [searchShowsQuery, { data, loading }] = useSearchLazyQuery();
   const reset = useCallback(() => {
     setQuery('');

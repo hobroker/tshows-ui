@@ -7,6 +7,7 @@ import UpNext from '../features/upnext/components/UpNext';
 import WhenAnonymous from '../../user/components/WhenAnonymous';
 import StatsSummary from '../../stats/components/summary/StatsSummary';
 import StatsSummaryProvider from '../../stats/contexts/StatsSummaryContext';
+import Trending from '../features/trending/components/Trending';
 import LoginAlert from './LoginAlert';
 
 const HomePage = () => (
@@ -23,6 +24,7 @@ const HomePage = () => (
       </StatsSummaryProvider>
       <Divider />
       <Upcoming />
+      <Trending />
     </WhenLoggedIn>
   </PageWrapper>
 );
