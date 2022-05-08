@@ -1,9 +1,10 @@
 import { Box, Container, Typography } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import React, { useContext } from 'react';
-import { makeTallMdImage, makeWideLgImage } from '../../../utils/image';
+import { makeWideLgImage } from '../../../utils/image';
 import { ShowPageContext } from '../../../contexts/ShowPageContext';
 import WhenLoggedIn from '../../../../user/components/WhenLoggedIn';
+import CustomImage from '../../CustomImage';
 import GenresList from './GenresList';
 import ShowTitle from './ShowTitle';
 import ShowSubtitle from './ShowSubtitle';
@@ -38,7 +39,7 @@ const Content = styled(Container)`
   }
 `;
 
-const TallImage = styled('img')`
+const TallImage = styled(CustomImage)`
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   width: 100%;
 `;
@@ -59,10 +60,7 @@ const ShowHeroCard = () => {
     >
       <Content>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <TallImage
-            src={makeTallMdImage(show.tallImage || '')}
-            alt={show.name}
-          />
+          <TallImage path={show.tallImage} size="medium" />
           <WhenLoggedIn>
             <WatchlistActionButton />
           </WhenLoggedIn>

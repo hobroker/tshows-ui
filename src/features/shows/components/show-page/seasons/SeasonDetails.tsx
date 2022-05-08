@@ -7,19 +7,12 @@ import {
   ListItemText,
   Stack,
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { DateTime } from 'luxon';
-import { makeWideSmImage } from '../../../utils/image';
 import IndefiniteLoading from '../../../../../components/IndefiniteLoading';
 import { EpisodeWithoutShowFragment } from '../../../../../generated/graphql';
 import WhenLoggedIn from '../../../../user/components/WhenLoggedIn';
+import CustomImage from '../../CustomImage';
 import EpisodeWatchActionButton from './EpisodeWatchActionButton';
-
-const StyledImage = styled('img')`
-  aspect-ratio: 3/2;
-  height: 100px;
-  object-fit: cover;
-`;
 
 interface Props {
   seasonNumber: number;
@@ -35,7 +28,7 @@ const SeasonDetails = ({ seasonNumber, episodes }: Props) =>
         ({ id, wideImage, name, description, isWatched, airDate, number }) => (
           <ListItem key={id} sx={{ pl: 0, gap: 1, alignItems: 'flex-start' }}>
             <ListItemAvatar>
-              <StyledImage src={makeWideSmImage(wideImage || '')} />
+              <CustomImage path={wideImage} type="wide" sx={{ height: 100 }} />
             </ListItemAvatar>
             <ListItemText
               primary={`${number}. ${name}`}

@@ -52,8 +52,8 @@ export type FullShow = {
   name: Scalars['String'];
   originCountry: Scalars['String'];
   status: Status;
-  tallImage: Scalars['String'];
-  wideImage: Scalars['String'];
+  tallImage?: Maybe<Scalars['String']>;
+  wideImage?: Maybe<Scalars['String']>;
 };
 
 export type FullShowInput = {
@@ -123,8 +123,8 @@ export type PartialShow = {
   name: Scalars['String'];
   originCountry: Scalars['String'];
   status: Status;
-  tallImage: Scalars['String'];
-  wideImage: Scalars['String'];
+  tallImage?: Maybe<Scalars['String']>;
+  wideImage?: Maybe<Scalars['String']>;
 };
 
 export type Preference = {
@@ -150,6 +150,7 @@ export type Query = {
   listUpNext: Array<Episode>;
   listUpcoming: Array<Episode>;
   me: User;
+  search: Array<PartialShow>;
 };
 
 export type QueryDiscoverShowsArgs = {
@@ -180,6 +181,10 @@ export type QueryGetSimilarShowsArgs = {
   input: SimilarShowsInput;
 };
 
+export type QuerySearchArgs = {
+  input: SearchInput;
+};
+
 export type Review = {
   __typename?: 'Review';
   content: Scalars['String'];
@@ -187,6 +192,10 @@ export type Review = {
   rating: Scalars['Int'];
   title: Scalars['String'];
   user: User;
+};
+
+export type SearchInput = {
+  query: Scalars['String'];
 };
 
 export type Season = {
@@ -301,8 +310,8 @@ export type ListUpcomingQuery = {
       __typename?: 'PartialShow';
       externalId: number;
       name: string;
-      wideImage: string;
-      tallImage: string;
+      wideImage?: string | null;
+      tallImage?: string | null;
     };
   }>;
 };
@@ -326,8 +335,8 @@ export type ListUpNextQuery = {
       __typename?: 'PartialShow';
       externalId: number;
       name: string;
-      wideImage: string;
-      tallImage: string;
+      wideImage?: string | null;
+      tallImage?: string | null;
     };
   }>;
 };
@@ -352,8 +361,8 @@ export type DiscoverShowsQuery = {
     externalId: number;
     name: string;
     description: string;
-    wideImage: string;
-    tallImage: string;
+    wideImage?: string | null;
+    tallImage?: string | null;
     firstAirDate: any;
     originCountry: string;
     status: Status;
@@ -460,6 +469,29 @@ export type UpsertReviewMutation = {
   };
 };
 
+export type SearchQueryVariables = Exact<{
+  query: Scalars['String'];
+}>;
+
+export type SearchQuery = {
+  __typename?: 'Query';
+  search: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage?: string | null;
+  }>;
+};
+
+export type SearchShowFragment = {
+  __typename?: 'PartialShow';
+  externalId: number;
+  name: string;
+  description: string;
+  wideImage?: string | null;
+};
+
 export type UpsertEpisodeMutationVariables = Exact<{
   episodeId: Scalars['Int'];
   isWatched?: InputMaybe<Scalars['Boolean']>;
@@ -482,8 +514,8 @@ export type UpsertEpisodeMutation = {
       __typename?: 'PartialShow';
       externalId: number;
       name: string;
-      wideImage: string;
-      tallImage: string;
+      wideImage?: string | null;
+      tallImage?: string | null;
     };
   } | null;
 };
@@ -503,8 +535,8 @@ export type EpisodeWithShowFragment = {
     __typename?: 'PartialShow';
     externalId: number;
     name: string;
-    wideImage: string;
-    tallImage: string;
+    wideImage?: string | null;
+    tallImage?: string | null;
   };
 };
 
@@ -551,8 +583,8 @@ export type GetMyShowsQuery = {
     externalId: number;
     name: string;
     description: string;
-    wideImage: string;
-    tallImage: string;
+    wideImage?: string | null;
+    tallImage?: string | null;
     firstAirDate: any;
     originCountry: string;
     status: Status;
@@ -569,7 +601,7 @@ export type GetSimilarShowsQuery = {
     __typename?: 'PartialShow';
     externalId: number;
     name: string;
-    tallImage: string;
+    tallImage?: string | null;
   }>;
 };
 
@@ -577,7 +609,7 @@ export type SimilarShowFragment = {
   __typename?: 'PartialShow';
   externalId: number;
   name: string;
-  tallImage: string;
+  tallImage?: string | null;
 };
 
 export type UpsertWatchlistItemMutationVariables = Exact<{
@@ -612,8 +644,8 @@ export type FullShowQuery = {
     externalId: number;
     name: string;
     description: string;
-    wideImage: string;
-    tallImage: string;
+    wideImage?: string | null;
+    tallImage?: string | null;
     firstAirDate: any;
     originCountry: string;
     status: Status;
@@ -640,8 +672,8 @@ export type PartialShowFragment = {
   externalId: number;
   name: string;
   description: string;
-  wideImage: string;
-  tallImage: string;
+  wideImage?: string | null;
+  tallImage?: string | null;
   firstAirDate: any;
   originCountry: string;
   status: Status;
@@ -711,6 +743,14 @@ export const ReviewFragmentDoc = gql`
       avatar
       name
     }
+  }
+`;
+export const SearchShowFragmentDoc = gql`
+  fragment SearchShow on PartialShow {
+    externalId
+    name
+    description
+    wideImage
   }
 `;
 export const EpisodeWithShowFragmentDoc = gql`
@@ -1348,6 +1388,57 @@ export type UpsertReviewMutationResult =
 export type UpsertReviewMutationOptions = Apollo.BaseMutationOptions<
   UpsertReviewMutation,
   UpsertReviewMutationVariables
+>;
+export const SearchDocument = gql`
+  query Search($query: String!) {
+    search(input: { query: $query }) {
+      ...SearchShow
+    }
+  }
+  ${SearchShowFragmentDoc}
+`;
+
+/**
+ * __useSearchQuery__
+ *
+ * To run a query within a React component, call `useSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchQuery(
+  baseOptions: Apollo.QueryHookOptions<SearchQuery, SearchQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<SearchQuery, SearchQueryVariables>(
+    SearchDocument,
+    options,
+  );
+}
+export function useSearchLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<SearchQuery, SearchQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<SearchQuery, SearchQueryVariables>(
+    SearchDocument,
+    options,
+  );
+}
+export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
+export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
+export type SearchQueryResult = Apollo.QueryResult<
+  SearchQuery,
+  SearchQueryVariables
 >;
 export const UpsertEpisodeDocument = gql`
   mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {

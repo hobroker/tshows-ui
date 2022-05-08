@@ -5,7 +5,7 @@ import { slugifyShow } from '../utils/slugify';
 import TallCard from './card/TallCard';
 
 interface Props {
-  tallImage: string;
+  tallImage?: string | null;
   name: string;
   externalId: number;
 }

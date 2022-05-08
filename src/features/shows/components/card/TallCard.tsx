@@ -1,7 +1,7 @@
 import { Box, Link, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { PropsWithChildren, ReactNode } from 'react';
-import { makeTallSmImage } from '../../utils/image';
+import CustomImage from '../CustomImage';
 
 const StyledWrapper = styled(Paper)`
   cursor: pointer;
@@ -14,12 +14,6 @@ const StyledWrapper = styled(Paper)`
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows[6]};
   }
-`;
-
-const StyledImage = styled('img')`
-  aspect-ratio: 2/3;
-  width: 100%;
-  object-fit: cover;
 `;
 
 const StyledActions = styled(Box)`
@@ -45,7 +39,7 @@ const TallCard = ({
   topChildren,
   href,
 }: PropsWithChildren<Props>) => {
-  const image = <StyledImage src={makeTallSmImage(tallImage || '')} />;
+  const image = <CustomImage path={tallImage} sx={{ width: '100%' }} />;
 
   return (
     <StyledWrapper variant="elevation" onClick={onClick}>

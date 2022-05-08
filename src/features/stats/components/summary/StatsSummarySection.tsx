@@ -23,7 +23,7 @@ const StatsSummarySection = ({ user }: Props) => {
         <Stack sx={{ gap: 2 }}>
           <Header avatar={user.avatar} date={user.createdAt} name={user.name} />
           {loading ? (
-            <IndefiniteLoading size={IndefiniteLoadingSize.small} />
+            <IndefiniteLoading size={IndefiniteLoadingSize.Small} />
           ) : (
             <Paper
               variant="outlined"
