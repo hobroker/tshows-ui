@@ -42,7 +42,7 @@ const TrendingProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (!data) return;
-    setShows((shows) => [...shows, ...data.listTrending.slice(0, 5)]);
+    setShows((shows) => [...shows, ...data.listTrending]);
   }, [data]);
 
   return (
