@@ -15,6 +15,7 @@ import {
 import { UserContext } from '../../../../user/contexts/UserContext';
 import { UserState } from '../../../../user/constants';
 import { EpisodeWithShowType } from '../../../../shows/features/episode/types';
+import { StatsSummaryContext } from '../../../../stats/contexts/StatsSummaryContext';
 
 interface ContextType {
   episodes: EpisodeWithShowType[];
@@ -37,6 +38,7 @@ const beforeEpisodeUpdate = (episodeId: number) =>
 
 const UpNextProvider = ({ children }: Props) => {
   const { userState } = useContext(UserContext);
+  const { refetch: refetchStatsSummary } = useContext(StatsSummaryContext);
   const [fetchUpNextEpisodes, { loading }] = useListUpNextLazyQuery({
     fetchPolicy: 'network-only',
   });
@@ -48,6 +50,8 @@ const UpNextProvider = ({ children }: Props) => {
       setEpisodes(beforeEpisodeUpdate(episodeId));
 
       const { data } = await upsertEpisode({ variables: { episodeId } });
+
+      refetchStatsSummary();
 
       const episode = data?.upsertEpisode;
 
@@ -61,7 +65,7 @@ const UpNextProvider = ({ children }: Props) => {
         );
       }
     },
-    [upsertEpisode],
+    [refetchStatsSummary, upsertEpisode],
   );
 
   useEffect(() => {

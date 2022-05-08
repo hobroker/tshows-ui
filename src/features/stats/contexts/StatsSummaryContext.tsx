@@ -3,10 +3,12 @@ import {
   StatsSummaryItem,
   useGetStatsSummaryQuery,
 } from '../../../generated/graphql';
+import { noop } from '../../../utils/fp';
 
 interface ContextType {
   statsItems: StatsSummaryItem[];
   loading: boolean;
+  refetch: () => void;
 }
 
 interface Props {
@@ -16,10 +18,11 @@ interface Props {
 const StatsSummaryContext = createContext<ContextType>({
   statsItems: [],
   loading: false,
+  refetch: noop,
 });
 
 const StatsSummaryProvider = ({ children }: Props) => {
-  const { data, loading } = useGetStatsSummaryQuery({
+  const { data, loading, refetch } = useGetStatsSummaryQuery({
     nextFetchPolicy: 'network-only',
   });
   const [statsItems, setStatsItems] = useState<StatsSummaryItem[]>([]);
@@ -30,7 +33,13 @@ const StatsSummaryProvider = ({ children }: Props) => {
   }, [data]);
 
   return (
-    <StatsSummaryContext.Provider value={{ statsItems, loading }}>
+    <StatsSummaryContext.Provider
+      value={{
+        statsItems,
+        loading,
+        refetch,
+      }}
+    >
       {children}
     </StatsSummaryContext.Provider>
   );

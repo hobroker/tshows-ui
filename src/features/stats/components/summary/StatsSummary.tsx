@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../../../user/contexts/UserContext';
-import StatsSummaryProvider from '../../contexts/StatsSummaryContext';
 import StatsSummarySection from './StatsSummarySection';
 
 const StatsSummary = () => {
@@ -10,11 +9,7 @@ const StatsSummary = () => {
     return null;
   }
 
-  return (
-    <StatsSummaryProvider>
-      <StatsSummarySection user={user} />
-    </StatsSummaryProvider>
-  );
+  return <StatsSummarySection user={user} />;
 };
 
 export default StatsSummary;
