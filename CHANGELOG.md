@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/hobroker/tshows-ui/compare/v1.16.0...v1.17.0) (2022-05-08)
+
+
+### Features
+
+* add search functionality ([#35](https://github.com/hobroker/tshows-ui/issues/35)) ([1bcee36](https://github.com/hobroker/tshows-ui/commit/1bcee3605051d40b1ce6ae35354ead686f861f07))
+
 # [1.16.0](https://github.com/hobroker/tshows-ui/compare/v1.15.0...v1.16.0) (2022-05-08)
 
 
