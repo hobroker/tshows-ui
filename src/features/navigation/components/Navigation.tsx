@@ -29,11 +29,11 @@ const Navigation = () => (
               <Search />
             </SearchProvider>
           </Box>
-          <Box sx={{ mr: 1 }}>
+          <Box>
             <Button href={StaticRoute.Trending}>Trending</Button>
             <Button href={StaticRoute.MyShows}>My Shows</Button>
           </Box>
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', gap: 1 }}>
             <NotificationsBadge />
             <UserItem />
           </Box>
