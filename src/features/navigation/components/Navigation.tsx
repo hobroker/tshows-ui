@@ -4,8 +4,9 @@ import { styled } from '@mui/material/styles';
 import NavigationProvider from '../contexts/NavigationContext';
 import LogoText from '../../logo/components/LogoText';
 import { StaticRoute } from '../../router/constants';
+import SearchProvider from '../../search/contexts/SearchContext';
+import Search from '../../search/components/Search';
 import ElevationScroll from './ElevationScroll';
-import Search from './Search';
 import NotificationsBadge from './NotificationsBadge';
 import UserItem from './UserItem/UserItem';
 
@@ -24,7 +25,9 @@ const Navigation = () => (
             </Button>
           </Box>
           <Box sx={{ mr: 1, flexGrow: 1 }}>
-            <Search />
+            <SearchProvider>
+              <Search />
+            </SearchProvider>
           </Box>
           <Box sx={{ mr: 1 }}>
             <Button onClick={() => {}} href={StaticRoute.MyShows}>
