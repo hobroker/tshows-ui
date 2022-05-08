@@ -17,3 +17,13 @@ export const QUERY_GET_STATS_CALENDAR = gql`
     }
   }
 `;
+
+export const QUERY_GET_STATS_GENRES = gql`
+  query GetStatsGenres {
+    getStatsGenres {
+      id
+      value
+      label
+    }
+  }
+`;

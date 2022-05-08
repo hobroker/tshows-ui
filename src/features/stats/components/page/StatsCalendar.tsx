@@ -1,26 +1,29 @@
-import React, { useContext } from 'react';
-import { ResponsiveCalendarCanvas } from '@nivo/calendar';
+import React from 'react';
+import { ResponsiveCalendar } from '@nivo/calendar';
 import { blue, grey } from '@mui/material/colors';
-import { StatsCalendarContext } from '../../contexts/StatsCalendarContext';
 import IndefiniteLoading from '../../../../components/IndefiniteLoading';
+import { useGetStatsCalendarQuery } from '../../../../generated/graphql';
 
 const StatsCalendar = () => {
-  const { data, loading } = useContext(StatsCalendarContext);
+  const { data, loading } = useGetStatsCalendarQuery();
+  const items = data?.getStatsCalendar || [];
 
   if (loading) {
     return <IndefiniteLoading />;
   }
 
-  if (data.length < 2) {
+  if (items.length < 2) {
     return null;
   }
 
   return (
-    <ResponsiveCalendarCanvas
-      data={data}
-      from={data[0].day}
-      to={data[data.length - 1].day}
+    <ResponsiveCalendar
+      data={items}
+      margin={{ left: 20 }}
+      from={items[0].day}
+      to={items[items.length - 1].day}
       emptyColor={grey[200]}
+      monthBorderColor="#ffffff"
       colors={[blue[100], blue[300], blue[500], blue[700], blue[900]]}
       dayBorderWidth={2}
       dayBorderColor="#ffffff"

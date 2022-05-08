@@ -131,6 +131,13 @@ export type PartialShow = {
   wideImage?: Maybe<Scalars['String']>;
 };
 
+export type PieItem = {
+  __typename?: 'PieItem';
+  id: Scalars['String'];
+  label: Scalars['String'];
+  value: Scalars['Int'];
+};
+
 export type Preference = {
   __typename?: 'Preference';
   genres: Array<Genre>;
@@ -148,6 +155,7 @@ export type Query = {
   getSeasonEpisodes: Array<Episode>;
   getSimilarShows: Array<PartialShow>;
   getStatsCalendar: Array<StatsCalendarItem>;
+  getStatsGenres: Array<PieItem>;
   getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
@@ -766,6 +774,18 @@ export type GetStatsCalendarQuery = {
     __typename?: 'StatsCalendarItem';
     day: string;
     value: number;
+  }>;
+};
+
+export type GetStatsGenresQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetStatsGenresQuery = {
+  __typename?: 'Query';
+  getStatsGenres: Array<{
+    __typename?: 'PieItem';
+    id: string;
+    value: number;
+    label: string;
   }>;
 };
 
@@ -2229,6 +2249,67 @@ export type GetStatsCalendarLazyQueryHookResult = ReturnType<
 export type GetStatsCalendarQueryResult = Apollo.QueryResult<
   GetStatsCalendarQuery,
   GetStatsCalendarQueryVariables
+>;
+export const GetStatsGenresDocument = gql`
+  query GetStatsGenres {
+    getStatsGenres {
+      id
+      value
+      label
+    }
+  }
+`;
+
+/**
+ * __useGetStatsGenresQuery__
+ *
+ * To run a query within a React component, call `useGetStatsGenresQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetStatsGenresQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetStatsGenresQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetStatsGenresQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetStatsGenresQuery,
+    GetStatsGenresQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetStatsGenresQuery, GetStatsGenresQueryVariables>(
+    GetStatsGenresDocument,
+    options,
+  );
+}
+export function useGetStatsGenresLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetStatsGenresQuery,
+    GetStatsGenresQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<GetStatsGenresQuery, GetStatsGenresQueryVariables>(
+    GetStatsGenresDocument,
+    options,
+  );
+}
+export type GetStatsGenresQueryHookResult = ReturnType<
+  typeof useGetStatsGenresQuery
+>;
+export type GetStatsGenresLazyQueryHookResult = ReturnType<
+  typeof useGetStatsGenresLazyQuery
+>;
+export type GetStatsGenresQueryResult = Apollo.QueryResult<
+  GetStatsGenresQuery,
+  GetStatsGenresQueryVariables
 >;
 export const MeDocument = gql`
   query Me {

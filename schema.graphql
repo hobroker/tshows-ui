@@ -85,6 +85,12 @@ type PartialShow {
   wideImage: String
 }
 
+type PieItem {
+  id: String!
+  label: String!
+  value: Int!
+}
+
 type Preference {
   genres: [Genre!]!
 }
@@ -100,6 +106,7 @@ type Query {
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
   getSimilarShows(input: SimilarShowsInput!): [PartialShow!]!
   getStatsCalendar: [StatsCalendarItem!]!
+  getStatsGenres: [PieItem!]!
   getStatsSummary: [StatsSummaryItem!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
