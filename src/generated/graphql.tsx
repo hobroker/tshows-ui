@@ -83,6 +83,10 @@ export type JoinWithGoogleInput = {
   token: Scalars['String'];
 };
 
+export type ListRecommendationsInput = {
+  genreIds?: InputMaybe<Array<Scalars['Int']>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   joinWithGoogle: User;
@@ -146,6 +150,7 @@ export type Query = {
   getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
+  listRecommendations: Array<PartialShow>;
   listTrending: Array<PartialShow>;
   listUpNext: Array<Episode>;
   listUpcoming: Array<Episode>;
@@ -179,6 +184,10 @@ export type QueryGetSeasonEpisodesArgs = {
 
 export type QueryGetSimilarShowsArgs = {
   input: SimilarShowsInput;
+};
+
+export type QueryListRecommendationsArgs = {
+  input: ListRecommendationsInput;
 };
 
 export type QueryListTrendingArgs = {
@@ -484,6 +493,22 @@ export type SearchQueryVariables = Exact<{
 export type SearchQuery = {
   __typename?: 'Query';
   search: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage?: string | null;
+    tallImage?: string | null;
+  }>;
+};
+
+export type ListRecommendationsQueryVariables = Exact<{
+  genreIds?: InputMaybe<Array<Scalars['Int']> | Scalars['Int']>;
+}>;
+
+export type ListRecommendationsQuery = {
+  __typename?: 'Query';
+  listRecommendations: Array<{
     __typename?: 'PartialShow';
     externalId: number;
     name: string;
@@ -1466,6 +1491,67 @@ export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
 export type SearchQueryResult = Apollo.QueryResult<
   SearchQuery,
   SearchQueryVariables
+>;
+export const ListRecommendationsDocument = gql`
+  query ListRecommendations($genreIds: [Int!]) {
+    listRecommendations(input: { genreIds: $genreIds }) {
+      ...ShowSummary
+    }
+  }
+  ${ShowSummaryFragmentDoc}
+`;
+
+/**
+ * __useListRecommendationsQuery__
+ *
+ * To run a query within a React component, call `useListRecommendationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListRecommendationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListRecommendationsQuery({
+ *   variables: {
+ *      genreIds: // value for 'genreIds'
+ *   },
+ * });
+ */
+export function useListRecommendationsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListRecommendationsQuery,
+    ListRecommendationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<
+    ListRecommendationsQuery,
+    ListRecommendationsQueryVariables
+  >(ListRecommendationsDocument, options);
+}
+export function useListRecommendationsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListRecommendationsQuery,
+    ListRecommendationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    ListRecommendationsQuery,
+    ListRecommendationsQueryVariables
+  >(ListRecommendationsDocument, options);
+}
+export type ListRecommendationsQueryHookResult = ReturnType<
+  typeof useListRecommendationsQuery
+>;
+export type ListRecommendationsLazyQueryHookResult = ReturnType<
+  typeof useListRecommendationsLazyQuery
+>;
+export type ListRecommendationsQueryResult = Apollo.QueryResult<
+  ListRecommendationsQuery,
+  ListRecommendationsQueryVariables
 >;
 export const UpsertEpisodeDocument = gql`
   mutation UpsertEpisode($episodeId: Int!, $isWatched: Boolean = true) {

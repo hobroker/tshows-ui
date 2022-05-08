@@ -59,6 +59,10 @@ input JoinWithGoogleInput {
   token: String!
 }
 
+input ListRecommendationsInput {
+  genreIds: [Int!]
+}
+
 type Mutation {
   joinWithGoogle(input: JoinWithGoogleInput!): User!
   logout: Void!
@@ -98,6 +102,7 @@ type Query {
   getStatsSummary: [StatsSummaryItem!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
+  listRecommendations(input: ListRecommendationsInput!): [PartialShow!]!
   listTrending(input: TrendingInput!): [PartialShow!]!
   listUpNext: [Episode!]!
   listUpcoming: [Episode!]!
