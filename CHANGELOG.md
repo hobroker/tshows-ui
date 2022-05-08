@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/hobroker/tshows-ui/compare/v1.17.0...v1.18.0) (2022-05-08)
+
+
+### Features
+
+* add trending section and page ([#36](https://github.com/hobroker/tshows-ui/issues/36)) ([1d29aa3](https://github.com/hobroker/tshows-ui/commit/1d29aa36d6362b33f41db884ec7009bcfe20e90e))
+
 # [1.17.0](https://github.com/hobroker/tshows-ui/compare/v1.16.0...v1.17.0) (2022-05-08)
 
 
