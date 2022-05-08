@@ -2,13 +2,13 @@ import { Box, Tooltip } from '@mui/material';
 import React, { PropsWithChildren, ReactNode } from 'react';
 import TallCard from '../../../components/card/TallCard';
 import EllipsisButton from '../../../../../components/EllipsisButton';
-import { EpisodeActionProps, EpisodeWithShowType } from '../types';
+import { EpisodeActionProps, EpisodeWithLoading } from '../types';
 import { DynamicRoute } from '../../../../router/constants';
 import { slugifyShow } from '../../../utils/slugify';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
 interface Props {
-  episode: EpisodeWithShowType;
+  episode: EpisodeWithLoading;
   actions?: React.JSXElementConstructor<EpisodeActionProps>[];
   topChildren?: ReactNode;
 }

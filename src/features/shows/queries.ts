@@ -50,7 +50,7 @@ export const QUERY_FULL_SHOW = gql`
   }
 `;
 
-export const SHOW_FRAGMENT = gql`
+export const PARTIAL_SHOW_FRAGMENT = gql`
   fragment PartialShow on PartialShow {
     externalId
     name
@@ -60,10 +60,6 @@ export const SHOW_FRAGMENT = gql`
     firstAirDate
     originCountry
     status
-    genres {
-      externalId
-      name
-    }
   }
 `;
 

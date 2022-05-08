@@ -4,11 +4,11 @@ import { DateTime } from 'luxon';
 import TallCardCollection from '../../../../shows/components/card/TallCardCollection';
 import TallEpisodeCardPlaceholder from '../../../../shows/features/episode/components/TallEpisodeCardPlaceholder';
 import TallEpisodeCard from '../../../../shows/features/episode/components/TallEpisodeCard';
-import { EpisodeWithShowType } from '../../../../shows/features/episode/types';
+import { EpisodeWithLoading } from '../../../../shows/features/episode/types';
 
 interface Props {
   loading: boolean;
-  episodes: Array<EpisodeWithShowType>;
+  episodes: Array<EpisodeWithLoading>;
 }
 
 const UpcomingEpisodesCollection = ({ episodes, loading }: Props) => (

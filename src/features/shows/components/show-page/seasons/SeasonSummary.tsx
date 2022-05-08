@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 import { DateTime } from 'luxon';
 import { Box, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Season } from '../../../../generated/graphql';
-import { makeTallSmImage } from '../../utils/image';
+import { Season } from '../../../../../generated/graphql';
+import { makeTallSmImage } from '../../../utils/image';
 
 const StyledImage = styled('img')`
   aspect-ratio: 2/3;

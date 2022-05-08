@@ -138,6 +138,7 @@ export type Query = {
   discoverShows: Array<PartialShow>;
   fullShow: FullShow;
   getMyReview?: Maybe<Review>;
+  getMyShows: Array<PartialShow>;
   getOtherReviews: Array<Review>;
   getPreferences?: Maybe<Preference>;
   getRating: Review;
@@ -223,6 +224,7 @@ export enum StatsSummaryItemKey {
 }
 
 export enum Status {
+  FinishedWatching = 'FinishedWatching',
   InWatchlist = 'InWatchlist',
   None = 'None',
   StoppedWatching = 'StoppedWatching',
@@ -355,7 +357,6 @@ export type DiscoverShowsQuery = {
     firstAirDate: any;
     originCountry: string;
     status: Status;
-    genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   }>;
 };
 
@@ -541,6 +542,23 @@ export type EpisodeWithoutShowFragment = {
   airDate?: any | null;
 };
 
+export type GetMyShowsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMyShowsQuery = {
+  __typename?: 'Query';
+  getMyShows: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage: string;
+    tallImage: string;
+    firstAirDate: any;
+    originCountry: string;
+    status: Status;
+  }>;
+};
+
 export type GetSimilarShowsQueryVariables = Exact<{
   externalId: Scalars['Int'];
 }>;
@@ -627,7 +645,6 @@ export type PartialShowFragment = {
   firstAirDate: any;
   originCountry: string;
   status: Status;
-  genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
 };
 
 export type UpsertSeasonEpisodeMutationVariables = Exact<{
@@ -745,10 +762,6 @@ export const PartialShowFragmentDoc = gql`
     firstAirDate
     originCountry
     status
-    genres {
-      externalId
-      name
-    }
   }
 `;
 export const ListGenresDocument = gql`
@@ -1450,6 +1463,64 @@ export type GetSeasonEpisodesLazyQueryHookResult = ReturnType<
 export type GetSeasonEpisodesQueryResult = Apollo.QueryResult<
   GetSeasonEpisodesQuery,
   GetSeasonEpisodesQueryVariables
+>;
+export const GetMyShowsDocument = gql`
+  query GetMyShows {
+    getMyShows {
+      ...PartialShow
+    }
+  }
+  ${PartialShowFragmentDoc}
+`;
+
+/**
+ * __useGetMyShowsQuery__
+ *
+ * To run a query within a React component, call `useGetMyShowsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyShowsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyShowsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyShowsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetMyShowsQuery,
+    GetMyShowsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<GetMyShowsQuery, GetMyShowsQueryVariables>(
+    GetMyShowsDocument,
+    options,
+  );
+}
+export function useGetMyShowsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetMyShowsQuery,
+    GetMyShowsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<GetMyShowsQuery, GetMyShowsQueryVariables>(
+    GetMyShowsDocument,
+    options,
+  );
+}
+export type GetMyShowsQueryHookResult = ReturnType<typeof useGetMyShowsQuery>;
+export type GetMyShowsLazyQueryHookResult = ReturnType<
+  typeof useGetMyShowsLazyQuery
+>;
+export type GetMyShowsQueryResult = Apollo.QueryResult<
+  GetMyShowsQuery,
+  GetMyShowsQueryVariables
 >;
 export const GetSimilarShowsDocument = gql`
   query GetSimilarShows($externalId: Int!) {

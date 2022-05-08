@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { assoc, compose, not, propEq } from 'ramda';
+import { always, assoc, compose, not, propEq, when } from 'ramda';
 import { noop, updateListItem } from '../../../../../utils/fp';
 import {
   useListUpNextLazyQuery,
@@ -14,10 +14,11 @@ import {
 } from '../../../../../generated/graphql';
 import { UserContext } from '../../../../user/contexts/UserContext';
 import { UserState } from '../../../../user/constants';
-import { EpisodeWithShowType } from '../../../../shows/features/episode/types';
+import { EpisodeWithLoading } from '../../../../shows/features/episode/types';
+import { StatsSummaryContext } from '../../../../stats/contexts/StatsSummaryContext';
 
 interface ContextType {
-  episodes: EpisodeWithShowType[];
+  episodes: EpisodeWithLoading[];
   watchEpisode: (episodeId: number) => void;
   loading: boolean;
 }
@@ -37,17 +38,20 @@ const beforeEpisodeUpdate = (episodeId: number) =>
 
 const UpNextProvider = ({ children }: Props) => {
   const { userState } = useContext(UserContext);
+  const { refetch: refetchStatsSummary } = useContext(StatsSummaryContext);
   const [fetchUpNextEpisodes, { loading }] = useListUpNextLazyQuery({
     fetchPolicy: 'network-only',
   });
   const [upsertEpisode] = useUpsertEpisodeMutation();
-  const [episodes, setEpisodes] = useState<EpisodeWithShowType[]>([]);
+  const [episodes, setEpisodes] = useState<EpisodeWithLoading[]>([]);
 
   const watchEpisode = useCallback(
     async (episodeId: number) => {
       setEpisodes(beforeEpisodeUpdate(episodeId));
 
       const { data } = await upsertEpisode({ variables: { episodeId } });
+
+      refetchStatsSummary();
 
       const episode = data?.upsertEpisode;
 
@@ -57,11 +61,16 @@ const UpNextProvider = ({ children }: Props) => {
         );
       } else {
         setEpisodes((episodes) =>
-          episodes.map((item) => (item.id === episodeId ? episode : item)),
+          episodes.map(
+            when<EpisodeWithLoading, EpisodeWithLoading>(
+              propEq('id', episodeId),
+              always(episode),
+            ),
+          ),
         );
       }
     },
-    [upsertEpisode],
+    [refetchStatsSummary, upsertEpisode],
   );
 
   useEffect(() => {

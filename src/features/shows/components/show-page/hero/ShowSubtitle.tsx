@@ -4,7 +4,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { DateTime } from 'luxon';
 import { styled } from '@mui/material/styles';
-import { ShowPageContext } from '../../contexts/ShowPageContext';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
 
 const Wrapper = styled(Box)`
   display: flex;

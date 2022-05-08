@@ -5,11 +5,11 @@ import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import { LoadingButton } from '@mui/lab';
 import type { ButtonProps } from '@mui/material';
-import { ShowPageContext } from '../../contexts/ShowPageContext';
-import { Status } from '../../../../generated/graphql';
-import useHover from '../../../../hooks/useHover';
-import useWatchlistActions from '../../hooks/useWatchlistActions';
-import { ShowStatusToggleMap } from '../../constants';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
+import { Status } from '../../../../../generated/graphql';
+import useHover from '../../../../../hooks/useHover';
+import useWatchlistActions from '../../../hooks/useWatchlistActions';
+import { ShowStatusToggleMap } from '../../../constants';
 
 const StyledButton = styled(LoadingButton)`
   font-weight: bold;

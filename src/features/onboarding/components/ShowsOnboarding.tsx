@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { ShowsOnboardingContext } from '../contexts/ShowsOnboardingContext';
-import TallShowCollection from '../../shows/components/TallShowCollection';
+import OnboardingShowsCollection from './OnboardingShowsCollection';
 
 const ShowsOnboarding = () => {
   const { shows, loading } = useContext(ShowsOnboardingContext);
 
-  return <TallShowCollection shows={shows} loading={loading} />;
+  return <OnboardingShowsCollection shows={shows} loading={loading} />;
 };
 
 export default ShowsOnboarding;

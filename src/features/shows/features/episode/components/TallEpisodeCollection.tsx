@@ -1,12 +1,12 @@
 import React from 'react';
 import TallCardCollection from '../../../components/card/TallCardCollection';
-import { EpisodeActionProps, EpisodeWithShowType } from '../types';
+import { EpisodeActionProps, EpisodeWithLoading } from '../types';
 import TallEpisodeCard from './TallEpisodeCard';
 import TallEpisodeCardPlaceholder from './TallEpisodeCardPlaceholder';
 
 interface Props {
   loading: boolean;
-  episodes: Array<EpisodeWithShowType>;
+  episodes: Array<EpisodeWithLoading>;
   actions?: React.JSXElementConstructor<EpisodeActionProps>[];
 }
 

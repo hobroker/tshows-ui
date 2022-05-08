@@ -1,6 +1,6 @@
 import { EpisodeWithShowFragment } from '../../../../generated/graphql';
 
-export type EpisodeWithShowType = EpisodeWithShowFragment & {
+export type EpisodeWithLoading = EpisodeWithShowFragment & {
   loading?: boolean;
 };
 

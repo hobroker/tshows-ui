@@ -1,30 +1,22 @@
-import { useContext } from 'react';
-import { PartialShow, Status } from '../../../generated/graphql';
-import useWatchlistActions from '../hooks/useWatchlistActions';
-import { ShowsOnboardingContext } from '../../onboarding/contexts/ShowsOnboardingContext';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { DynamicRoute } from '../../router/constants';
+import { slugifyShow } from '../utils/slugify';
 import TallCard from './card/TallCard';
-import WatchlistOverlayAction from './WatchlistOverlayAction';
 
 interface Props {
-  show: PartialShow;
+  tallImage: string;
+  name: string;
+  externalId: number;
 }
 
-const TallShowCard = ({ show }: Props) => {
-  const { upsertWatchlistItem } = useWatchlistActions();
-  const { updateShow } = useContext(ShowsOnboardingContext);
+const TallShowCard = ({ name, tallImage, externalId }: Props) => {
+  const navigate = useNavigate();
+  const onClick = useCallback(() => {
+    navigate(DynamicRoute.Show(slugifyShow({ externalId, name })));
+  }, [externalId, name, navigate]);
 
-  const onClick = (status: Status) => {
-    const showId = show.externalId;
-
-    upsertWatchlistItem({ showId, status });
-    updateShow(showId, { status });
-  };
-
-  return (
-    <TallCard tallImage={show.tallImage}>
-      <WatchlistOverlayAction status={show.status} onClick={onClick} />
-    </TallCard>
-  );
+  return <TallCard tallImage={tallImage} onClick={onClick} />;
 };
 
 export default TallShowCard;

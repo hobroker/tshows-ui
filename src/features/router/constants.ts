@@ -3,6 +3,7 @@ export enum StaticRoute {
   Welcome = '/welcome',
   Login = '/login',
   Register = '/join',
+  MyShows = '/my-shows',
 }
 
 export enum __DynamicRoute {

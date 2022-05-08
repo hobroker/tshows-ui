@@ -8,10 +8,10 @@ import React, {
 import { useListUpcomingLazyQuery } from '../../../../../generated/graphql';
 import { UserContext } from '../../../../user/contexts/UserContext';
 import { UserState } from '../../../../user/constants';
-import { EpisodeWithShowType } from '../../../../shows/features/episode/types';
+import { EpisodeWithLoading } from '../../../../shows/features/episode/types';
 
 interface ContextType {
-  episodes: EpisodeWithShowType[];
+  episodes: EpisodeWithLoading[];
   loading: boolean;
 }
 
@@ -28,7 +28,7 @@ const UpcomingProvider = ({ children }: Props) => {
   const [fetchUpcomingEpisodes, { loading }] = useListUpcomingLazyQuery({
     fetchPolicy: 'network-only',
   });
-  const [episodes, setEpisodes] = useState<EpisodeWithShowType[]>([]);
+  const [episodes, setEpisodes] = useState<EpisodeWithLoading[]>([]);
 
   useEffect(() => {
     if (userState !== UserState.LoggedIn) {
