@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import { TrendingContext } from '../contexts/TrendingContext';
-import Section from '../../../../../components/Section';
-import ShowsCollection from '../../../../shows/components/ShowsCollection';
+import { TrendingContext } from '../../contexts/TrendingContext';
+import Section from '../../../../../../components/Section';
+import ShowsCollection from '../../../../components/ShowsCollection';
 
 const TrendingSection = () => {
   const { shows, loading } = useContext(TrendingContext);

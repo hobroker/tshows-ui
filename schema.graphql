@@ -98,7 +98,7 @@ type Query {
   getStatsSummary: [StatsSummaryItem!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
-  listTrending: [PartialShow!]!
+  listTrending(input: TrendingInput!): [PartialShow!]!
   listUpNext: [Episode!]!
   listUpcoming: [Episode!]!
   me: User!
@@ -157,6 +157,10 @@ enum Status {
 
 input ToggleGenrePreferenceInput {
   genreId: Int!
+}
+
+input TrendingInput {
+  page: Int
 }
 
 input UpsertEpisodeInput {

@@ -1,4 +1,4 @@
-import TrendingProvider from '../contexts/TrendingContext';
+import TrendingProvider from '../../contexts/TrendingContext';
 import TrendingSection from './TrendingSection';
 
 const Trending = () => (

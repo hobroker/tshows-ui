@@ -4,6 +4,7 @@ export enum StaticRoute {
   Login = '/login',
   Register = '/join',
   MyShows = '/my-shows',
+  Trending = '/trending',
 }
 
 export enum __DynamicRoute {

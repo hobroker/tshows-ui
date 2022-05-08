@@ -30,9 +30,8 @@ const Navigation = () => (
             </SearchProvider>
           </Box>
           <Box sx={{ mr: 1 }}>
-            <Button onClick={() => {}} href={StaticRoute.MyShows}>
-              My Shows
-            </Button>
+            <Button href={StaticRoute.Trending}>Trending</Button>
+            <Button href={StaticRoute.MyShows}>My Shows</Button>
           </Box>
           <Box sx={{ display: 'flex' }}>
             <NotificationsBadge />

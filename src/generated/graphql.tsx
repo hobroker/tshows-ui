@@ -181,6 +181,10 @@ export type QueryGetSimilarShowsArgs = {
   input: SimilarShowsInput;
 };
 
+export type QueryListTrendingArgs = {
+  input: TrendingInput;
+};
+
 export type QuerySearchArgs = {
   input: SearchInput;
 };
@@ -243,6 +247,10 @@ export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
 };
 
+export type TrendingInput = {
+  page?: InputMaybe<Scalars['Int']>;
+};
+
 export type UpsertEpisodeInput = {
   episodeId: Scalars['Int'];
   isWatched: Scalars['Boolean'];
@@ -289,20 +297,6 @@ export type ListGenresQuery = {
     externalId: number;
     name: string;
   }> | null;
-};
-
-export type ListTrendingQueryVariables = Exact<{ [key: string]: never }>;
-
-export type ListTrendingQuery = {
-  __typename?: 'Query';
-  listTrending: Array<{
-    __typename?: 'PartialShow';
-    externalId: number;
-    name: string;
-    description: string;
-    wideImage?: string | null;
-    tallImage?: string | null;
-  }>;
 };
 
 export type ListUpcomingQueryVariables = Exact<{ [key: string]: never }>;
@@ -619,6 +613,22 @@ export type SimilarShowFragment = {
   tallImage?: string | null;
 };
 
+export type ListTrendingQueryVariables = Exact<{
+  page?: InputMaybe<Scalars['Int']>;
+}>;
+
+export type ListTrendingQuery = {
+  __typename?: 'Query';
+  listTrending: Array<{
+    __typename?: 'PartialShow';
+    externalId: number;
+    name: string;
+    description: string;
+    wideImage?: string | null;
+    tallImage?: string | null;
+  }>;
+};
+
 export type UpsertWatchlistItemMutationVariables = Exact<{
   showId: Scalars['Int'];
   status: Status;
@@ -878,66 +888,6 @@ export type ListGenresLazyQueryHookResult = ReturnType<
 export type ListGenresQueryResult = Apollo.QueryResult<
   ListGenresQuery,
   ListGenresQueryVariables
->;
-export const ListTrendingDocument = gql`
-  query ListTrending {
-    listTrending {
-      ...ShowSummary
-    }
-  }
-  ${ShowSummaryFragmentDoc}
-`;
-
-/**
- * __useListTrendingQuery__
- *
- * To run a query within a React component, call `useListTrendingQuery` and pass it any options that fit your needs.
- * When your component renders, `useListTrendingQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useListTrendingQuery({
- *   variables: {
- *   },
- * });
- */
-export function useListTrendingQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    ListTrendingQuery,
-    ListTrendingQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useQuery<ListTrendingQuery, ListTrendingQueryVariables>(
-    ListTrendingDocument,
-    options,
-  );
-}
-export function useListTrendingLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    ListTrendingQuery,
-    ListTrendingQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-
-  return Apollo.useLazyQuery<ListTrendingQuery, ListTrendingQueryVariables>(
-    ListTrendingDocument,
-    options,
-  );
-}
-export type ListTrendingQueryHookResult = ReturnType<
-  typeof useListTrendingQuery
->;
-export type ListTrendingLazyQueryHookResult = ReturnType<
-  typeof useListTrendingLazyQuery
->;
-export type ListTrendingQueryResult = Apollo.QueryResult<
-  ListTrendingQuery,
-  ListTrendingQueryVariables
 >;
 export const ListUpcomingDocument = gql`
   query ListUpcoming {
@@ -1750,6 +1700,67 @@ export type GetSimilarShowsLazyQueryHookResult = ReturnType<
 export type GetSimilarShowsQueryResult = Apollo.QueryResult<
   GetSimilarShowsQuery,
   GetSimilarShowsQueryVariables
+>;
+export const ListTrendingDocument = gql`
+  query ListTrending($page: Int = 1) {
+    listTrending(input: { page: $page }) {
+      ...ShowSummary
+    }
+  }
+  ${ShowSummaryFragmentDoc}
+`;
+
+/**
+ * __useListTrendingQuery__
+ *
+ * To run a query within a React component, call `useListTrendingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListTrendingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListTrendingQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *   },
+ * });
+ */
+export function useListTrendingQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListTrendingQuery,
+    ListTrendingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<ListTrendingQuery, ListTrendingQueryVariables>(
+    ListTrendingDocument,
+    options,
+  );
+}
+export function useListTrendingLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListTrendingQuery,
+    ListTrendingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<ListTrendingQuery, ListTrendingQueryVariables>(
+    ListTrendingDocument,
+    options,
+  );
+}
+export type ListTrendingQueryHookResult = ReturnType<
+  typeof useListTrendingQuery
+>;
+export type ListTrendingLazyQueryHookResult = ReturnType<
+  typeof useListTrendingLazyQuery
+>;
+export type ListTrendingQueryResult = Apollo.QueryResult<
+  ListTrendingQuery,
+  ListTrendingQueryVariables
 >;
 export const UpsertWatchlistItemDocument = gql`
   mutation UpsertWatchlistItem($showId: Int!, $status: Status!) {
