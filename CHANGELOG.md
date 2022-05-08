@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/hobroker/tshows-ui/compare/v1.18.0...v1.19.0) (2022-05-08)
+
+
+### Features
+
+* add listRecommendations endpoint ([#37](https://github.com/hobroker/tshows-ui/issues/37)) ([1feb4fd](https://github.com/hobroker/tshows-ui/commit/1feb4fde78244c75b8c017e77c2c2f95e78a8aca))
+
 # [1.18.0](https://github.com/hobroker/tshows-ui/compare/v1.17.0...v1.18.0) (2022-05-08)
 
 
