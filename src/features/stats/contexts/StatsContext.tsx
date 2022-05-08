@@ -1,5 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect } from 'react';
-import { BackdropContext } from '../../../contexts/BackdropContext';
+import { createContext, ReactNode } from 'react';
 
 interface ContextType {
   loading: boolean;
@@ -14,17 +13,12 @@ const StatsContext = createContext<ContextType>({
 });
 
 const StatsProvider = ({ children }: Props) => {
-  const { toggleBackdrop } = useContext(BackdropContext);
   const loading = true;
-
-  useEffect(() => {
-    toggleBackdrop(loading);
-  }, [toggleBackdrop, loading]);
 
   return (
     <StatsContext.Provider
       value={{
-        loading: false,
+        loading,
       }}
     >
       {children}
