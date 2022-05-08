@@ -224,6 +224,7 @@ export enum StatsSummaryItemKey {
 }
 
 export enum Status {
+  FinishedWatching = 'FinishedWatching',
   InWatchlist = 'InWatchlist',
   None = 'None',
   StoppedWatching = 'StoppedWatching',

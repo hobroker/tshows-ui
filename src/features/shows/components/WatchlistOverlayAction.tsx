@@ -3,6 +3,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
 import classNames from 'classnames';
 import { Status } from '../../../generated/graphql';
+import { ShowStatusToggleMap } from '../constants';
 
 interface OverlayProps {
   status: Status;
@@ -39,15 +40,9 @@ interface Props extends OverlayProps {
   onClick: (status: Status) => void;
 }
 
-const STATUS_TOGGLE_MAP = {
-  [Status.InWatchlist]: Status.None,
-  [Status.None]: Status.InWatchlist,
-  [Status.StoppedWatching]: Status.InWatchlist,
-} as const;
-
 const WatchlistOverlayAction = ({ status, onClick }: Props) => {
   const handleClick = () => {
-    onClick(STATUS_TOGGLE_MAP[status]);
+    onClick(ShowStatusToggleMap[status]);
   };
 
   return (

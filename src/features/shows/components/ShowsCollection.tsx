@@ -6,11 +6,11 @@ import TallShowCard from '../components/TallShowCard';
 
 interface Props {
   shows: Pick<PartialShow, 'externalId' | 'tallImage' | 'name'>[];
-  loading: boolean;
+  loading?: boolean;
   scroll: boolean;
 }
 
-const ShowsCollection = ({ shows, loading, scroll }: Props) => (
+const ShowsCollection = ({ shows, loading = false, scroll }: Props) => (
   <TallCardCollection
     loading={loading}
     PlaceholderComponent={TallCardPlaceholder}

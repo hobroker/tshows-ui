@@ -1,12 +1,22 @@
-import { createContext, ReactNode, useEffect, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { groupBy, prop } from 'ramda';
 import {
   PartialShowFragment,
+  Status,
   useGetMyShowsQuery,
 } from '../../../../../generated/graphql';
+import { BackdropContext } from '../../../../../contexts/BackdropContext';
+
+type ShowsMap = Record<Status, PartialShowFragment[]>;
 
 interface ContextType {
-  shows: PartialShowFragment[];
-  loading: boolean;
+  showsMap: ShowsMap;
 }
 
 interface Props {
@@ -14,26 +24,32 @@ interface Props {
 }
 
 const MyShowsContext = createContext<ContextType>({
-  shows: [],
-  loading: true,
+  showsMap: {} as ShowsMap,
 });
 
 const MyShowsProvider = ({ children }: Props) => {
-  const [shows, setShows] = useState<PartialShowFragment[]>([]);
+  const { toggleBackdrop } = useContext(BackdropContext);
+  const [shows, setShows] = useState<ShowsMap>({} as ShowsMap);
   const { data, loading } = useGetMyShowsQuery({
     fetchPolicy: 'network-only',
   });
 
+  console.log('shows', shows);
+
   useEffect(() => {
     if (!data?.getMyShows) return;
-    setShows(data.getMyShows);
+
+    setShows(groupBy(prop('status'), data.getMyShows));
   }, [data]);
+
+  useEffect(() => {
+    toggleBackdrop(loading);
+  }, [toggleBackdrop, loading]);
 
   return (
     <MyShowsContext.Provider
       value={{
-        shows,
-        loading,
+        showsMap: shows,
       }}
     >
       {children}
