@@ -28,11 +28,11 @@ const StyledWrapper = styled(({ scroll, ...props }: WrapperProps) => (
           grid-auto-flow: dense;
 
           ${theme.breakpoints.up('sm')} {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
           }
 
           ${theme.breakpoints.up('md')} {
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
           }
 
           ${theme.breakpoints.up('lg')} {

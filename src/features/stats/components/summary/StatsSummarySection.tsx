@@ -28,7 +28,20 @@ const StatsSummarySection = ({ user }: Props) => {
           ) : (
             <Paper
               variant="outlined"
-              sx={{ px: 2, py: 1, display: 'flex', gap: 2 }}
+              sx={{
+                px: 2,
+                py: 1,
+                display: 'flex',
+                gap: 2,
+                flexDirection: {
+                  xs: 'column',
+                  sm: 'row',
+                },
+                alignItems: {
+                  xs: 'center',
+                  sm: 'flex-start',
+                },
+              }}
             >
               <Box sx={{ flex: 1 }}>
                 <StatsList />
@@ -39,7 +52,7 @@ const StatsSummarySection = ({ user }: Props) => {
                 href={StaticRoute.Statistics}
                 size="small"
                 endIcon={<ArrowForwardIosIcon />}
-                sx={{ ml: 'auto' }}
+                sx={{ ml: { md: 'auto' } }}
               >
                 Statistics
               </Button>

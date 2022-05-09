@@ -30,7 +30,7 @@ const TrendingContent = () => {
 
   return (
     <Box>
-      <Section title="Recommendations" icon={<TrendingUpIcon />}>
+      <Section title="Trending TV Shows" icon={<TrendingUpIcon />}>
         <ShowsCollection
           shows={shows}
           loading={false}

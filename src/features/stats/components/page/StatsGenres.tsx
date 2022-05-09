@@ -45,7 +45,7 @@ const StatsGenres = () => {
   return (
     <ResponsivePie
       data={genres}
-      margin={{ top: 20, bottom: 80 }}
+      margin={{ top: 30, bottom: 80 }}
       innerRadius={0.5}
       padAngle={0.7}
       cornerRadius={3}

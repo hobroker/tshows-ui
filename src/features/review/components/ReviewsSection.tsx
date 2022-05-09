@@ -4,6 +4,7 @@ import { not } from 'ramda';
 import Section from '../../../components/Section';
 import { ReviewContext } from '../contexts/ReviewContext';
 import IndefiniteLoading from '../../../components/IndefiniteLoading';
+import WhenLoggedIn from '../../user/components/WhenLoggedIn';
 import ReviewForm from './ReviewForm';
 import ReviewsList from './ReviewsList';
 import RatingInfo from './RatingInfo';
@@ -46,7 +47,11 @@ const ReviewsSection = () => {
             <IndefiniteLoading />
           ) : (
             <>
-              {isFormOpen && <ReviewForm toggleIsFormOpen={toggleIsFormOpen} />}
+              <WhenLoggedIn>
+                {isFormOpen && (
+                  <ReviewForm toggleIsFormOpen={toggleIsFormOpen} />
+                )}
+              </WhenLoggedIn>
               <ReviewsList toggleIsFormOpen={toggleIsFormOpen} />
             </>
           )}
