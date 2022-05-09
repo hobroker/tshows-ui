@@ -9,7 +9,17 @@ interface Props {
 }
 
 const Header = ({ avatar, date, name }: Props) => (
-  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+  <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: 2,
+      flexDirection: {
+        xs: 'column',
+        sm: 'row',
+      },
+    }}
+  >
     <UserAvatar src={avatar} sx={{ width: 100, height: 100 }} />
     <Stack>
       <Typography variant="h5" sx={{ fontWeight: 'bold' }}>

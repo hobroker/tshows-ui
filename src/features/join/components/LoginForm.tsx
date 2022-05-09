@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  FormControlLabel,
-  Link,
-  Switch,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Link, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import useYupValidationResolver from '../hooks/useYupValidationResolver';
@@ -62,10 +54,6 @@ const LoginForm = () => {
         />
       </Box>
       <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
-        <FormControlLabel
-          control={<Switch defaultChecked />}
-          label="Remember me"
-        />
         <Link marginLeft="auto" variant="body2" color="error" href="#">
           Forgot password?
         </Link>
