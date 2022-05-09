@@ -6,9 +6,10 @@ import LogoText from '../../logo/components/LogoText';
 import { StaticRoute } from '../../router/constants';
 import SearchProvider from '../../search/contexts/SearchContext';
 import Search from '../../search/components/Search';
+import WhenLoggedIn from '../../user/components/WhenLoggedIn';
 import ElevationScroll from './ElevationScroll';
-import NotificationsBadge from './NotificationsBadge';
 import UserItem from './UserItem/UserItem';
+import Notifications from './Notifications';
 
 const StyledAppBar = styled(AppBar)`
   background-color: ${({ theme }) => theme.palette.background.paper};
@@ -31,10 +32,14 @@ const Navigation = () => (
           </Box>
           <Box>
             <Button href={StaticRoute.Trending}>Trending</Button>
-            <Button href={StaticRoute.MyShows}>My Shows</Button>
+            <WhenLoggedIn>
+              <Button href={StaticRoute.MyShows}>My Shows</Button>
+            </WhenLoggedIn>
           </Box>
           <Box sx={{ display: 'flex', gap: 1 }}>
-            <NotificationsBadge />
+            <WhenLoggedIn>
+              <Notifications />
+            </WhenLoggedIn>
             <UserItem />
           </Box>
         </Toolbar>
