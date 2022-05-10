@@ -29,7 +29,7 @@ const ShowSubtitle = () => {
     },
     {
       icon: <AccessTimeIcon color="primary" />,
-      text: `${show.details.episodeRuntime} min`,
+      text: `${show.episodeRuntime} min`,
     },
   ];
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import { PartialShow } from '../../../generated/graphql';
+import { Show } from '../../../generated/graphql';
 import TallCardPlaceholder from '../components/card/TallCardPlaceholder';
 import TallCardCollection from '../components/card/TallCardCollection';
 import TallShowCard from '../components/TallShowCard';
 import IndefiniteLoading from '../../../components/IndefiniteLoading';
 
 interface Props {
-  shows: Pick<PartialShow, 'externalId' | 'tallImage' | 'name'>[];
+  shows: Pick<Show, 'externalId' | 'tallImage' | 'name'>[];
   loading?: boolean;
   loadingIndicator?: boolean;
   scroll: boolean;

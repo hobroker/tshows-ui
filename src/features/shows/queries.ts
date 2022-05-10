@@ -30,28 +30,26 @@ export const QUERY_FULL_SHOW = gql`
       firstAirDate
       originCountry
       status
+      episodeRuntime
+      isInProduction
+      seasons {
+        number
+        description
+        name
+        tallImage
+        episodeCount
+        airDate
+      }
       genres {
         externalId
         name
-      }
-      details {
-        episodeRuntime
-        isInProduction
-        seasons {
-          number
-          description
-          name
-          tallImage
-          episodeCount
-          airDate
-        }
       }
     }
   }
 `;
 
 export const PARTIAL_SHOW_FRAGMENT = gql`
-  fragment PartialShow on PartialShow {
+  fragment PartialShow on Show {
     externalId
     name
     description
@@ -64,7 +62,7 @@ export const PARTIAL_SHOW_FRAGMENT = gql`
 `;
 
 export const PARTIAL_SHOW_SUMMARY_FRAGMENT = gql`
-  fragment ShowSummary on PartialShow {
+  fragment ShowSummary on Show {
     externalId
     name
     description

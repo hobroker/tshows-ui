@@ -48,7 +48,8 @@ const WatchlistOverlayAction = ({ status, onClick }: Props) => {
   return (
     <Overlay
       className={classNames({
-        'status-in-watchlist': status === Status.InWatchlist,
+        'status-in-watchlist':
+          status === Status.InWatchlist || status === Status.FinishedWatching,
       })}
     >
       <StyledActionButton onClick={handleClick}>

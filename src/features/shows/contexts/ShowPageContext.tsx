@@ -9,7 +9,7 @@ import {
 import { useLocation } from 'react-router-dom';
 import {
   EpisodeWithoutShowFragment,
-  FullShow,
+  Show,
   useFullShowQuery,
   useGetSeasonEpisodesLazyQuery,
   useUpsertSeasonEpisodeMutation,
@@ -18,9 +18,9 @@ import { noop } from '../../../utils/fp';
 import { BackdropContext } from '../../../contexts/BackdropContext';
 
 interface ContextType {
-  show: FullShow;
+  show: Show;
   episodesMap: Record<number, EpisodeWithoutShowFragment[]>;
-  update: (data: Partial<FullShow>) => void;
+  update: (data: Partial<Show>) => void;
   fetchSeason: (seasonNumber: number) => void;
   watchEpisode: (
     seasonNumber: number,
@@ -35,7 +35,7 @@ interface Props {
 }
 
 const ShowPageContext = createContext<ContextType>({
-  show: {} as FullShow,
+  show: {} as Show,
   episodesMap: {},
   update: noop,
   fetchSeason: noop,
@@ -50,14 +50,14 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
   const [fetchSeasonEpisodes] = useGetSeasonEpisodesLazyQuery({
     fetchPolicy: 'network-only',
   });
-  const [show, setShow] = useState<FullShow>();
+  const [show, setShow] = useState<Show>();
   const [episodesMap, setEpisodesMap] = useState<
     Record<number, EpisodeWithoutShowFragment[]>
   >({});
   const [upsertEpisode] = useUpsertSeasonEpisodeMutation();
 
   const update = useCallback(
-    (data: Partial<FullShow>) => {
+    (data: Partial<Show>) => {
       if (!show) {
         return;
       }
