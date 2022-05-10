@@ -16,20 +16,7 @@ type Episode {
   name: String!
   number: Int!
   seasonNumber: Int!
-  show: PartialShow!
-  wideImage: String
-}
-
-type FullShow {
-  description: String!
-  details: ShowDetails!
-  externalId: Int!
-  firstAirDate: DateTime!
-  genres: [Genre!]!
-  name: String!
-  originCountry: String!
-  status: Status!
-  tallImage: String
+  show: Show!
   wideImage: String
 }
 
@@ -73,18 +60,6 @@ type Mutation {
   upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
 }
 
-type PartialShow {
-  description: String!
-  externalId: Int!
-  firstAirDate: DateTime!
-  genres: [Genre!]!
-  name: String!
-  originCountry: String!
-  status: Status!
-  tallImage: String
-  wideImage: String
-}
-
 type PieItem {
   id: String!
   label: String!
@@ -96,26 +71,26 @@ type Preference {
 }
 
 type Query {
-  discoverShows(input: DiscoverShowsInput!): [PartialShow!]!
-  fullShow(input: FullShowInput!): FullShow!
+  discoverShows(input: DiscoverShowsInput!): [Show!]!
+  fullShow(input: FullShowInput!): Show!
   getMyReview(input: GetReviewInput!): Review
-  getMyShows: [PartialShow!]!
+  getMyShows: [Show!]!
   getOtherReviews(input: GetReviewInput!): [Review!]!
   getPreferences: Preference
   getRating(input: GetRatingInput!): Review!
   getSeasonEpisodes(input: GetSeasonEpisodesInput!): [Episode!]!
-  getSimilarShows(input: SimilarShowsInput!): [PartialShow!]!
+  getSimilarShows(input: SimilarShowsInput!): [Show!]!
   getStatsCalendar: [StatsCalendarItem!]!
   getStatsGenres: [PieItem!]!
   getStatsSummary: [StatsSummaryItem!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
-  listRecommendations(input: ListRecommendationsInput!): [PartialShow!]!
-  listTrending(input: TrendingInput!): [PartialShow!]!
+  listRecommendations(input: ListRecommendationsInput!): [Show!]!
+  listTrending(input: TrendingInput!): [Show!]!
   listUpNext: [Episode!]!
   listUpcoming: [Episode!]!
   me: User!
-  search(input: SearchInput!): [PartialShow!]!
+  search(input: SearchInput!): [Show!]!
 }
 
 type Review {
@@ -139,11 +114,20 @@ type Season {
   tallImage: String
 }
 
-type ShowDetails {
+type Show {
+  description: String!
   episodeRuntime: Int!
+  externalId: Int!
+  firstAirDate: DateTime!
+  genres: [Genre!]!
   isInProduction: Boolean!
+  name: String!
+  originCountry: String!
   seasons: [Season!]!
+  status: Status!
   tagline: String
+  tallImage: String
+  wideImage: String
 }
 
 input SimilarShowsInput {
@@ -211,6 +195,6 @@ type Void {
 }
 
 type Watchlist {
-  show: PartialShow!
+  show: Show!
   status: Status!
 }

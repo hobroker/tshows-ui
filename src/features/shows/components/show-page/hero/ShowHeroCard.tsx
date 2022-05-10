@@ -35,7 +35,7 @@ const Content = styled(Container)`
   align-items: center;
 
   ${({ theme }) => theme.breakpoints.up('sm')} {
-    grid-template-columns: minmax(200px, 1fr) 3fr;
+    grid-template-columns: minmax(270px, 1fr) 3fr;
   }
 `;
 
