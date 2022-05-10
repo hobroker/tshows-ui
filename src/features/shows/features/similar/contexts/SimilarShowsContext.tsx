@@ -6,13 +6,13 @@ import {
   useState,
 } from 'react';
 import {
-  SimilarShowFragment,
+  ShowSummaryFragment,
   useGetSimilarShowsQuery,
 } from '../../../../../generated/graphql';
 import { ShowPageContext } from '../../../contexts/ShowPageContext';
 
 interface ContextType {
-  shows: SimilarShowFragment[];
+  shows: ShowSummaryFragment[];
   loading: boolean;
 }
 
@@ -32,7 +32,7 @@ const SimilarShowsProvider = ({ children }: Props) => {
   const { data, loading } = useGetSimilarShowsQuery({
     variables: { externalId },
   });
-  const [shows, setShows] = useState<SimilarShowFragment[]>([]);
+  const [shows, setShows] = useState<ShowSummaryFragment[]>([]);
 
   useEffect(() => {
     if (data?.getSimilarShows) {

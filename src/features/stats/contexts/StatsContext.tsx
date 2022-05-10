@@ -22,7 +22,9 @@ const StatsContext = createContext<ContextType>({
 });
 
 const StatsProvider = ({ children }: Props) => {
-  const { data, loading } = useGetStatsPageDataQuery();
+  const { data, loading } = useGetStatsPageDataQuery({
+    fetchPolicy: 'network-only',
+  });
 
   return (
     <StatsContext.Provider

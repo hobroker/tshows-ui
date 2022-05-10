@@ -47,7 +47,14 @@ const StatsList = () => {
   return (
     <Typography
       variant="overline"
-      sx={{ display: 'flex', justifyContent: 'space-between' }}
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: {
+          xs: 'column',
+          sm: 'row',
+        },
+      }}
     >
       {data.map(({ key, value }) => (
         <span key={key}>{value}</span>

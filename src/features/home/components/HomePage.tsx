@@ -26,12 +26,10 @@ const HomePage = () => (
       <Divider />
       <Upcoming />
       <Divider />
-      <WhenLoggedIn>
-        <Recommendations />
-      </WhenLoggedIn>
+      <Recommendations />
       <Divider />
-      <Trending />
     </WhenLoggedIn>
+    <Trending />
   </PageWrapper>
 );
 

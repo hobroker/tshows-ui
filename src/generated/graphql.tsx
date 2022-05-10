@@ -38,21 +38,7 @@ export type Episode = {
   name: Scalars['String'];
   number: Scalars['Int'];
   seasonNumber: Scalars['Int'];
-  show: PartialShow;
-  wideImage?: Maybe<Scalars['String']>;
-};
-
-export type FullShow = {
-  __typename?: 'FullShow';
-  description: Scalars['String'];
-  details: ShowDetails;
-  externalId: Scalars['Int'];
-  firstAirDate: Scalars['DateTime'];
-  genres: Array<Genre>;
-  name: Scalars['String'];
-  originCountry: Scalars['String'];
-  status: Status;
-  tallImage?: Maybe<Scalars['String']>;
+  show: Show;
   wideImage?: Maybe<Scalars['String']>;
 };
 
@@ -118,19 +104,6 @@ export type MutationUpsertWatchlistItemArgs = {
   input: UpsertWatchlistInput;
 };
 
-export type PartialShow = {
-  __typename?: 'PartialShow';
-  description: Scalars['String'];
-  externalId: Scalars['Int'];
-  firstAirDate: Scalars['DateTime'];
-  genres: Array<Genre>;
-  name: Scalars['String'];
-  originCountry: Scalars['String'];
-  status: Status;
-  tallImage?: Maybe<Scalars['String']>;
-  wideImage?: Maybe<Scalars['String']>;
-};
-
 export type PieItem = {
   __typename?: 'PieItem';
   id: Scalars['String'];
@@ -145,26 +118,26 @@ export type Preference = {
 
 export type Query = {
   __typename?: 'Query';
-  discoverShows: Array<PartialShow>;
-  fullShow: FullShow;
+  discoverShows: Array<Show>;
+  fullShow: Show;
   getMyReview?: Maybe<Review>;
-  getMyShows: Array<PartialShow>;
+  getMyShows: Array<Show>;
   getOtherReviews: Array<Review>;
   getPreferences?: Maybe<Preference>;
   getRating: Review;
   getSeasonEpisodes: Array<Episode>;
-  getSimilarShows: Array<PartialShow>;
+  getSimilarShows: Array<Show>;
   getStatsCalendar: Array<StatsCalendarItem>;
   getStatsGenres: Array<PieItem>;
   getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
-  listRecommendations: Array<PartialShow>;
-  listTrending: Array<PartialShow>;
+  listRecommendations: Array<Show>;
+  listTrending: Array<Show>;
   listUpNext: Array<Episode>;
   listUpcoming: Array<Episode>;
   me: User;
-  search: Array<PartialShow>;
+  search: Array<Show>;
 };
 
 export type QueryDiscoverShowsArgs = {
@@ -230,12 +203,21 @@ export type Season = {
   tallImage?: Maybe<Scalars['String']>;
 };
 
-export type ShowDetails = {
-  __typename?: 'ShowDetails';
+export type Show = {
+  __typename?: 'Show';
+  description: Scalars['String'];
   episodeRuntime: Scalars['Int'];
+  externalId: Scalars['Int'];
+  firstAirDate: Scalars['DateTime'];
+  genres: Array<Genre>;
   isInProduction: Scalars['Boolean'];
+  name: Scalars['String'];
+  originCountry: Scalars['String'];
   seasons: Array<Season>;
+  status: Status;
   tagline?: Maybe<Scalars['String']>;
+  tallImage?: Maybe<Scalars['String']>;
+  wideImage?: Maybe<Scalars['String']>;
 };
 
 export type SimilarShowsInput = {
@@ -308,7 +290,7 @@ export type Void = {
 
 export type Watchlist = {
   __typename?: 'Watchlist';
-  show: PartialShow;
+  show: Show;
   status: Status;
 };
 
@@ -339,7 +321,7 @@ export type ListUpcomingQuery = {
     wideImage?: string | null;
     airDate?: any | null;
     show: {
-      __typename?: 'PartialShow';
+      __typename?: 'Show';
       externalId: number;
       name: string;
       wideImage?: string | null;
@@ -364,7 +346,7 @@ export type ListUpNextQuery = {
     wideImage?: string | null;
     airDate?: any | null;
     show: {
-      __typename?: 'PartialShow';
+      __typename?: 'Show';
       externalId: number;
       name: string;
       wideImage?: string | null;
@@ -389,7 +371,7 @@ export type DiscoverShowsQueryVariables = Exact<{
 export type DiscoverShowsQuery = {
   __typename?: 'Query';
   discoverShows: Array<{
-    __typename?: 'PartialShow';
+    __typename?: 'Show';
     externalId: number;
     name: string;
     description: string;
@@ -508,7 +490,7 @@ export type SearchQueryVariables = Exact<{
 export type SearchQuery = {
   __typename?: 'Query';
   search: Array<{
-    __typename?: 'PartialShow';
+    __typename?: 'Show';
     externalId: number;
     name: string;
     description: string;
@@ -524,7 +506,7 @@ export type ListRecommendationsQueryVariables = Exact<{
 export type ListRecommendationsQuery = {
   __typename?: 'Query';
   listRecommendations: Array<{
-    __typename?: 'PartialShow';
+    __typename?: 'Show';
     externalId: number;
     name: string;
     description: string;
@@ -552,7 +534,7 @@ export type UpsertEpisodeMutation = {
     wideImage?: string | null;
     airDate?: any | null;
     show: {
-      __typename?: 'PartialShow';
+      __typename?: 'Show';
       externalId: number;
       name: string;
       wideImage?: string | null;
@@ -573,7 +555,7 @@ export type EpisodeWithShowFragment = {
   wideImage?: string | null;
   airDate?: any | null;
   show: {
-    __typename?: 'PartialShow';
+    __typename?: 'Show';
     externalId: number;
     name: string;
     wideImage?: string | null;
@@ -620,7 +602,7 @@ export type GetMyShowsQueryVariables = Exact<{ [key: string]: never }>;
 export type GetMyShowsQuery = {
   __typename?: 'Query';
   getMyShows: Array<{
-    __typename?: 'PartialShow';
+    __typename?: 'Show';
     externalId: number;
     name: string;
     description: string;
@@ -639,18 +621,13 @@ export type GetSimilarShowsQueryVariables = Exact<{
 export type GetSimilarShowsQuery = {
   __typename?: 'Query';
   getSimilarShows: Array<{
-    __typename?: 'PartialShow';
+    __typename?: 'Show';
     externalId: number;
     name: string;
+    description: string;
+    wideImage?: string | null;
     tallImage?: string | null;
   }>;
-};
-
-export type SimilarShowFragment = {
-  __typename?: 'PartialShow';
-  externalId: number;
-  name: string;
-  tallImage?: string | null;
 };
 
 export type ListTrendingQueryVariables = Exact<{
@@ -660,7 +637,7 @@ export type ListTrendingQueryVariables = Exact<{
 export type ListTrendingQuery = {
   __typename?: 'Query';
   listTrending: Array<{
-    __typename?: 'PartialShow';
+    __typename?: 'Show';
     externalId: number;
     name: string;
     description: string;
@@ -686,7 +663,7 @@ export type GetPartialWatchlistQuery = {
   getWatchlist: Array<{
     __typename?: 'Watchlist';
     status: Status;
-    show: { __typename?: 'PartialShow'; externalId: number };
+    show: { __typename?: 'Show'; externalId: number };
   }>;
 };
 
@@ -697,7 +674,7 @@ export type FullShowQueryVariables = Exact<{
 export type FullShowQuery = {
   __typename?: 'Query';
   fullShow: {
-    __typename?: 'FullShow';
+    __typename?: 'Show';
     externalId: number;
     name: string;
     description: string;
@@ -706,26 +683,23 @@ export type FullShowQuery = {
     firstAirDate: any;
     originCountry: string;
     status: Status;
+    episodeRuntime: number;
+    isInProduction: boolean;
+    seasons: Array<{
+      __typename?: 'Season';
+      number: number;
+      description?: string | null;
+      name: string;
+      tallImage?: string | null;
+      episodeCount: string;
+      airDate?: any | null;
+    }>;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
-    details: {
-      __typename?: 'ShowDetails';
-      episodeRuntime: number;
-      isInProduction: boolean;
-      seasons: Array<{
-        __typename?: 'Season';
-        number: number;
-        description?: string | null;
-        name: string;
-        tallImage?: string | null;
-        episodeCount: string;
-        airDate?: any | null;
-      }>;
-    };
   };
 };
 
 export type PartialShowFragment = {
-  __typename?: 'PartialShow';
+  __typename?: 'Show';
   externalId: number;
   name: string;
   description: string;
@@ -737,7 +711,7 @@ export type PartialShowFragment = {
 };
 
 export type ShowSummaryFragment = {
-  __typename?: 'PartialShow';
+  __typename?: 'Show';
   externalId: number;
   name: string;
   description: string;
@@ -860,15 +834,8 @@ export const EpisodeWithoutShowFragmentDoc = gql`
     airDate
   }
 `;
-export const SimilarShowFragmentDoc = gql`
-  fragment SimilarShow on PartialShow {
-    externalId
-    name
-    tallImage
-  }
-`;
 export const PartialShowFragmentDoc = gql`
-  fragment PartialShow on PartialShow {
+  fragment PartialShow on Show {
     externalId
     name
     description
@@ -880,7 +847,7 @@ export const PartialShowFragmentDoc = gql`
   }
 `;
 export const ShowSummaryFragmentDoc = gql`
-  fragment ShowSummary on PartialShow {
+  fragment ShowSummary on Show {
     externalId
     name
     description
@@ -1761,10 +1728,10 @@ export type GetMyShowsQueryResult = Apollo.QueryResult<
 export const GetSimilarShowsDocument = gql`
   query GetSimilarShows($externalId: Int!) {
     getSimilarShows(input: { externalId: $externalId }) {
-      ...SimilarShow
+      ...ShowSummary
     }
   }
-  ${SimilarShowFragmentDoc}
+  ${ShowSummaryFragmentDoc}
 `;
 
 /**
@@ -2005,21 +1972,19 @@ export const FullShowDocument = gql`
       firstAirDate
       originCountry
       status
+      episodeRuntime
+      isInProduction
+      seasons {
+        number
+        description
+        name
+        tallImage
+        episodeCount
+        airDate
+      }
       genres {
         externalId
         name
-      }
-      details {
-        episodeRuntime
-        isInProduction
-        seasons {
-          number
-          description
-          name
-          tallImage
-          episodeCount
-          airDate
-        }
       }
     }
   }

@@ -16,11 +16,7 @@ const NavigationContext = createContext<NavigationContextType>({
 });
 
 const NavigationProvider = ({ children }: Props) => {
-  const [notifications, setNotifications] = useState<string[]>([
-    'one',
-    'two',
-    'three',
-  ]);
+  const [notifications, setNotifications] = useState<string[]>([]);
 
   return (
     <NavigationContext.Provider value={{ notifications, setNotifications }}>

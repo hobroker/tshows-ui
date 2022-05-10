@@ -6,7 +6,7 @@ import SeasonsAccordion from './SeasonsAccordion';
 
 const SeasonsSection = () => {
   const { show } = useContext(ShowPageContext);
-  const { seasons } = show.details;
+  const { seasons } = show;
 
   return (
     <Box>

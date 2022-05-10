@@ -73,7 +73,10 @@ const SearchInput = ({
           onChange={onChange}
           onFocus={onFocus}
         />
-        <SearchOverlay sx={{ display: isOverlayOpen ? 'initial' : 'none' }}>
+        <SearchOverlay
+          sx={{ display: isOverlayOpen ? 'initial' : 'none' }}
+          elevation={8}
+        >
           {children}
         </SearchOverlay>
       </Box>
