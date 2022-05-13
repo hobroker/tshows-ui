@@ -39,6 +39,7 @@ export type Episode = {
   number: Scalars['Int'];
   seasonNumber: Scalars['Int'];
   show: Show;
+  showId: Scalars['Int'];
   wideImage?: Maybe<Scalars['String']>;
 };
 
@@ -114,6 +115,7 @@ export type PieItem = {
 export type Preference = {
   __typename?: 'Preference';
   genres: Array<Genre>;
+  id: Scalars['Int'];
 };
 
 export type Query = {

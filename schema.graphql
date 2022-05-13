@@ -17,6 +17,7 @@ type Episode {
   number: Int!
   seasonNumber: Int!
   show: Show!
+  showId: Int!
   wideImage: String
 }
 
@@ -68,6 +69,7 @@ type PieItem {
 
 type Preference {
   genres: [Genre!]!
+  id: Int!
 }
 
 type Query {
