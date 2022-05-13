@@ -40,7 +40,7 @@ const SeasonDetails = ({ seasonNumber, episodes }: Props) =>
                   <span>{description}</span>
                 </Stack>
               }
-              sx={{ my: 0, pr: 2 }}
+              sx={{ my: 0, pr: 4 }}
             />
             <WhenLoggedIn>
               <ListItemSecondaryAction sx={{ right: 0 }}>
