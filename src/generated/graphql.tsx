@@ -105,6 +105,13 @@ export type MutationUpsertWatchlistItemArgs = {
   input: UpsertWatchlistInput;
 };
 
+export type Notification = {
+  __typename?: 'Notification';
+  episode: Episode;
+  id: Scalars['Int'];
+  isRead?: Maybe<Scalars['Boolean']>;
+};
+
 export type PieItem = {
   __typename?: 'PieItem';
   id: Scalars['String'];
@@ -134,6 +141,7 @@ export type Query = {
   getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
+  listNotifications: Array<Notification>;
   listRecommendations: Array<Show>;
   listTrending: Array<Show>;
   listUpNext: Array<Episode>;
@@ -364,6 +372,53 @@ export type JoinWithGoogleMutationVariables = Exact<{
 export type JoinWithGoogleMutation = {
   __typename?: 'Mutation';
   joinWithGoogle: { __typename?: 'User'; name: string; email: string };
+};
+
+export type ListNotificationsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListNotificationsQuery = {
+  __typename?: 'Query';
+  listNotifications: Array<{
+    __typename?: 'Notification';
+    id: number;
+    isRead?: boolean | null;
+    episode: {
+      __typename?: 'Episode';
+      id: number;
+      number: number;
+      seasonNumber: number;
+      name: string;
+      airDate?: any | null;
+      show: {
+        __typename?: 'Show';
+        externalId: number;
+        name: string;
+        wideImage?: string | null;
+        tallImage?: string | null;
+      };
+    };
+  }>;
+};
+
+export type NotificationFragment = {
+  __typename?: 'Notification';
+  id: number;
+  isRead?: boolean | null;
+  episode: {
+    __typename?: 'Episode';
+    id: number;
+    number: number;
+    seasonNumber: number;
+    name: string;
+    airDate?: any | null;
+    show: {
+      __typename?: 'Show';
+      externalId: number;
+      name: string;
+      wideImage?: string | null;
+      tallImage?: string | null;
+    };
+  };
 };
 
 export type DiscoverShowsQueryVariables = Exact<{
@@ -791,6 +846,25 @@ export type LogoutMutation = {
   logout: { __typename: 'Void' };
 };
 
+export const NotificationFragmentDoc = gql`
+  fragment Notification on Notification {
+    id
+    isRead
+    episode {
+      id
+      number
+      seasonNumber
+      name
+      airDate
+      show {
+        externalId
+        name
+        wideImage
+        tallImage
+      }
+    }
+  }
+`;
 export const ReviewFragmentDoc = gql`
   fragment Review on Review {
     id
@@ -1084,6 +1158,66 @@ export type JoinWithGoogleMutationResult =
 export type JoinWithGoogleMutationOptions = Apollo.BaseMutationOptions<
   JoinWithGoogleMutation,
   JoinWithGoogleMutationVariables
+>;
+export const ListNotificationsDocument = gql`
+  query ListNotifications {
+    listNotifications {
+      ...Notification
+    }
+  }
+  ${NotificationFragmentDoc}
+`;
+
+/**
+ * __useListNotificationsQuery__
+ *
+ * To run a query within a React component, call `useListNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListNotificationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListNotificationsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListNotificationsQuery,
+    ListNotificationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<
+    ListNotificationsQuery,
+    ListNotificationsQueryVariables
+  >(ListNotificationsDocument, options);
+}
+export function useListNotificationsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListNotificationsQuery,
+    ListNotificationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    ListNotificationsQuery,
+    ListNotificationsQueryVariables
+  >(ListNotificationsDocument, options);
+}
+export type ListNotificationsQueryHookResult = ReturnType<
+  typeof useListNotificationsQuery
+>;
+export type ListNotificationsLazyQueryHookResult = ReturnType<
+  typeof useListNotificationsLazyQuery
+>;
+export type ListNotificationsQueryResult = Apollo.QueryResult<
+  ListNotificationsQuery,
+  ListNotificationsQueryVariables
 >;
 export const DiscoverShowsDocument = gql`
   query DiscoverShows($genreIds: [Int!]!) {

@@ -1,21 +1,16 @@
-import {
-  Badge,
-  Box,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Popover,
-} from '@mui/material';
+import { Badge, Box, IconButton, List, Popover } from '@mui/material';
 import React, { useContext } from 'react';
 import { bindPopover, bindTrigger } from 'material-ui-popup-state';
 import { usePopupState } from 'material-ui-popup-state/hooks';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { NavigationContext } from '../contexts/NavigationContext';
+import { NotificationsContext } from '../../contexts/NotificationsContext';
+import IndefiniteLoading, {
+  IndefiniteLoadingSize,
+} from '../../../../components/IndefiniteLoading';
+import NotificationListItem from './NotificationListItem';
 
 const Notifications = () => {
-  const { notifications } = useContext(NavigationContext);
+  const { notifications, loading } = useContext(NotificationsContext);
   const notificationsCount = notifications.length;
   const popupState = usePopupState({
     variant: 'popover',
@@ -37,16 +32,13 @@ const Notifications = () => {
         transformOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <List sx={{ maxWidth: '100%', width: 300 }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="Inbox" />
-            </ListItemButton>
-          </ListItem>
+          {loading ? (
+            <IndefiniteLoading size={IndefiniteLoadingSize.Small} />
+          ) : (
+            notifications.map((notification) => (
+              <NotificationListItem notification={notification} />
+            ))
+          )}
         </List>
       </Popover>
     </>

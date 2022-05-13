@@ -61,6 +61,12 @@ type Mutation {
   upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
 }
 
+type Notification {
+  episode: Episode!
+  id: Int!
+  isRead: Boolean
+}
+
 type PieItem {
   id: String!
   label: String!
@@ -87,6 +93,7 @@ type Query {
   getStatsSummary: [StatsSummaryItem!]!
   getWatchlist: [Watchlist!]!
   listGenres: [Genre!]
+  listNotifications: [Notification!]!
   listRecommendations(input: ListRecommendationsInput!): [Show!]!
   listTrending(input: TrendingInput!): [Show!]!
   listUpNext: [Episode!]!
