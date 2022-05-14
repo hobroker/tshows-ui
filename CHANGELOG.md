@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/hobroker/tshows-ui/compare/v2.0.0...v2.1.0) (2022-05-14)
+
+
+### Features
+
+* add notifications and subscription ([#41](https://github.com/hobroker/tshows-ui/issues/41)) ([97884b0](https://github.com/hobroker/tshows-ui/commit/97884b0cc09d7bdb1fc5cf6cfae7f36461a17b13))
+
 # [2.0.0](https://github.com/hobroker/tshows-ui/compare/v1.20.1...v2.0.0) (2022-05-10)
 
 ## [1.20.1](https://github.com/hobroker/tshows-ui/compare/v1.20.0...v1.20.1) (2022-05-08)
