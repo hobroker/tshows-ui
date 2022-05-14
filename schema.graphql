@@ -172,6 +172,10 @@ enum Status {
   StoppedWatching
 }
 
+type Subscription {
+  notificationsAdded: [Notification!]!
+}
+
 input ToggleGenrePreferenceInput {
   genreId: Int!
 }

@@ -8,6 +8,7 @@ import {
 import {
   NotificationFragment,
   useListNotificationsQuery,
+  useNotificationsAddedSubscription,
   useReadAllNotificationsMutation,
   useReadNotificationMutation,
 } from '../../../generated/graphql';
@@ -53,6 +54,11 @@ const NotificationsProvider = ({ children }: Props) => {
 
     return readAllNotificationsMutation();
   }, [readAllNotificationsMutation]);
+
+  const { data: data2, loading: loading2 } =
+    useNotificationsAddedSubscription();
+
+  console.log('loading, data2', loading2, data2);
 
   useEffect(() => {
     if (!data) return;

@@ -24,6 +24,14 @@ export const MUTATION_READ_ALL_NOTIFICATIONS = gql`
   }
 `;
 
+export const SUBSCRIPTION_NOTIFICATIONS_ADDED = gql`
+  subscription NotificationsAdded {
+    notificationsAdded {
+      ...Notification
+    }
+  }
+`;
+
 export const NOTIFICATION_FRAGMENT = gql`
   fragment Notification on Notification {
     id

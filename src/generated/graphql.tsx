@@ -269,6 +269,11 @@ export enum Status {
   StoppedWatching = 'StoppedWatching',
 }
 
+export type Subscription = {
+  __typename?: 'Subscription';
+  notificationsAdded: Array<Notification>;
+};
+
 export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
 };
@@ -426,6 +431,34 @@ export type ReadAllNotificationsMutationVariables = Exact<{
 export type ReadAllNotificationsMutation = {
   __typename?: 'Mutation';
   readAllNotifications: { __typename: 'Void' };
+};
+
+export type NotificationsAddedSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type NotificationsAddedSubscription = {
+  __typename?: 'Subscription';
+  notificationsAdded: Array<{
+    __typename?: 'Notification';
+    id: number;
+    isRead?: boolean | null;
+    episode: {
+      __typename?: 'Episode';
+      id: number;
+      number: number;
+      seasonNumber: number;
+      name: string;
+      airDate?: any | null;
+      show: {
+        __typename?: 'Show';
+        externalId: number;
+        name: string;
+        wideImage?: string | null;
+        tallImage?: string | null;
+      };
+    };
+  }>;
 };
 
 export type NotificationFragment = {
@@ -1348,6 +1381,48 @@ export type ReadAllNotificationsMutationOptions = Apollo.BaseMutationOptions<
   ReadAllNotificationsMutation,
   ReadAllNotificationsMutationVariables
 >;
+export const NotificationsAddedDocument = gql`
+  subscription NotificationsAdded {
+    notificationsAdded {
+      ...Notification
+    }
+  }
+  ${NotificationFragmentDoc}
+`;
+
+/**
+ * __useNotificationsAddedSubscription__
+ *
+ * To run a query within a React component, call `useNotificationsAddedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationsAddedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationsAddedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNotificationsAddedSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    NotificationsAddedSubscription,
+    NotificationsAddedSubscriptionVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useSubscription<
+    NotificationsAddedSubscription,
+    NotificationsAddedSubscriptionVariables
+  >(NotificationsAddedDocument, options);
+}
+export type NotificationsAddedSubscriptionHookResult = ReturnType<
+  typeof useNotificationsAddedSubscription
+>;
+export type NotificationsAddedSubscriptionResult =
+  Apollo.SubscriptionResult<NotificationsAddedSubscription>;
 export const DiscoverShowsDocument = gql`
   query DiscoverShows($genreIds: [Int!]!) {
     discoverShows(input: { genreIds: $genreIds }) {
