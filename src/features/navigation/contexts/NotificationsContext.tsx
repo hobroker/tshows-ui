@@ -13,6 +13,7 @@ import {
   useReadNotificationMutation,
 } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
+import useAlert from '../../../hooks/useAlert';
 
 interface NavigationContextType {
   notifications: NotificationFragment[];
@@ -33,6 +34,7 @@ const NotificationsContext = createContext<NavigationContextType>({
 });
 
 const NotificationsProvider = ({ children }: Props) => {
+  const { notifyInfo } = useAlert();
   const { data, loading } = useListNotificationsQuery();
   const [readNotificationMutation] = useReadNotificationMutation();
   const [readAllNotificationsMutation] = useReadAllNotificationsMutation();
@@ -67,8 +69,11 @@ const NotificationsProvider = ({ children }: Props) => {
       return;
     }
 
+    notifyInfo(
+      `You have ${subscription.notificationsAdded.length} new notifications`,
+    );
     setNotifications((data) => [...subscription.notificationsAdded, ...data]);
-  }, [subscription, subscriptionWaiting]);
+  }, [notifyInfo, subscription, subscriptionWaiting]);
 
   useEffect(() => {
     if (!data) return;
