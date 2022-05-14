@@ -34,10 +34,12 @@ const Notifications = () => {
         <List sx={{ maxWidth: '100%', width: 300 }}>
           {loading ? (
             <IndefiniteLoading size={IndefiniteLoadingSize.Small} />
-          ) : (
+          ) : notifications.length ? (
             notifications.map((notification) => (
               <NotificationListItem notification={notification} />
             ))
+          ) : (
+            <Box sx={{ textAlign: 'center' }}>No new notifications</Box>
           )}
         </List>
       </Popover>

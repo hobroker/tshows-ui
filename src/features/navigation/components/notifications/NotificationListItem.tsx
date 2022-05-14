@@ -1,20 +1,26 @@
 import { ListItem, ListItemButton, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { useCallback, useContext } from 'react';
 import { DateTime } from 'luxon';
 import { NotificationFragment } from '../../../../generated/graphql';
 import CustomImage from '../../../shows/components/CustomImage';
+import { NotificationsContext } from '../../contexts/NotificationsContext';
 
 interface Props {
   notification: NotificationFragment;
 }
 
 const NotificationListItem = ({ notification }: Props) => {
-  const { episode } = notification;
+  const { readNotification } = useContext(NotificationsContext);
+  const { id, episode } = notification;
   const title = `${episode.show.name} - ${episode.seasonNumber}x${episode.number} - ${episode.name}`;
+  const onClick = useCallback(
+    () => readNotification(id),
+    [id, readNotification],
+  );
 
   return (
     <ListItem disablePadding>
-      <ListItemButton sx={{ gap: 1, px: 1 }}>
+      <ListItemButton sx={{ gap: 1, px: 1 }} onClick={onClick}>
         <CustomImage
           path={episode.show.tallImage}
           type="tall"

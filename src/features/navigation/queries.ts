@@ -8,6 +8,14 @@ export const QUERY_LIST_NOTIFICATIONS = gql`
   }
 `;
 
+export const MUTATION_READ_NOTIFICATION = gql`
+  mutation ReadNotification($notificationId: Int!) {
+    readNotification(input: { notificationId: $notificationId }) {
+      __typename
+    }
+  }
+`;
+
 export const NOTIFICATION_FRAGMENT = gql`
   fragment Notification on Notification {
     id

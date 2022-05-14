@@ -54,6 +54,7 @@ input ListRecommendationsInput {
 type Mutation {
   joinWithGoogle(input: JoinWithGoogleInput!): User!
   logout: Void!
+  readNotification(input: ReadNotificationInput!): Void!
   refresh: User!
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
   upsertEpisode(input: UpsertEpisodeInput!): Episode
@@ -100,6 +101,10 @@ type Query {
   listUpcoming: [Episode!]!
   me: User!
   search(input: SearchInput!): [Show!]!
+}
+
+input ReadNotificationInput {
+  notificationId: Int!
 }
 
 type Review {

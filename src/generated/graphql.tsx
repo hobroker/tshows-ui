@@ -78,6 +78,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   joinWithGoogle: User;
   logout: Void;
+  readNotification: Void;
   refresh: User;
   toggleGenrePreference: Void;
   upsertEpisode?: Maybe<Episode>;
@@ -87,6 +88,10 @@ export type Mutation = {
 
 export type MutationJoinWithGoogleArgs = {
   input: JoinWithGoogleInput;
+};
+
+export type MutationReadNotificationArgs = {
+  input: ReadNotificationInput;
 };
 
 export type MutationToggleGenrePreferenceArgs = {
@@ -188,6 +193,10 @@ export type QueryListTrendingArgs = {
 
 export type QuerySearchArgs = {
   input: SearchInput;
+};
+
+export type ReadNotificationInput = {
+  notificationId: Scalars['Int'];
 };
 
 export type Review = {
@@ -398,6 +407,15 @@ export type ListNotificationsQuery = {
       };
     };
   }>;
+};
+
+export type ReadNotificationMutationVariables = Exact<{
+  notificationId: Scalars['Int'];
+}>;
+
+export type ReadNotificationMutation = {
+  __typename?: 'Mutation';
+  readNotification: { __typename: 'Void' };
 };
 
 export type NotificationFragment = {
@@ -1218,6 +1236,57 @@ export type ListNotificationsLazyQueryHookResult = ReturnType<
 export type ListNotificationsQueryResult = Apollo.QueryResult<
   ListNotificationsQuery,
   ListNotificationsQueryVariables
+>;
+export const ReadNotificationDocument = gql`
+  mutation ReadNotification($notificationId: Int!) {
+    readNotification(input: { notificationId: $notificationId }) {
+      __typename
+    }
+  }
+`;
+export type ReadNotificationMutationFn = Apollo.MutationFunction<
+  ReadNotificationMutation,
+  ReadNotificationMutationVariables
+>;
+
+/**
+ * __useReadNotificationMutation__
+ *
+ * To run a mutation, you first call `useReadNotificationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReadNotificationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [readNotificationMutation, { data, loading, error }] = useReadNotificationMutation({
+ *   variables: {
+ *      notificationId: // value for 'notificationId'
+ *   },
+ * });
+ */
+export function useReadNotificationMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ReadNotificationMutation,
+    ReadNotificationMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    ReadNotificationMutation,
+    ReadNotificationMutationVariables
+  >(ReadNotificationDocument, options);
+}
+export type ReadNotificationMutationHookResult = ReturnType<
+  typeof useReadNotificationMutation
+>;
+export type ReadNotificationMutationResult =
+  Apollo.MutationResult<ReadNotificationMutation>;
+export type ReadNotificationMutationOptions = Apollo.BaseMutationOptions<
+  ReadNotificationMutation,
+  ReadNotificationMutationVariables
 >;
 export const DiscoverShowsDocument = gql`
   query DiscoverShows($genreIds: [Int!]!) {
