@@ -55,10 +55,20 @@ const NotificationsProvider = ({ children }: Props) => {
     return readAllNotificationsMutation();
   }, [readAllNotificationsMutation]);
 
-  const { data: data2, loading: loading2 } =
+  const { data: subscription, loading: subscriptionWaiting } =
     useNotificationsAddedSubscription();
 
-  console.log('loading, data2', loading2, data2);
+  useEffect(() => {
+    if (
+      subscriptionWaiting ||
+      !subscription ||
+      !subscription.notificationsAdded.length
+    ) {
+      return;
+    }
+
+    setNotifications((data) => [...subscription.notificationsAdded, ...data]);
+  }, [subscription, subscriptionWaiting]);
 
   useEffect(() => {
     if (!data) return;
