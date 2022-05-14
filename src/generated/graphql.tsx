@@ -78,6 +78,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   joinWithGoogle: User;
   logout: Void;
+  readAllNotifications: Void;
   readNotification: Void;
   refresh: User;
   toggleGenrePreference: Void;
@@ -416,6 +417,15 @@ export type ReadNotificationMutationVariables = Exact<{
 export type ReadNotificationMutation = {
   __typename?: 'Mutation';
   readNotification: { __typename: 'Void' };
+};
+
+export type ReadAllNotificationsMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ReadAllNotificationsMutation = {
+  __typename?: 'Mutation';
+  readAllNotifications: { __typename: 'Void' };
 };
 
 export type NotificationFragment = {
@@ -1287,6 +1297,56 @@ export type ReadNotificationMutationResult =
 export type ReadNotificationMutationOptions = Apollo.BaseMutationOptions<
   ReadNotificationMutation,
   ReadNotificationMutationVariables
+>;
+export const ReadAllNotificationsDocument = gql`
+  mutation ReadAllNotifications {
+    readAllNotifications {
+      __typename
+    }
+  }
+`;
+export type ReadAllNotificationsMutationFn = Apollo.MutationFunction<
+  ReadAllNotificationsMutation,
+  ReadAllNotificationsMutationVariables
+>;
+
+/**
+ * __useReadAllNotificationsMutation__
+ *
+ * To run a mutation, you first call `useReadAllNotificationsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReadAllNotificationsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [readAllNotificationsMutation, { data, loading, error }] = useReadAllNotificationsMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReadAllNotificationsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ReadAllNotificationsMutation,
+    ReadAllNotificationsMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    ReadAllNotificationsMutation,
+    ReadAllNotificationsMutationVariables
+  >(ReadAllNotificationsDocument, options);
+}
+export type ReadAllNotificationsMutationHookResult = ReturnType<
+  typeof useReadAllNotificationsMutation
+>;
+export type ReadAllNotificationsMutationResult =
+  Apollo.MutationResult<ReadAllNotificationsMutation>;
+export type ReadAllNotificationsMutationOptions = Apollo.BaseMutationOptions<
+  ReadAllNotificationsMutation,
+  ReadAllNotificationsMutationVariables
 >;
 export const DiscoverShowsDocument = gql`
   query DiscoverShows($genreIds: [Int!]!) {

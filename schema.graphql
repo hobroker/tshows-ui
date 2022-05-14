@@ -54,6 +54,7 @@ input ListRecommendationsInput {
 type Mutation {
   joinWithGoogle(input: JoinWithGoogleInput!): User!
   logout: Void!
+  readAllNotifications: Void!
   readNotification(input: ReadNotificationInput!): Void!
   refresh: User!
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!

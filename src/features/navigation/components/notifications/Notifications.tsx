@@ -4,13 +4,11 @@ import { bindPopover, bindTrigger } from 'material-ui-popup-state';
 import { usePopupState } from 'material-ui-popup-state/hooks';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { NotificationsContext } from '../../contexts/NotificationsContext';
-import IndefiniteLoading, {
-  IndefiniteLoadingSize,
-} from '../../../../components/IndefiniteLoading';
-import NotificationListItem from './NotificationListItem';
+import NotificationsContent from './NotificationsContent';
+import NotificationsHeader from './NotificationsHeader';
 
 const Notifications = () => {
-  const { notifications, loading } = useContext(NotificationsContext);
+  const { notifications } = useContext(NotificationsContext);
   const notificationsCount = notifications.length;
   const popupState = usePopupState({
     variant: 'popover',
@@ -31,16 +29,9 @@ const Notifications = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
-        <List sx={{ maxWidth: '100%', width: 300 }}>
-          {loading ? (
-            <IndefiniteLoading size={IndefiniteLoadingSize.Small} />
-          ) : notifications.length ? (
-            notifications.map((notification) => (
-              <NotificationListItem notification={notification} />
-            ))
-          ) : (
-            <Box sx={{ textAlign: 'center' }}>No new notifications</Box>
-          )}
+        <List sx={{ maxWidth: '100%', width: 300, maxHeight: 600 }}>
+          <NotificationsHeader />
+          <NotificationsContent />
         </List>
       </Popover>
     </>

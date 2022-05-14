@@ -8,6 +8,7 @@ import {
 import {
   NotificationFragment,
   useListNotificationsQuery,
+  useReadAllNotificationsMutation,
   useReadNotificationMutation,
 } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
@@ -15,6 +16,7 @@ import { noop } from '../../../utils/fp';
 interface NavigationContextType {
   notifications: NotificationFragment[];
   readNotification: (notificationId: number) => void;
+  readAllNotifications: () => void;
   loading: boolean;
 }
 
@@ -26,11 +28,13 @@ const NotificationsContext = createContext<NavigationContextType>({
   notifications: [],
   loading: true,
   readNotification: noop,
+  readAllNotifications: noop,
 });
 
 const NotificationsProvider = ({ children }: Props) => {
   const { data, loading } = useListNotificationsQuery();
   const [readNotificationMutation] = useReadNotificationMutation();
+  const [readAllNotificationsMutation] = useReadAllNotificationsMutation();
   const [notifications, setNotifications] = useState<NotificationFragment[]>(
     [],
   );
@@ -39,18 +43,20 @@ const NotificationsProvider = ({ children }: Props) => {
       setNotifications((data) =>
         data.filter(({ id }) => id !== notificationId),
       );
-      readNotificationMutation({
-        variables: {
-          notificationId,
-        },
-      });
+
+      return readNotificationMutation({ variables: { notificationId } });
     },
     [readNotificationMutation],
   );
+  const readAllNotifications = useCallback(() => {
+    setNotifications([]);
+
+    return readAllNotificationsMutation();
+  }, [readAllNotificationsMutation]);
 
   useEffect(() => {
     if (!data) return;
-    setNotifications((shows) => data.listNotifications);
+    setNotifications(data.listNotifications);
   }, [data]);
 
   return (
@@ -59,6 +65,7 @@ const NotificationsProvider = ({ children }: Props) => {
         notifications,
         loading,
         readNotification,
+        readAllNotifications,
       }}
     >
       {children}

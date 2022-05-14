@@ -16,6 +16,14 @@ export const MUTATION_READ_NOTIFICATION = gql`
   }
 `;
 
+export const MUTATION_READ_ALL_NOTIFICATIONS = gql`
+  mutation ReadAllNotifications {
+    readAllNotifications {
+      __typename
+    }
+  }
+`;
+
 export const NOTIFICATION_FRAGMENT = gql`
   fragment Notification on Notification {
     id
