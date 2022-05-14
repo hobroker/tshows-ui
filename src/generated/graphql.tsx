@@ -39,6 +39,7 @@ export type Episode = {
   number: Scalars['Int'];
   seasonNumber: Scalars['Int'];
   show: Show;
+  showId: Scalars['Int'];
   wideImage?: Maybe<Scalars['String']>;
 };
 
@@ -77,6 +78,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   joinWithGoogle: User;
   logout: Void;
+  readAllNotifications: Void;
+  readNotification: Void;
   refresh: User;
   toggleGenrePreference: Void;
   upsertEpisode?: Maybe<Episode>;
@@ -86,6 +89,10 @@ export type Mutation = {
 
 export type MutationJoinWithGoogleArgs = {
   input: JoinWithGoogleInput;
+};
+
+export type MutationReadNotificationArgs = {
+  input: ReadNotificationInput;
 };
 
 export type MutationToggleGenrePreferenceArgs = {
@@ -104,6 +111,13 @@ export type MutationUpsertWatchlistItemArgs = {
   input: UpsertWatchlistInput;
 };
 
+export type Notification = {
+  __typename?: 'Notification';
+  episode: Episode;
+  id: Scalars['Int'];
+  isRead?: Maybe<Scalars['Boolean']>;
+};
+
 export type PieItem = {
   __typename?: 'PieItem';
   id: Scalars['String'];
@@ -114,6 +128,7 @@ export type PieItem = {
 export type Preference = {
   __typename?: 'Preference';
   genres: Array<Genre>;
+  id: Scalars['Int'];
 };
 
 export type Query = {
@@ -132,6 +147,7 @@ export type Query = {
   getStatsSummary: Array<StatsSummaryItem>;
   getWatchlist: Array<Watchlist>;
   listGenres?: Maybe<Array<Genre>>;
+  listNotifications: Array<Notification>;
   listRecommendations: Array<Show>;
   listTrending: Array<Show>;
   listUpNext: Array<Episode>;
@@ -178,6 +194,10 @@ export type QueryListTrendingArgs = {
 
 export type QuerySearchArgs = {
   input: SearchInput;
+};
+
+export type ReadNotificationInput = {
+  notificationId: Scalars['Int'];
 };
 
 export type Review = {
@@ -248,6 +268,11 @@ export enum Status {
   None = 'None',
   StoppedWatching = 'StoppedWatching',
 }
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  notificationsAdded: Array<Notification>;
+};
 
 export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
@@ -362,6 +387,99 @@ export type JoinWithGoogleMutationVariables = Exact<{
 export type JoinWithGoogleMutation = {
   __typename?: 'Mutation';
   joinWithGoogle: { __typename?: 'User'; name: string; email: string };
+};
+
+export type ListNotificationsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type ListNotificationsQuery = {
+  __typename?: 'Query';
+  listNotifications: Array<{
+    __typename?: 'Notification';
+    id: number;
+    isRead?: boolean | null;
+    episode: {
+      __typename?: 'Episode';
+      id: number;
+      number: number;
+      seasonNumber: number;
+      name: string;
+      airDate?: any | null;
+      show: {
+        __typename?: 'Show';
+        externalId: number;
+        name: string;
+        wideImage?: string | null;
+        tallImage?: string | null;
+      };
+    };
+  }>;
+};
+
+export type ReadNotificationMutationVariables = Exact<{
+  notificationId: Scalars['Int'];
+}>;
+
+export type ReadNotificationMutation = {
+  __typename?: 'Mutation';
+  readNotification: { __typename: 'Void' };
+};
+
+export type ReadAllNotificationsMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ReadAllNotificationsMutation = {
+  __typename?: 'Mutation';
+  readAllNotifications: { __typename: 'Void' };
+};
+
+export type NotificationsAddedSubscriptionVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type NotificationsAddedSubscription = {
+  __typename?: 'Subscription';
+  notificationsAdded: Array<{
+    __typename?: 'Notification';
+    id: number;
+    isRead?: boolean | null;
+    episode: {
+      __typename?: 'Episode';
+      id: number;
+      number: number;
+      seasonNumber: number;
+      name: string;
+      airDate?: any | null;
+      show: {
+        __typename?: 'Show';
+        externalId: number;
+        name: string;
+        wideImage?: string | null;
+        tallImage?: string | null;
+      };
+    };
+  }>;
+};
+
+export type NotificationFragment = {
+  __typename?: 'Notification';
+  id: number;
+  isRead?: boolean | null;
+  episode: {
+    __typename?: 'Episode';
+    id: number;
+    number: number;
+    seasonNumber: number;
+    name: string;
+    airDate?: any | null;
+    show: {
+      __typename?: 'Show';
+      externalId: number;
+      name: string;
+      wideImage?: string | null;
+      tallImage?: string | null;
+    };
+  };
 };
 
 export type DiscoverShowsQueryVariables = Exact<{
@@ -789,6 +907,25 @@ export type LogoutMutation = {
   logout: { __typename: 'Void' };
 };
 
+export const NotificationFragmentDoc = gql`
+  fragment Notification on Notification {
+    id
+    isRead
+    episode {
+      id
+      number
+      seasonNumber
+      name
+      airDate
+      show {
+        externalId
+        name
+        wideImage
+        tallImage
+      }
+    }
+  }
+`;
 export const ReviewFragmentDoc = gql`
   fragment Review on Review {
     id
@@ -1083,6 +1220,209 @@ export type JoinWithGoogleMutationOptions = Apollo.BaseMutationOptions<
   JoinWithGoogleMutation,
   JoinWithGoogleMutationVariables
 >;
+export const ListNotificationsDocument = gql`
+  query ListNotifications {
+    listNotifications {
+      ...Notification
+    }
+  }
+  ${NotificationFragmentDoc}
+`;
+
+/**
+ * __useListNotificationsQuery__
+ *
+ * To run a query within a React component, call `useListNotificationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useListNotificationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useListNotificationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useListNotificationsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    ListNotificationsQuery,
+    ListNotificationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useQuery<
+    ListNotificationsQuery,
+    ListNotificationsQueryVariables
+  >(ListNotificationsDocument, options);
+}
+export function useListNotificationsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ListNotificationsQuery,
+    ListNotificationsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useLazyQuery<
+    ListNotificationsQuery,
+    ListNotificationsQueryVariables
+  >(ListNotificationsDocument, options);
+}
+export type ListNotificationsQueryHookResult = ReturnType<
+  typeof useListNotificationsQuery
+>;
+export type ListNotificationsLazyQueryHookResult = ReturnType<
+  typeof useListNotificationsLazyQuery
+>;
+export type ListNotificationsQueryResult = Apollo.QueryResult<
+  ListNotificationsQuery,
+  ListNotificationsQueryVariables
+>;
+export const ReadNotificationDocument = gql`
+  mutation ReadNotification($notificationId: Int!) {
+    readNotification(input: { notificationId: $notificationId }) {
+      __typename
+    }
+  }
+`;
+export type ReadNotificationMutationFn = Apollo.MutationFunction<
+  ReadNotificationMutation,
+  ReadNotificationMutationVariables
+>;
+
+/**
+ * __useReadNotificationMutation__
+ *
+ * To run a mutation, you first call `useReadNotificationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReadNotificationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [readNotificationMutation, { data, loading, error }] = useReadNotificationMutation({
+ *   variables: {
+ *      notificationId: // value for 'notificationId'
+ *   },
+ * });
+ */
+export function useReadNotificationMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ReadNotificationMutation,
+    ReadNotificationMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    ReadNotificationMutation,
+    ReadNotificationMutationVariables
+  >(ReadNotificationDocument, options);
+}
+export type ReadNotificationMutationHookResult = ReturnType<
+  typeof useReadNotificationMutation
+>;
+export type ReadNotificationMutationResult =
+  Apollo.MutationResult<ReadNotificationMutation>;
+export type ReadNotificationMutationOptions = Apollo.BaseMutationOptions<
+  ReadNotificationMutation,
+  ReadNotificationMutationVariables
+>;
+export const ReadAllNotificationsDocument = gql`
+  mutation ReadAllNotifications {
+    readAllNotifications {
+      __typename
+    }
+  }
+`;
+export type ReadAllNotificationsMutationFn = Apollo.MutationFunction<
+  ReadAllNotificationsMutation,
+  ReadAllNotificationsMutationVariables
+>;
+
+/**
+ * __useReadAllNotificationsMutation__
+ *
+ * To run a mutation, you first call `useReadAllNotificationsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReadAllNotificationsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [readAllNotificationsMutation, { data, loading, error }] = useReadAllNotificationsMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useReadAllNotificationsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ReadAllNotificationsMutation,
+    ReadAllNotificationsMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    ReadAllNotificationsMutation,
+    ReadAllNotificationsMutationVariables
+  >(ReadAllNotificationsDocument, options);
+}
+export type ReadAllNotificationsMutationHookResult = ReturnType<
+  typeof useReadAllNotificationsMutation
+>;
+export type ReadAllNotificationsMutationResult =
+  Apollo.MutationResult<ReadAllNotificationsMutation>;
+export type ReadAllNotificationsMutationOptions = Apollo.BaseMutationOptions<
+  ReadAllNotificationsMutation,
+  ReadAllNotificationsMutationVariables
+>;
+export const NotificationsAddedDocument = gql`
+  subscription NotificationsAdded {
+    notificationsAdded {
+      ...Notification
+    }
+  }
+  ${NotificationFragmentDoc}
+`;
+
+/**
+ * __useNotificationsAddedSubscription__
+ *
+ * To run a query within a React component, call `useNotificationsAddedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationsAddedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationsAddedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNotificationsAddedSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    NotificationsAddedSubscription,
+    NotificationsAddedSubscriptionVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useSubscription<
+    NotificationsAddedSubscription,
+    NotificationsAddedSubscriptionVariables
+  >(NotificationsAddedDocument, options);
+}
+export type NotificationsAddedSubscriptionHookResult = ReturnType<
+  typeof useNotificationsAddedSubscription
+>;
+export type NotificationsAddedSubscriptionResult =
+  Apollo.SubscriptionResult<NotificationsAddedSubscription>;
 export const DiscoverShowsDocument = gql`
   query DiscoverShows($genreIds: [Int!]!) {
     discoverShows(input: { genreIds: $genreIds }) {

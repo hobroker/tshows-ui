@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { Badge, Box, IconButton } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { NavigationContext } from '../contexts/NavigationContext';
+import { NotificationsContext } from '../../contexts/NotificationsContext';
 
 const NotificationsBadge = () => {
-  const { notifications } = useContext(NavigationContext);
+  const { notifications } = useContext(NotificationsContext);
   const notificationsCount = notifications.length;
 
   return (

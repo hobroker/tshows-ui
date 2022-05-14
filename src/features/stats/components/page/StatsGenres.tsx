@@ -18,7 +18,9 @@ import {
   teal,
   yellow,
 } from '@mui/material/colors';
+import { Box } from '@mui/material';
 import { StatsContext } from '../../contexts/StatsContext';
+import Section from '../../../../components/Section';
 
 const colors = [
   amber[500],
@@ -43,36 +45,40 @@ const StatsGenres = () => {
   const { genres } = useContext(StatsContext);
 
   return (
-    <ResponsivePie
-      data={genres}
-      margin={{ top: 30, bottom: 80 }}
-      innerRadius={0.5}
-      padAngle={0.7}
-      cornerRadius={3}
-      activeOuterRadiusOffset={4}
-      arcLabelsTextColor="#ffffff"
-      borderColor={{
-        from: 'color',
-        modifiers: [['darker', 0.2]],
-      }}
-      arcLinkLabelsTextColor="#000000"
-      arcLinkLabelsThickness={2}
-      colors={colors}
-      arcLinkLabelsColor={{ from: 'color' }}
-      legends={[
-        {
-          translateY: 50,
-          anchor: 'bottom',
-          direction: 'row',
-          justify: false,
-          itemWidth: 120,
-          itemHeight: 24,
-          itemTextColor: '#000000',
-          itemDirection: 'left-to-right',
-          symbolShape: 'circle',
-        },
-      ]}
-    />
+    <Section title="Activity by genres" divider>
+      <Box sx={{ height: 400 }}>
+        <ResponsivePie
+          data={genres}
+          margin={{ top: 30, bottom: 80 }}
+          innerRadius={0.5}
+          padAngle={0.7}
+          cornerRadius={3}
+          activeOuterRadiusOffset={4}
+          arcLabelsTextColor="#ffffff"
+          borderColor={{
+            from: 'color',
+            modifiers: [['darker', 0.2]],
+          }}
+          arcLinkLabelsTextColor="#000000"
+          arcLinkLabelsThickness={2}
+          colors={colors}
+          arcLinkLabelsColor={{ from: 'color' }}
+          legends={[
+            {
+              translateY: 50,
+              anchor: 'bottom',
+              direction: 'row',
+              justify: false,
+              itemWidth: 120,
+              itemHeight: 24,
+              itemTextColor: '#000000',
+              itemDirection: 'left-to-right',
+              symbolShape: 'circle',
+            },
+          ]}
+        />
+      </Box>
+    </Section>
   );
 };
 

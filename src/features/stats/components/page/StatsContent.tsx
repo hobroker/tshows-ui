@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { Box, Stack } from '@mui/material';
-import Section from '../../../../components/Section';
+import { Stack } from '@mui/material';
 import { StatsContext } from '../../contexts/StatsContext';
 import IndefiniteLoading from '../../../../components/IndefiniteLoading';
 import StatsCalendar from './StatsCalendar';
@@ -15,16 +14,8 @@ const StatsContent = () => {
 
   return (
     <Stack>
-      <Section title="Activity by day" divider>
-        <Box sx={{ height: 200 }}>
-          <StatsCalendar />
-        </Box>
-      </Section>
-      <Section title="Activity by genres" divider>
-        <Box sx={{ height: 400 }}>
-          <StatsGenres />
-        </Box>
-      </Section>
+      <StatsCalendar />
+      <StatsGenres />
     </Stack>
   );
 };
