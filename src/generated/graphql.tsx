@@ -807,6 +807,7 @@ export type FullShowQuery = {
     isInProduction: boolean;
     seasons: Array<{
       __typename?: 'Season';
+      showId: number;
       number: number;
       description?: string | null;
       name: string;
@@ -2318,6 +2319,7 @@ export const FullShowDocument = gql`
       episodeRuntime
       isInProduction
       seasons {
+        showId
         number
         description
         name

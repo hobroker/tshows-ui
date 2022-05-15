@@ -33,6 +33,7 @@ export const QUERY_FULL_SHOW = gql`
       episodeRuntime
       isInProduction
       seasons {
+        showId
         number
         description
         name
