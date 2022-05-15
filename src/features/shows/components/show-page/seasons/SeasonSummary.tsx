@@ -6,6 +6,7 @@ import { Season } from '../../../../../generated/graphql';
 import CustomImage from '../../CustomImage';
 import { UserContext } from '../../../../user/contexts/UserContext';
 import { UserState } from '../../../../user/constants';
+import { ShowPageContext } from '../../../contexts/ShowPageContext';
 
 interface Props {
   season: Season;
@@ -19,15 +20,17 @@ const SeasonSummary = ({
     tallImage,
     episodeCount,
     isFullyWatched,
+    number,
   },
 }: Props) => {
   const { userState } = useContext(UserContext);
+  const { toggleSeasonIsFullyWatched } = useContext(ShowPageContext);
   const onMarkAllAsWatchedClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
-      console.log('Mark all as watched');
+      toggleSeasonIsFullyWatched(number);
     },
-    [],
+    [number, toggleSeasonIsFullyWatched],
   );
 
   return (

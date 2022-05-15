@@ -13,10 +13,10 @@ const EpisodeWatchActionButton = ({
   episodeId,
   isWatched,
 }: Props) => {
-  const { watchEpisode } = useContext(ShowPageContext);
+  const { toggleEpisodeIsWatched } = useContext(ShowPageContext);
   const onWatchEpisode = useCallback(() => {
-    watchEpisode(seasonNumber, episodeId, !isWatched);
-  }, [episodeId, isWatched, seasonNumber, watchEpisode]);
+    toggleEpisodeIsWatched(seasonNumber, episodeId, !isWatched);
+  }, [episodeId, isWatched, seasonNumber, toggleEpisodeIsWatched]);
 
   return (
     <UpsertEpisodeAction

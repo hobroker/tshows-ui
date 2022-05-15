@@ -80,3 +80,13 @@ export const MUTATION_UPSERT_SEASON_EPISODE = gql`
     }
   }
 `;
+
+export const MUTATION_TOGGLE_SEASON_IS_FULLY_WATCHED = gql`
+  mutation ToggleSeasonIsFullyWatched($showId: Int!, $seasonNumber: Int!) {
+    toggleSeasonIsFullyWatched(
+      input: { showId: $showId, seasonNumber: $seasonNumber }
+    ) {
+      __typename
+    }
+  }
+`;
