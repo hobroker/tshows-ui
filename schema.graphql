@@ -124,8 +124,10 @@ type Season {
   airDate: DateTime
   description: String
   episodeCount: String!
+  isFullyWatched: Boolean!
   name: String!
   number: Int!
+  showId: Int!
   tallImage: String
 }
 

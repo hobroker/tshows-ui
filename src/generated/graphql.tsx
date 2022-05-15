@@ -218,8 +218,10 @@ export type Season = {
   airDate?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   episodeCount: Scalars['String'];
+  isFullyWatched: Scalars['Boolean'];
   name: Scalars['String'];
   number: Scalars['Int'];
+  showId: Scalars['Int'];
   tallImage?: Maybe<Scalars['String']>;
 };
 
@@ -811,6 +813,7 @@ export type FullShowQuery = {
       tallImage?: string | null;
       episodeCount: string;
       airDate?: any | null;
+      isFullyWatched: boolean;
     }>;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   };
@@ -2321,6 +2324,7 @@ export const FullShowDocument = gql`
         tallImage
         episodeCount
         airDate
+        isFullyWatched
       }
       genres {
         externalId

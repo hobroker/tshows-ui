@@ -39,6 +39,7 @@ export const QUERY_FULL_SHOW = gql`
         tallImage
         episodeCount
         airDate
+        isFullyWatched
       }
       genres {
         externalId
