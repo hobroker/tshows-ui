@@ -2,6 +2,8 @@ import React, { MouseEvent, useCallback, useContext } from 'react';
 import Typography from '@mui/material/Typography';
 import { DateTime } from 'luxon';
 import { Box, Button, Divider } from '@mui/material';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { Season } from '../../../../../generated/graphql';
 import CustomImage from '../../CustomImage';
 import { UserContext } from '../../../../user/contexts/UserContext';
@@ -53,6 +55,13 @@ const SeasonSummary = ({
               sx={{ ml: 'auto', lineHeight: 1 }}
               size="small"
               onClick={onMarkAllAsWatchedClick}
+              endIcon={
+                isFullyWatched ? (
+                  <CheckCircleIcon />
+                ) : (
+                  <CheckCircleOutlineIcon />
+                )
+              }
             >
               {isFullyWatched ? 'Mark as unwatched' : 'Mark as watched'}
             </Button>
