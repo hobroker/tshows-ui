@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react';
 import { useLocation } from 'react-router-dom';
+import { prop } from 'ramda';
 import {
   EpisodeWithoutShowFragment,
   Show,
@@ -98,16 +99,32 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
 
   const toggleEpisodeIsWatched = useCallback(
     async (seasonNumber: number, episodeId: number, isWatched: boolean) => {
-      setEpisodesMap((episodesMap) => ({
+      const episodes = episodesMap[seasonNumber].map((episode) =>
+        episode.id !== episodeId ? episode : { ...episode, isWatched },
+      );
+      const isSeasonFullyWatched = episodes.every(prop('isWatched'));
+
+      setEpisodesMap({
         ...episodesMap,
-        [seasonNumber]: episodesMap[seasonNumber].map((episode) =>
-          episode.id !== episodeId ? episode : { ...episode, isWatched },
-        ),
-      }));
+        [seasonNumber]: episodes,
+      });
+
+      setShow((show) =>
+        !show
+          ? show
+          : {
+              ...show,
+              seasons: show.seasons.map((season) =>
+                season.number !== seasonNumber
+                  ? season
+                  : { ...season, isFullyWatched: isSeasonFullyWatched },
+              ),
+            },
+      );
 
       await upsertEpisode({ variables: { episodeId, isWatched } });
     },
-    [upsertEpisode],
+    [episodesMap, upsertEpisode],
   );
 
   const toggleSeasonIsFullyWatched = useCallback(
