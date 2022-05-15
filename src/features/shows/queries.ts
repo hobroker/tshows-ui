@@ -33,12 +33,14 @@ export const QUERY_FULL_SHOW = gql`
       episodeRuntime
       isInProduction
       seasons {
+        showId
         number
         description
         name
         tallImage
         episodeCount
         airDate
+        isFullyWatched
       }
       genres {
         externalId
@@ -74,6 +76,16 @@ export const PARTIAL_SHOW_SUMMARY_FRAGMENT = gql`
 export const MUTATION_UPSERT_SEASON_EPISODE = gql`
   mutation UpsertSeasonEpisode($episodeId: Int!, $isWatched: Boolean = true) {
     upsertEpisode(input: { episodeId: $episodeId, isWatched: $isWatched }) {
+      __typename
+    }
+  }
+`;
+
+export const MUTATION_TOGGLE_SEASON_IS_FULLY_WATCHED = gql`
+  mutation ToggleSeasonIsFullyWatched($showId: Int!, $seasonNumber: Int!) {
+    toggleSeasonIsFullyWatched(
+      input: { showId: $showId, seasonNumber: $seasonNumber }
+    ) {
       __typename
     }
   }

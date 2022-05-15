@@ -58,6 +58,7 @@ type Mutation {
   readNotification(input: ReadNotificationInput!): Void!
   refresh: User!
   toggleGenrePreference(input: ToggleGenrePreferenceInput!): Void!
+  toggleSeasonIsFullyWatched(input: ToggleSeasonWatchedInput!): Void!
   upsertEpisode(input: UpsertEpisodeInput!): Episode
   upsertReview(input: UpsertReviewInput!): Review!
   upsertWatchlistItem(input: UpsertWatchlistInput!): Watchlist!
@@ -124,8 +125,10 @@ type Season {
   airDate: DateTime
   description: String
   episodeCount: String!
+  isFullyWatched: Boolean!
   name: String!
   number: Int!
+  showId: Int!
   tallImage: String
 }
 
@@ -178,6 +181,11 @@ type Subscription {
 
 input ToggleGenrePreferenceInput {
   genreId: Int!
+}
+
+input ToggleSeasonWatchedInput {
+  seasonNumber: Int!
+  showId: Int!
 }
 
 input TrendingInput {

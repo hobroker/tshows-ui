@@ -22,7 +22,7 @@ const NotificationsHeader = () => {
       <Button
         variant="outlined"
         size="small"
-        sx={{ p: 0.5, lineHeight: 1 }}
+        sx={{ lineHeight: 1 }}
         onClick={readAllNotifications}
       >
         Mark all as read

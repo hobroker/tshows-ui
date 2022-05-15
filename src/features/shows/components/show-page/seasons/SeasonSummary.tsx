@@ -4,13 +4,22 @@ import { DateTime } from 'luxon';
 import { Box, Divider } from '@mui/material';
 import { Season } from '../../../../../generated/graphql';
 import CustomImage from '../../CustomImage';
+import SeasonWatchedButton from './SeasonWatchedButton';
 
 interface Props {
   season: Season;
 }
 
 const SeasonSummary = ({
-  season: { description, airDate, name, tallImage, episodeCount },
+  season: {
+    description,
+    airDate,
+    name,
+    tallImage,
+    episodeCount,
+    isFullyWatched,
+    number,
+  },
 }: Props) => (
   <Box sx={{ display: 'flex', gap: 1 }}>
     <CustomImage path={tallImage} sx={{ width: 80 }} />
@@ -25,6 +34,12 @@ const SeasonSummary = ({
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {episodeCount} episodes
         </Typography>
+        <Box sx={{ ml: 'auto' }}>
+          <SeasonWatchedButton
+            seasonNumber={number}
+            isFullyWatched={isFullyWatched}
+          />
+        </Box>
       </Box>
       <Box>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>

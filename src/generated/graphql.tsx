@@ -82,6 +82,7 @@ export type Mutation = {
   readNotification: Void;
   refresh: User;
   toggleGenrePreference: Void;
+  toggleSeasonIsFullyWatched: Void;
   upsertEpisode?: Maybe<Episode>;
   upsertReview: Review;
   upsertWatchlistItem: Watchlist;
@@ -97,6 +98,10 @@ export type MutationReadNotificationArgs = {
 
 export type MutationToggleGenrePreferenceArgs = {
   input: ToggleGenrePreferenceInput;
+};
+
+export type MutationToggleSeasonIsFullyWatchedArgs = {
+  input: ToggleSeasonWatchedInput;
 };
 
 export type MutationUpsertEpisodeArgs = {
@@ -218,8 +223,10 @@ export type Season = {
   airDate?: Maybe<Scalars['DateTime']>;
   description?: Maybe<Scalars['String']>;
   episodeCount: Scalars['String'];
+  isFullyWatched: Scalars['Boolean'];
   name: Scalars['String'];
   number: Scalars['Int'];
+  showId: Scalars['Int'];
   tallImage?: Maybe<Scalars['String']>;
 };
 
@@ -276,6 +283,11 @@ export type Subscription = {
 
 export type ToggleGenrePreferenceInput = {
   genreId: Scalars['Int'];
+};
+
+export type ToggleSeasonWatchedInput = {
+  seasonNumber: Scalars['Int'];
+  showId: Scalars['Int'];
 };
 
 export type TrendingInput = {
@@ -805,12 +817,14 @@ export type FullShowQuery = {
     isInProduction: boolean;
     seasons: Array<{
       __typename?: 'Season';
+      showId: number;
       number: number;
       description?: string | null;
       name: string;
       tallImage?: string | null;
       episodeCount: string;
       airDate?: any | null;
+      isFullyWatched: boolean;
     }>;
     genres: Array<{ __typename?: 'Genre'; externalId: number; name: string }>;
   };
@@ -845,6 +859,16 @@ export type UpsertSeasonEpisodeMutationVariables = Exact<{
 export type UpsertSeasonEpisodeMutation = {
   __typename?: 'Mutation';
   upsertEpisode?: { __typename: 'Episode' } | null;
+};
+
+export type ToggleSeasonIsFullyWatchedMutationVariables = Exact<{
+  showId: Scalars['Int'];
+  seasonNumber: Scalars['Int'];
+}>;
+
+export type ToggleSeasonIsFullyWatchedMutation = {
+  __typename?: 'Mutation';
+  toggleSeasonIsFullyWatched: { __typename: 'Void' };
 };
 
 export type GetStatsSummaryQueryVariables = Exact<{ [key: string]: never }>;
@@ -2315,12 +2339,14 @@ export const FullShowDocument = gql`
       episodeRuntime
       isInProduction
       seasons {
+        showId
         number
         description
         name
         tallImage
         episodeCount
         airDate
+        isFullyWatched
       }
       genres {
         externalId
@@ -2429,6 +2455,61 @@ export type UpsertSeasonEpisodeMutationOptions = Apollo.BaseMutationOptions<
   UpsertSeasonEpisodeMutation,
   UpsertSeasonEpisodeMutationVariables
 >;
+export const ToggleSeasonIsFullyWatchedDocument = gql`
+  mutation ToggleSeasonIsFullyWatched($showId: Int!, $seasonNumber: Int!) {
+    toggleSeasonIsFullyWatched(
+      input: { showId: $showId, seasonNumber: $seasonNumber }
+    ) {
+      __typename
+    }
+  }
+`;
+export type ToggleSeasonIsFullyWatchedMutationFn = Apollo.MutationFunction<
+  ToggleSeasonIsFullyWatchedMutation,
+  ToggleSeasonIsFullyWatchedMutationVariables
+>;
+
+/**
+ * __useToggleSeasonIsFullyWatchedMutation__
+ *
+ * To run a mutation, you first call `useToggleSeasonIsFullyWatchedMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleSeasonIsFullyWatchedMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleSeasonIsFullyWatchedMutation, { data, loading, error }] = useToggleSeasonIsFullyWatchedMutation({
+ *   variables: {
+ *      showId: // value for 'showId'
+ *      seasonNumber: // value for 'seasonNumber'
+ *   },
+ * });
+ */
+export function useToggleSeasonIsFullyWatchedMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ToggleSeasonIsFullyWatchedMutation,
+    ToggleSeasonIsFullyWatchedMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+
+  return Apollo.useMutation<
+    ToggleSeasonIsFullyWatchedMutation,
+    ToggleSeasonIsFullyWatchedMutationVariables
+  >(ToggleSeasonIsFullyWatchedDocument, options);
+}
+export type ToggleSeasonIsFullyWatchedMutationHookResult = ReturnType<
+  typeof useToggleSeasonIsFullyWatchedMutation
+>;
+export type ToggleSeasonIsFullyWatchedMutationResult =
+  Apollo.MutationResult<ToggleSeasonIsFullyWatchedMutation>;
+export type ToggleSeasonIsFullyWatchedMutationOptions =
+  Apollo.BaseMutationOptions<
+    ToggleSeasonIsFullyWatchedMutation,
+    ToggleSeasonIsFullyWatchedMutationVariables
+  >;
 export const GetStatsSummaryDocument = gql`
   query GetStatsSummary {
     getStatsSummary {

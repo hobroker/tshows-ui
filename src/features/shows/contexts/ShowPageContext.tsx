@@ -7,11 +7,13 @@ import {
   useState,
 } from 'react';
 import { useLocation } from 'react-router-dom';
+import { prop } from 'ramda';
 import {
   EpisodeWithoutShowFragment,
   Show,
   useFullShowQuery,
   useGetSeasonEpisodesLazyQuery,
+  useToggleSeasonIsFullyWatchedMutation,
   useUpsertSeasonEpisodeMutation,
 } from '../../../generated/graphql';
 import { noop } from '../../../utils/fp';
@@ -22,11 +24,12 @@ interface ContextType {
   episodesMap: Record<number, EpisodeWithoutShowFragment[]>;
   update: (data: Partial<Show>) => void;
   fetchSeason: (seasonNumber: number) => void;
-  watchEpisode: (
+  toggleEpisodeIsWatched: (
     seasonNumber: number,
     episodeId: number,
     isWatched: boolean,
   ) => void;
+  toggleSeasonIsFullyWatched: (seasonNumber: number) => void;
 }
 
 interface Props {
@@ -39,10 +42,13 @@ const ShowPageContext = createContext<ContextType>({
   episodesMap: {},
   update: noop,
   fetchSeason: noop,
-  watchEpisode: noop,
+  toggleEpisodeIsWatched: noop,
+  toggleSeasonIsFullyWatched: noop,
 });
 
 const ShowPageProvider = ({ children, externalId }: Props) => {
+  const { toggleBackdrop } = useContext(BackdropContext);
+  const { pathname } = useLocation();
   const { data, loading } = useFullShowQuery({
     variables: { externalId },
     fetchPolicy: 'network-only',
@@ -55,6 +61,8 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
     Record<number, EpisodeWithoutShowFragment[]>
   >({});
   const [upsertEpisode] = useUpsertSeasonEpisodeMutation();
+  const [toggleSeasonIsFullyWatchedMutation] =
+    useToggleSeasonIsFullyWatchedMutation();
 
   const update = useCallback(
     (data: Partial<Show>) => {
@@ -89,18 +97,76 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
     [episodesMap, externalId, fetchSeasonEpisodes],
   );
 
-  const watchEpisode = useCallback(
+  const toggleEpisodeIsWatched = useCallback(
     async (seasonNumber: number, episodeId: number, isWatched: boolean) => {
-      setEpisodesMap((episodesMap) => ({
+      const episodes = episodesMap[seasonNumber].map((episode) =>
+        episode.id !== episodeId ? episode : { ...episode, isWatched },
+      );
+      const isSeasonFullyWatched = episodes.every(prop('isWatched'));
+
+      setEpisodesMap({
         ...episodesMap,
-        [seasonNumber]: episodesMap[seasonNumber].map((episode) =>
-          episode.id !== episodeId ? episode : { ...episode, isWatched },
-        ),
-      }));
+        [seasonNumber]: episodes,
+      });
+
+      setShow((show) =>
+        !show
+          ? show
+          : {
+              ...show,
+              seasons: show.seasons.map((season) =>
+                season.number !== seasonNumber
+                  ? season
+                  : { ...season, isFullyWatched: isSeasonFullyWatched },
+              ),
+            },
+      );
 
       await upsertEpisode({ variables: { episodeId, isWatched } });
     },
-    [upsertEpisode],
+    [episodesMap, upsertEpisode],
+  );
+
+  const toggleSeasonIsFullyWatched = useCallback(
+    async (seasonNumber: number) => {
+      if (!show) return;
+
+      const season = show.seasons.find(
+        (season) => season.number === seasonNumber,
+      );
+
+      if (!season) return;
+
+      const isWatched = !season.isFullyWatched;
+
+      setEpisodesMap((episodesMap) => {
+        const episodes = episodesMap[seasonNumber];
+
+        if (!episodes) return episodesMap;
+
+        return {
+          ...episodesMap,
+          [seasonNumber]: episodes.map((episode) => ({
+            ...episode,
+            isWatched,
+          })),
+        };
+      });
+
+      setShow({
+        ...show,
+        seasons: show.seasons.map((season) =>
+          season.number !== seasonNumber
+            ? season
+            : { ...season, isFullyWatched: isWatched },
+        ),
+      });
+
+      await toggleSeasonIsFullyWatchedMutation({
+        variables: { showId: show.externalId, seasonNumber },
+      });
+    },
+    [show, toggleSeasonIsFullyWatchedMutation],
   );
 
   useEffect(() => {
@@ -109,13 +175,9 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
     }
   }, [data]);
 
-  const { toggleBackdrop } = useContext(BackdropContext);
-
   useEffect(() => {
     toggleBackdrop(!show || loading);
   }, [toggleBackdrop, show, loading]);
-
-  const { pathname } = useLocation();
 
   useEffect(() => {
     setEpisodesMap({});
@@ -133,7 +195,8 @@ const ShowPageProvider = ({ children, externalId }: Props) => {
         update,
         episodesMap,
         fetchSeason,
-        watchEpisode,
+        toggleEpisodeIsWatched,
+        toggleSeasonIsFullyWatched,
       }}
     >
       {children}
