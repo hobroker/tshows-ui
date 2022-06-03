@@ -76,7 +76,7 @@ export type ListRecommendationsInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  joinWithGoogle: User;
+  joinWithGoogle: Void;
   logout: Void;
   readAllNotifications: Void;
   readNotification: Void;
@@ -398,7 +398,7 @@ export type JoinWithGoogleMutationVariables = Exact<{
 
 export type JoinWithGoogleMutation = {
   __typename?: 'Mutation';
-  joinWithGoogle: { __typename?: 'User'; name: string; email: string };
+  joinWithGoogle: { __typename: 'Void' };
 };
 
 export type ListNotificationsQueryVariables = Exact<{ [key: string]: never }>;
@@ -1195,8 +1195,7 @@ export type ListUpNextQueryResult = Apollo.QueryResult<
 export const JoinWithGoogleDocument = gql`
   mutation JoinWithGoogle($input: JoinWithGoogleInput!) {
     joinWithGoogle(input: $input) {
-      name
-      email
+      __typename
     }
   }
 `;
