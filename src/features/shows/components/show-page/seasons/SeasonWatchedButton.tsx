@@ -5,6 +5,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { UserContext } from '../../../../user/contexts/UserContext';
 import { UserState } from '../../../../user/constants';
 import { ShowPageContext } from '../../../contexts/ShowPageContext';
+import { Status } from '../../../../../generated/graphql';
 
 interface Props {
   isFullyWatched: boolean;
@@ -13,7 +14,8 @@ interface Props {
 
 const SeasonWatchedButton = ({ isFullyWatched, seasonNumber }: Props) => {
   const { userState } = useContext(UserContext);
-  const { toggleSeasonIsFullyWatched } = useContext(ShowPageContext);
+  const { toggleSeasonIsFullyWatched, show } = useContext(ShowPageContext);
+  const isShowInWatchlist = show.status !== Status.None;
   const onMarkAllAsWatchedClick = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
@@ -32,6 +34,7 @@ const SeasonWatchedButton = ({ isFullyWatched, seasonNumber }: Props) => {
       sx={{ lineHeight: 1 }}
       size="small"
       onClick={onMarkAllAsWatchedClick}
+      disabled={!isShowInWatchlist}
       endIcon={
         isFullyWatched ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />
       }
