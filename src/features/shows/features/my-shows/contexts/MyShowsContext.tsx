@@ -34,8 +34,6 @@ const MyShowsProvider = ({ children }: Props) => {
     fetchPolicy: 'network-only',
   });
 
-  console.log('shows', shows);
-
   useEffect(() => {
     if (!data?.getMyShows) return;
 
