@@ -1,3 +1,10 @@
+## [2.3.1](https://github.com/hobroker/tshows-ui/compare/v2.3.0...v2.3.1) (2022-06-07)
+
+
+### Bug Fixes
+
+* watch season button enabled for shows not in watchlist ([#44](https://github.com/hobroker/tshows-ui/issues/44)) ([ffe07b5](https://github.com/hobroker/tshows-ui/commit/ffe07b5ecdbb17597503eb60ab6bfdb0f0ca4cef))
+
 # [2.3.0](https://github.com/hobroker/tshows-ui/compare/v2.2.0...v2.3.0) (2022-06-03)
 
 
