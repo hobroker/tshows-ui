@@ -24,18 +24,18 @@ const Navigation = () => (
             <LogoText sx={{ width: 150 }} />
           </Button>
         </Box>
-        <Box sx={{ mr: 1, flexGrow: 1 }}>
+        <Box sx={{ mr: 1, flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
           <SearchProvider>
             <Search />
           </SearchProvider>
         </Box>
-        <Box>
+        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           <Button href={StaticRoute.Trending}>Trending</Button>
           <WhenLoggedIn>
             <Button href={StaticRoute.MyShows}>My Shows</Button>
           </WhenLoggedIn>
         </Box>
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx={{ display: 'flex', gap: 1, marginLeft: 'auto' }}>
           <WhenLoggedIn>
             <NotificationsProvider>
               <Notifications />
