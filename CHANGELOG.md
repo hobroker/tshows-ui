@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/hobroker/tshows-ui/compare/v2.3.1...v2.4.0) (2022-06-25)
+
+
+### Features
+
+* add shadow to the TallCardCollection ([#45](https://github.com/hobroker/tshows-ui/issues/45)) ([8e9a8f4](https://github.com/hobroker/tshows-ui/commit/8e9a8f4d997be16621035f9cb6a0960de1100e7f))
+
 ## [2.3.1](https://github.com/hobroker/tshows-ui/compare/v2.3.0...v2.3.1) (2022-06-07)
 
 
